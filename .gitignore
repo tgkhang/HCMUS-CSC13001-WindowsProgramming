@@ -1,0 +1,72 @@
+# Visual Studio and VS Code specific
+.vscode/
+*.code-workspace
+
+# Build output
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+*.msixupload
+*.appxupload
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.vs/
+
+# Package dependencies
+packages/
+node_modules/
+project.lock.json
+
+# .NET-specific
+*.dotnettools/
+*.nuget/
+.nuget/
+*.nupkg
+*.snupkg
+project.assets.json
+project.lock.json
+
+# Windows-specific
+Thumbs.db
+Desktop.ini
+
+# Entity Framework
+Migrations/
+
+# SQLite database
+*.db
+*.db-shm
+*.db-wal
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.cache
+
+# Resharper files
+_ReSharper*/
+*.DotSettings.user
+
+# JetBrains Rider
+.idea/
+
+# Publish output
+publish/
+dist/
+out/
+
+# Secrets and configuration files
+secrets.json
+appsettings.json
+appsettings.*.json

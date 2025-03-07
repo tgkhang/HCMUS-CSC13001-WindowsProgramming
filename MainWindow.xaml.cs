@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using POS_For_Small_Shop.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,10 +24,35 @@ namespace POS_For_Small_Shop
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-
+        public AuthViewModel ViewModel { get; set; }
         public MainWindow()
         {
             this.InitializeComponent();
+            ViewModel = new AuthViewModel(this);
+            container.DataContext = ViewModel;
+        }
+
+        private void Window_Activated(object sender, WindowActivatedEventArgs args)
+        {
+
+        }
+        private async void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.CanLogin())
+            {
+                ViewModel.Login();
+            }
+            else
+            {
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Title = "Cannot login",
+                    Content = "Invalid username or password",
+                    CloseButtonText = "OK",
+                };
+                await dialog.ShowAsync();
+            }
         }
     }
 }

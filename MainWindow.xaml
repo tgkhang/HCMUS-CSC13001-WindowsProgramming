@@ -9,7 +9,36 @@
     mc:Ignorable="d"
     Title="POS For Small Shop">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-       
-    </Grid>
+    
+    <StackPanel x:Name="container" Orientation="Vertical" Width="300"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+        <TextBlock Text="Login" Style="{StaticResource TitleTextBlockStyle}"/>
+        <TextBox
+            Margin="0, 5, 0, 5"
+            Header="Username"
+            x:Name="usernameTextBox"
+            Text="{Binding Username, 
+            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+        />
+
+        <PasswordBox
+            x:Name="passwordBox" Header="Password"
+            Margin="0, 5, 0, 5"
+            Password="{Binding Password, Mode=TwoWay}"
+            />
+
+        <StackPanel HorizontalAlignment="Center">
+            <Button
+                Style="{StaticResource AccentButtonStyle}"
+                Name="loginButton"
+                Content="Login"
+                Height="35"
+                Click="loginButton_Click"
+                Margin="0, 5, 0, 5"
+                />
+        </StackPanel>
+    </StackPanel>
+
 </Window>

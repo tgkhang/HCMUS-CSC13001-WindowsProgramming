@@ -9,4 +9,6 @@ namespace POS_For_Small_Shop.Services
     class Class1
     {
     }
+
+
 }

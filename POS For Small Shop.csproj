@@ -13,10 +13,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Components\ProductItem.xaml" />
     <None Remove="DashboardWindow.xaml" />
     <None Remove="ShopDatabase.db" />
+    <None Remove="Views\AddCustomerPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
+    <None Remove="Views\NewOrderPage.xaml" />
     <None Remove="Views\OpenShiftPage.xaml" />
+    <None Remove="Views\OrdersPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +63,21 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="9.0.4" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\AddCustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\NewOrderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\OrdersPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\OpenShiftPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -70,6 +89,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="DashboardWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Components\ProductItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

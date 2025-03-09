@@ -27,5 +27,44 @@ namespace POS_For_Small_Shop.Views
         {
             this.InitializeComponent();
         }
+
+        private void navi_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.SelectedItemContainer != null)
+            {
+                string tag = args.SelectedItemContainer.Tag.ToString();
+                NavigateToPage(tag);
+            }
+        }
+
+        private void NavigateToPage(string pageTag)
+        {
+            switch (pageTag)
+            {
+                case "NewOrderPage":
+                    ContentFrame.Navigate(typeof(NewOrderPage));
+                    break;
+                case "AddCustomerPage":
+                    ContentFrame.Navigate(typeof(AddCustomerPage));
+                    break;
+                case "OrdersPage":
+                    ContentFrame.Navigate(typeof(OrdersPage));
+                    break;
+                case "CloseShiftPage":
+                   // ContentFrame.Navigate(typeof(CloseShiftPage));
+                    break;
+                case "AccountPage":
+                   // ContentFrame.Navigate(typeof(AccountPage));
+                    break;
+                case "CartPage":
+                    //ContentFrame.Navigate(typeof(CartPage));
+                    break;
+                case "HelpPage":
+                 //   ContentFrame.Navigate(typeof(HelpPage));
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

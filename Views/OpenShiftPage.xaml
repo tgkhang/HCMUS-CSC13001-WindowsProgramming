@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.OpenShiftPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views"
+    xmlns:components="using:POS_For_Small_Shop.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <!-- NavigationView on the left -->
+        <NavigationView x:Name="navi"
+                        AlwaysShowHeader="False"
+                        PaneDisplayMode="Left"
+                        IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="False"
+                        OpenPaneLength="200"  
+                        CompactModeThresholdWidth="100"
+                        ItemInvoked="Navigation_ItemInvoked">
+
+            <!-- Main Menu Items -->
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="NewOrderPage" Padding="20">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="/Assets/LockScreenLogo.png" Width="40" Height="40"/>
+                        <TextBlock Text="New Order" FontSize="12" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="ShiftCustomerPage" Padding="20">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="/Assets/LockScreenLogo.png" Width="40" Height="40"/>
+                        <TextBlock Text="Add Customer" FontSize="12" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="ShiftOrderHistoryPage" Padding="20">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="/Assets/LockScreenLogo.png" Width="40" Height="40"/>
+                        <TextBlock Text="Orders" FontSize="12" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="TestPage" Padding="20">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Source="/Assets/LockScreenLogo.png" Width="40" Height="40"/>
+                        <TextBlock Text="Close Shift" FontSize="12" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <!-- Footer Menu Items -->
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Content="Account" Tag="AccountPage" Icon="Contact"/>
+                <NavigationViewItem Content="Your Cart" Tag="CartPage" Icon="Shop"/>
+                <NavigationViewItem Content="Help" Tag="HelpPage" Icon="Help"/>
+            </NavigationView.FooterMenuItems>
+
+            <!-- Content Frame -->
+            <Frame x:Name="Container" Margin="10"/>
+        </NavigationView>
+    </Grid>
+</Page>

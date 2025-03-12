@@ -16,18 +16,16 @@ using Microsoft.UI.Xaml.Navigation;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace POS_For_Small_Shop
+namespace POS_For_Small_Shop.Views.ShiftPage
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DashboardWindow : Window
+    public sealed partial class TestPage : Page
     {
-        private string _username;
-        public DashboardWindow(string username)
+        public TestPage()
         {
             this.InitializeComponent();
-            _username = username;
         }
     }
 }

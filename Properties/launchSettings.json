@@ -5,6 +5,12 @@
     },
     "POS For Small Shop (Unpackaged)": {
       "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "Project"
+    },
+    "Profile 2": {
+      "commandName": "MsixPackage"
     }
   }
 }

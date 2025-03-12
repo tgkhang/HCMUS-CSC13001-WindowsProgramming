@@ -2,10 +2,12 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PropertyChanged;
 
 
 namespace POS_For_Small_Shop.Data.Models
 {
+    [AddINotifyPropertyChangedInterface]
     public class Ingredient
     {
         [Key]

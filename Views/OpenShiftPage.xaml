@@ -19,7 +19,7 @@
                         IsSettingsVisible="False"
                         OpenPaneLength="200"  
                         CompactModeThresholdWidth="100"
-                        SelectionChanged="navi_SelectionChanged">
+                        ItemInvoked="Navigation_ItemInvoked">
 
             <!-- Main Menu Items -->
             <NavigationView.MenuItems>
@@ -30,21 +30,21 @@
                     </StackPanel>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="AddCustomerPage" Padding="20">
+                <NavigationViewItem Tag="ShiftCustomerPage" Padding="20">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="/Assets/LockScreenLogo.png" Width="40" Height="40"/>
                         <TextBlock Text="Add Customer" FontSize="12" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="OrdersPage" Padding="20">
+                <NavigationViewItem Tag="ShiftOrderHistoryPage" Padding="20">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="/Assets/LockScreenLogo.png" Width="40" Height="40"/>
                         <TextBlock Text="Orders" FontSize="12" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="CloseShiftPage" Padding="20">
+                <NavigationViewItem Tag="TestPage" Padding="20">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="/Assets/LockScreenLogo.png" Width="40" Height="40"/>
                         <TextBlock Text="Close Shift" FontSize="12" HorizontalAlignment="Center"/>
@@ -60,7 +60,7 @@
             </NavigationView.FooterMenuItems>
 
             <!-- Content Frame -->
-            <Frame x:Name="ContentFrame" Margin="10"/>
+            <Frame x:Name="Container" Margin="10"/>
         </NavigationView>
     </Grid>
 </Page>

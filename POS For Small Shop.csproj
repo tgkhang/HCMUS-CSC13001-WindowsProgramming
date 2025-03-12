@@ -16,11 +16,12 @@
     <None Remove="Components\ProductItem.xaml" />
     <None Remove="DashboardWindow.xaml" />
     <None Remove="ShopDatabase.db" />
-    <None Remove="Views\AddCustomerPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\NewOrderPage.xaml" />
     <None Remove="Views\OpenShiftPage.xaml" />
-    <None Remove="Views\OrdersPage.xaml" />
+    <None Remove="Views\ShiftPage\ShiftCustomerPage.xaml" />
+    <None Remove="Views\ShiftPage\ShiftOrderHistoryPage.xaml" />
+    <None Remove="Views\ShiftPage\TestPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,17 +69,17 @@
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\AddCustomerPage.xaml">
+    <Page Update="Views\ShiftPage\TestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ShiftPage\ShiftOrderHistoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\NewOrderPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\OrdersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -99,6 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Components\ProductItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ShiftPage\ShiftCustomerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -6,22 +6,31 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Data;
 
+
+
 namespace POS_For_Small_Shop.Converters
 {
     public class CurrencyFormatter : IValueConverter
     {
+        private static readonly CultureInfo _vietnameseCulture = new CultureInfo("vi-VN");
+
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
-            {
-                return "";
-            }
+                return string.Empty;
 
-            int ammount = (int)value;
-            CultureInfo culture = new CultureInfo("vi-VN");
-            string formatted = ammount.ToString("#,### đ", culture.NumberFormat);
-            return formatted;
+            try
+            {
+                
+                decimal amount = System.Convert.ToDecimal(value);
+                return string.Format(_vietnameseCulture, "{0:#,##0} đ", amount);
+            }
+            catch
+            {
+                return value.ToString();
+            }
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();

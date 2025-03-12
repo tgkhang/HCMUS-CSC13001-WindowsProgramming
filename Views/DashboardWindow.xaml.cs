@@ -25,10 +25,10 @@ namespace POS_For_Small_Shop
     public sealed partial class DashboardWindow : Window
     {
         private string _username;
-        public DashboardWindow(string username)
+        public DashboardWindow()
         {
             this.InitializeComponent();
-            _username = username;
+            //_username = username;
             MainFrame.Navigate(typeof(HomePage));
         }
     }

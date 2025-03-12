@@ -9,9 +9,9 @@ namespace POS_For_Small_Shop.Services
     public interface IRepository<T>
     {
         List<T> GetAll(); // Phân trang, Sắp xếp, Lọc, Tìm kiếm
-        //T GetById(string id);
-        //int Insert(T info);
-        //int DeleteById(string id);
-        //int UpdateById(string id, T info)
+        T GetById(int id);
+        bool Insert(T item);
+        bool Update(int id, T item);
+        bool Delete(int id);
     }
 }

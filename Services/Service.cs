@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace POS_For_Small_Shop.Services
 {
-    public class Services
+    public static class Service
     {
         static Dictionary<string, object> _singletons = new Dictionary<string, object>();
         public static void AddKeyedSingleton<IParent, Child>()

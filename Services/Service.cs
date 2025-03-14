@@ -4,29 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System;
-using System.Collections.Generic;
-
 namespace POS_For_Small_Shop.Services
 {
     public static class Service
     {
-        private static Dictionary<string, object> _singletons = new Dictionary<string, object>();
-
-        public static void AddKeyedSingleton<IParent, Child>(string key) where Child : IParent, new()
+        static Dictionary<string, object> _singletons = new Dictionary<string, object>();
+        public static void AddKeyedSingleton<IParent, Child>()
         {
-            _singletons[key] = new Child();
+            Type parent = typeof(IParent);
+            Type child = typeof(Child);
+            _singletons[parent.Name] = Activator.CreateInstance(child)!;
         }
 
-        public static IParent GetKeyedSingleton<IParent>(string key)
+        public static IParent GetKeyedSingleton<IParent>()
         {
-            if (_singletons.TryGetValue(key, out var instance))
-            {
-                return (IParent)instance;
-            }
-
-            throw new KeyNotFoundException($"No singleton registered with key '{key}'.");
+            Type parent = typeof(IParent);
+            return (IParent)_singletons[parent.Name];
         }
     }
 }
-

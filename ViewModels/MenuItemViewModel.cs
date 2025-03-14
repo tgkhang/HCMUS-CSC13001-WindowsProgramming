@@ -19,7 +19,7 @@ namespace POS_For_Small_Shop.ViewModels
 
         public MenuItemViewModel()
         {
-            var _dao = Service.GetKeyedSingleton<IDao>("Category");
+            _dao = Service.GetKeyedSingleton<IDao>(); 
             var items = _dao.MenuItems.GetAll();
             MenuItems = new ObservableCollection<MenuItem>(items);
         }

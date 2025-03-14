@@ -7,7 +7,7 @@ using POS_For_Small_Shop.Data.Models;
 
 namespace POS_For_Small_Shop.Services
 {
-    public class MockCategoryRepository : IDao
+    public class MockRepository : IDao
     {
         public IRepository<Category> Categories { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Customer> Customers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

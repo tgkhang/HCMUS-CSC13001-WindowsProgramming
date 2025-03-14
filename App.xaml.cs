@@ -34,7 +34,7 @@ namespace POS_For_Small_Shop
         public App()
         {
             this.InitializeComponent();
-            Service.AddKeyedSingleton<IDao, MockRepository>(); // TextDao, PostgresDao, SqlServerDao, RestDao, GraphQLDao,APIDao
+            Service.AddKeyedSingleton<IDao, MockDao>(); // TextDao, PostgresDao, SqlServerDao, RestDao, GraphQLDao,APIDao
         }
 
         /// <summary>

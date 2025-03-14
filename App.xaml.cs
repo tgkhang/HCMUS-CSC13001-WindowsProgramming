@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using POS_For_Small_Shop.Services;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,7 +34,7 @@ namespace POS_For_Small_Shop
         public App()
         {
             this.InitializeComponent();
-           
+            Service.AddKeyedSingleton<IDao, MockCategoryRepository>("Category"); // TextDao, PostgresDao, SqlServerDao, RestDao, GraphQLDao,APIDao
         }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace POS_For_Small_Shop
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
+            m_window = new LoginWindow();
             m_window.Activate();
         }
 

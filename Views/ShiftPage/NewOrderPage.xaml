@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.NewOrderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:components="using:POS_For_Small_Shop.Components">
+
+    <Grid>
+      
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <!-- Products column  -->
+            <ColumnDefinition Width="300"/>
+            <!-- Receipt column -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Product Items Section -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="ProductItemsControl">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <components:ProductItem
+                            Name="{Binding Name}"
+                            Price="{Binding Price}"
+                            Sale="{Binding Sale}"
+                            ImageSource="{Binding ImageSource}"
+                            />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Receipt Section -->
+        <Border Grid.Column="1" Background="White" BorderBrush="Gray" BorderThickness="1" Padding="10">
+            <StackPanel>
+                <TextBlock Text="Receipt" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                <!-- Add receipt content here -->
+                <TextBlock Text="Total: $0.00" FontSize="16" FontWeight="SemiBold"/>
+                <Button Content="Print Receipt" Margin="0,10,0,0" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

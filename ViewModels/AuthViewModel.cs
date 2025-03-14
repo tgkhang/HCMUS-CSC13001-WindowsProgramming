@@ -1,50 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.UI.Xaml;
-using POS_For_Small_Shop.Helpers;
+﻿using Microsoft.UI.Xaml;
+using PropertyChanged;
 
 namespace POS_For_Small_Shop.ViewModels
 {
-    public class AuthViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class AuthViewModel
     {
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public bool RememberMe { get; set; }
 
-        private string _username;
-        public string Username
-        {
-            get => _username;
-            set
-            {
-                if (_username != value)
-                {
-                    _username = value;
-                    OnPropertyChanged(nameof(Username));
-                }
-            }
-        }
-        private string _password;
-        public string Password
-        {
-            get => _password;
-            set
-            {
-                if (_password != value)
-                {
-                    _password = value;
-                    OnPropertyChanged(nameof(Password));
-                }
-            }
-        }
-
-        private Window? _host = null;
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        private Window? _host;
 
         public AuthViewModel(Window host)
         {
@@ -53,16 +19,12 @@ namespace POS_For_Small_Shop.ViewModels
 
         public bool CanLogin()
         {
-            return Username.IsNotEmpty() && Password.IsNotEmpty();
+            return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
         }
 
-        public void Login()
+        public bool Login()
         {
-            var screen = new DashboardWindow(Username);
-            screen.Activate();
-
-            _host?.Close();
+            return ((Username == "admin" || Username == "tester") && Password == "1234");
         }
-
     }
 }

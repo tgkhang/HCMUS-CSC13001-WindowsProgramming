@@ -10,40 +10,81 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Padding="100">
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="30">
 
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="30">
+            <!-- Left Column Buttons -->
             <StackPanel Orientation="Vertical" Spacing="20">
-                <Button Content="Open Shift" Click="OpenShiftButton_Click"
-                    Style="{StaticResource AccentButtonStyle}"
-                    FontSize="16" Height="50" Width="200" Margin="0,5"/>
-                <Button Content="Inventory" Click="InventoryButton_Click"
+                <Button Content="Open Shift"
+                        Click="OpenShiftButton_Click"
                         Style="{StaticResource AccentButtonStyle}"
-                        FontSize="16" Height="50" Width="200" Margin="0,5"/>
-                <Button Content="Customers Services" Click="CustomersButton_Click"
+                        FontSize="16"
+                        Height="50"
+                        Width="200"
+                        Margin="0,5" />
+
+                <Button Content="Customers Management"
+                        Click="CustomersButton_Click"
                         Style="{StaticResource AccentButtonStyle}"
-                        FontSize="16" Height="50" Width="200" Margin="0,5"/>
-                <Button Content="Receipt Management" Click="ReceiptButton_Click"
+                        FontSize="16"
+                        Height="50"
+                        Width="200"
+                        Margin="0,5" />
+
+                <Button Content="Receipt Management"
+                        Click="ReceiptButton_Click"
                         Style="{StaticResource AccentButtonStyle}"
-                        FontSize="16" Height="50" Width="200" Margin="0,5"/>
+                        FontSize="16"
+                        Height="50"
+                        Width="200"
+                        Margin="0,5" />
+
+                <Button Content="Setting"
+                        Click="SettingButton_Click"
+                        Style="{StaticResource AccentButtonStyle}"
+                        FontSize="16"
+                        Height="50"
+                        Width="200"
+                        Margin="0,5" />
             </StackPanel>
 
+            <!-- Right Column Buttons -->
             <StackPanel Orientation="Vertical" Spacing="20">
-                <Button Content="Promotion" Click="PromotionButton_Click"
-                    Style="{StaticResource AccentButtonStyle}"
-                    FontSize="16" Height="50" Width="200" Margin="0,5"/>
-                <Button Content="Menu" Click="MenuButton_Click"
+                <Button Content="Menu Items"
+                        Click="MenuButton_Click"
                         Style="{StaticResource AccentButtonStyle}"
-                        FontSize="16" Height="50" Width="200" Margin="0,5"/>
-                <Button Content="Setting" Click="SettingButton_Click"
+                        FontSize="16"
+                        Height="50"
+                        Width="200"
+                        Margin="0,5" />
+
+                <Button Content="Promotion"
+                        Click="PromotionButton_Click"
                         Style="{StaticResource AccentButtonStyle}"
-                        FontSize="16" Height="50" Width="200" Margin="0,5"/>
-                <Button Content="Logout" Click="LogoutButton_Click"
+                        FontSize="16"
+                        Height="50"
+                        Width="200"
+                        Margin="0,5" />
+
+                <Button Content="Inventory"
+                        Click="InventoryButton_Click"
                         Style="{StaticResource AccentButtonStyle}"
-                        FontSize="16" Height="50" Width="200" Margin="0,5"/>
+                        FontSize="16"
+                        Height="50"
+                        Width="200"
+                        Margin="0,5" />
+
+                <Button Content="Logout"
+                        Click="LogoutButton_Click"
+                        Style="{StaticResource AccentButtonStyle}"
+                        FontSize="16"
+                        Height="50"
+                        Width="200"
+                        Margin="0,5" />
             </StackPanel>
 
         </StackPanel>
-
     </Grid>
 </Page>

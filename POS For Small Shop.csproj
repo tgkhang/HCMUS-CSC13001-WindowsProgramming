@@ -19,6 +19,7 @@
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\NewOrderPage.xaml" />
     <None Remove="Views\OpenShiftPage.xaml" />
+    <None Remove="Views\PromotionManagerPage.xaml" />
     <None Remove="Views\ShiftPage\ShiftCustomerPage.xaml" />
     <None Remove="Views\ShiftPage\ShiftOrderHistoryPage.xaml" />
     <None Remove="Views\ShiftPage\TestPage.xaml" />
@@ -67,6 +68,11 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="9.0.4" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionManagerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ShiftPage\TestPage.xaml">

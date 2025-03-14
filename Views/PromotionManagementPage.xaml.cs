@@ -21,9 +21,9 @@ namespace POS_For_Small_Shop.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class PromotionManagerPage : Page
+    public sealed partial class PromotionManagementPage : Page
     {
-        public PromotionManagerPage()
+        public PromotionManagementPage()
         {
             this.InitializeComponent();
         }

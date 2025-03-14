@@ -50,7 +50,7 @@ namespace POS_For_Small_Shop.Views
 
         private void PromotionButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(PromotionManagementPage));
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)

@@ -8,6 +8,7 @@ using PropertyChanged;
 
 namespace POS_For_Small_Shop.Data.Models
 {
+
     [AddINotifyPropertyChangedInterface]
     public class Promotion
     {
@@ -15,16 +16,14 @@ namespace POS_For_Small_Shop.Data.Models
         public int PromoID { get; set; }
 
         [Required]
-        public string PromoName { get; set; } = "Speacial sales"; // Default value prevents warning
+        [MaxLength(100)]
+        public string PromoName { get; set; } = String.Empty;
 
-        public string DiscountType { get; set; } = "Percentages"; // Nullable (Fix warning)
+        public virtual PromotionDetails Details { get; set; }
 
-        public float DiscountValue { get; set; }
+        public List<int> ItemIDs { get; set; } = new List<int>();
 
         public DateTime StartDate { get; set; }
-
         public DateTime EndDate { get; set; }
     }
-
-
 }

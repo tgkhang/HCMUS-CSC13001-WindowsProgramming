@@ -52,7 +52,7 @@
 
             <!-- Right Column Buttons -->
             <StackPanel Orientation="Vertical" Spacing="20">
-                <Button Content="Menu"
+                <Button Content="Menu Items"
                         Click="MenuButton_Click"
                         Style="{StaticResource AccentButtonStyle}"
                         FontSize="16"

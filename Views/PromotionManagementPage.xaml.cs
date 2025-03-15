@@ -12,6 +12,8 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using POS_For_Small_Shop.ViewModels;
+using Microsoft.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,9 +25,14 @@ namespace POS_For_Small_Shop.Views
     /// </summary>
     public sealed partial class PromotionManagementPage : Page
     {
+        public PromotionManagementViewModel ViewModel { get; set; } = new PromotionManagementViewModel();
+
         public PromotionManagementPage()
         {
             this.InitializeComponent();
+            this.DataContext = ViewModel;
         }
+
+        
     }
 }

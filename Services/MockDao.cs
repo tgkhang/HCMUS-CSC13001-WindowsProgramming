@@ -11,7 +11,7 @@ namespace POS_For_Small_Shop.Services
     {
         public IRepository<Category> Categories { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Customer> Customers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<Promotion> Promotions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        //public IRepository<Promotion> Promotions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Shift> Shifts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Ingredient> Ingredients { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Order> Orders { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -25,7 +25,7 @@ namespace POS_For_Small_Shop.Services
 
         //Done
         public IRepository<MenuItem> MenuItems { get; set; } = new MockMenuItemRepository();
-
+        public IRepository<Promotion> Promotions { get; set; } = new MockPromotionRepository();
 
     }
 

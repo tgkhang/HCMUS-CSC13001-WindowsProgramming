@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.UI;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using PropertyChanged;
 
 namespace POS_For_Small_Shop.ViewModels
 {
-    class PromotionManagementViewModel
+    public class PromotionManagementViewModel
     {
         private IDao _dao;
         public ObservableHashSet<Promotion> Promotions { get; set; }
@@ -21,5 +25,6 @@ namespace POS_For_Small_Shop.ViewModels
             var promos = _dao.Promotions.GetAll();
             Promotions = new ObservableHashSet<Promotion>(promos);
         }
+
     }
 }

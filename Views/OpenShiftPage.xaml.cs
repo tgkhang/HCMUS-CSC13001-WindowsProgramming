@@ -31,6 +31,7 @@ namespace POS_For_Small_Shop.Views
             { "NewOrderPage", typeof(NewOrderPage) },
             { "ShiftCustomerPage", typeof(ShiftCustomerPage) },
             { "ShiftOrderHistoryPage", typeof(ShiftOrderHistoryPage) },
+            {"CloseShiftPage", typeof(CloseShiftPage) },
             {"TestPage", typeof(TestPage) },
         };
 

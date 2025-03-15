@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.ShiftPage.CloseShiftPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views.ShiftPage"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:converters="using:POS_For_Small_Shop.Converters"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:CurrencyFormatter x:Key="CurrencyFormatter"/>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        
+        <!--Header-->
+        <TextBlock Grid.Row="0" 
+                   Text="Close Shift" 
+                   Style="{StaticResource TitleTextBlockStyle}"
+                   Margin="0,0,0,20"/>
+        
+        <!--Content-->
+        <Grid Grid.Row="1" MaxWidth="600">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+
+            <!-- Shift Information -->
+            <TextBlock Grid.Row="0" 
+                       Grid.Column="0" 
+                       Text="Shift Information" 
+                       Style="{StaticResource SubtitleTextBlockStyle}" 
+                       Margin="0,0,0,10"/>
+            <!-- Opening Cash -->
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+                       Text="Opening Cash" 
+                       Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" 
+                       x:Name="OpeningCashText" 
+                       Text="500,000 đ"
+                       Margin="0,10,0,0"/>
+            <!-- Expected Cash -->
+            <TextBlock Grid.Row="2" Grid.Column="0" 
+                       Text="Expected Cash" 
+                       Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="ExpectedCashText" 
+                       Text="500,000 đ" 
+                       Margin="0,10,0,0"/>
+
+            <!-- Actual Cash -->
+            <TextBlock Grid.Row="3" Grid.Column="0" 
+                       Text="Actual Cash" 
+                       Margin="0,10,0,0"/>
+            <NumberBox Grid.Row="3" Grid.Column="1" x:Name="ActualCashBox" Value="500000" SpinButtonPlacementMode="Compact" 
+                       SmallChange="1000" 
+                       LargeChange="10000" 
+                       Margin="0,10,0,0" 
+                       ValueChanged="ActualCashBox_ValueChanged"/>
+            
+            <!-- Cash Difference -->
+            <TextBlock Grid.Row="4" Grid.Column="0" 
+                       Text="Cash Difference" 
+                       Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="4" Grid.Column="1" x:Name="CashDifferenceText" 
+                       Text="0 đ" 
+                       Margin="0,10,0,0"/>
+            <!-- Total Sales -->
+            <TextBlock Grid.Row="5" Grid.Column="0" 
+                       Text="Total Sales" 
+                       Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="5" Grid.Column="1" 
+                       x:Name="TotalSalesText" 
+                       Text="0 đ" 
+                       Margin="0,10,0,0"/>
+
+            <!-- Total Orders -->
+            <TextBlock Grid.Row="6" Grid.Column="0" 
+                       Text="Total Orders" 
+                       Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="6" Grid.Column="1" 
+                       x:Name="TotalOrdersText" 
+                       Text="0" Margin="0,10,0,0"/>
+        </Grid>
+        <!-- Actions -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" 
+                    Spacing="10" 
+                    Margin="0,20,0,0">
+            <Button x:Name="CloseShiftButton" 
+                    Content="Close Shift" 
+                    Style="{StaticResource AccentButtonStyle}" 
+                    Click="CloseShiftButton_Click"/>
+            <Button x:Name="CancelButton" 
+                    Content="Cancel" 
+                    Click="CancelButton_Click"/>
+        </StackPanel>
+
+
+    </Grid>
+</Page>

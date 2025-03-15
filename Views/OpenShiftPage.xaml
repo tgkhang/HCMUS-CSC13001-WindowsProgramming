@@ -44,7 +44,7 @@
                     </StackPanel>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="TestPage" Padding="20">
+                <NavigationViewItem Tag="CloseShiftPage" Padding="20">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                         <Image Source="/Assets/LockScreenLogo.png" Width="40" Height="40"/>
                         <TextBlock Text="Close Shift" FontSize="12" HorizontalAlignment="Center"/>

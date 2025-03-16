@@ -13,44 +13,35 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.ViewModels;
-using Microsoft.UI;
-using System.Diagnostics;
+using POS_For_Small_Shop.Data.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace POS_For_Small_Shop.Views
+namespace POS_For_Small_Shop.Views.PromotionPopupForm
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class PromotionManagementPage : Page
+    public sealed partial class AddPromotionForm : UserControl
     {
         public PromotionManagementViewModel ViewModel { get; set; } = new PromotionManagementViewModel();
 
-        public PromotionManagementPage()
+        public DiscountType[] discountTypeValues => Enum.GetValues<DiscountType>();
+
+        public AddPromotionForm()
         {
             this.InitializeComponent();
             this.DataContext = ViewModel;
         }
 
 
-        public void AddPromotionButton_Click(object sender, RoutedEventArgs e)
+        private void SelectAllButton_Click(object sender, RoutedEventArgs e)
         {
-
-            double windowWidth = this.ActualWidth;
-
-           
-            
-
-
-            addPromotionPopup.HorizontalOffset = (windowWidth - 800) / 2;
-
-            // Show the popup
-            addPromotionPopup.IsOpen = true;
-
+            ItemGridView.SelectAll();
         }
 
+        private void UnselectAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            ItemGridView.SelectedItems.Clear();
+        }
 
     }
 }

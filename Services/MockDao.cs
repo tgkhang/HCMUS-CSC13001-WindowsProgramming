@@ -89,7 +89,7 @@ namespace POS_For_Small_Shop.Services
         {
             PromoID = 1,
             PromoName = "Summer Sale",
-            StartDate = DateTime.UtcNow,
+            StartDate = DateTime.UtcNow.AddDays(2),
             EndDate = DateTime.UtcNow.AddDays(7),
             ItemIDs = new List<int> { 1, 2 }, 
             Details = new PromotionDetails
@@ -105,8 +105,8 @@ namespace POS_For_Small_Shop.Services
         {
             PromoID = 2,
             PromoName = "Weekend Special",
-            StartDate = DateTime.UtcNow,
-            EndDate = DateTime.UtcNow.AddDays(2),
+            StartDate = DateTime.UtcNow.AddDays(-5),
+            EndDate = DateTime.UtcNow.AddDays(-1),
             ItemIDs = new List<int> { 3 }, 
             Details = new PromotionDetails
             {

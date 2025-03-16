@@ -23,9 +23,17 @@ namespace POS_For_Small_Shop.Converters
                 // Determine what to return based on targetType and parameter
                 if (targetType == typeof(Brush)) // For Background
                 {
+                    if (param == "Stripe")
+                    {
+                        // Alternate background colors based on PromoID for striping
+                        return promo.PromoID % 2 == 0
+                            ? new SolidColorBrush(Colors.White)
+                            : new SolidColorBrush(Windows.UI.Color.FromArgb(255, 245, 245, 245)); 
+                    }
+                    // Existing status-based background logic
                     return status.ToLower() switch
                     {
-                        "upcoming" => new SolidColorBrush(Colors.Yellow),
+                        "upcoming" => new SolidColorBrush(Colors.DarkOrange),
                         "active" => new SolidColorBrush(Colors.Green),
                         "expired" => new SolidColorBrush(Colors.Red),
                         _ => new SolidColorBrush(Colors.Gray)
@@ -42,7 +50,7 @@ namespace POS_For_Small_Shop.Converters
             // Fallbacks
             if (targetType == typeof(Brush))
                 return new SolidColorBrush(Colors.Gray);
-            return string.Empty; // Default for string
+            return string.Empty; 
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -50,7 +58,7 @@ namespace POS_For_Small_Shop.Converters
             throw new NotImplementedException();
         }
 
-        // Your static methods
+        
         public static string GetStatus(Promotion promo)
         {
             Debug.WriteLine($"Checking status of {promo.PromoName}");

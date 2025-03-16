@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -17,14 +18,21 @@ namespace POS_For_Small_Shop.ViewModels
     public class PromotionManagementViewModel
     {
         private IDao _dao;
-        public ObservableHashSet<Promotion> Promotions { get; set; }
+        public ObservableCollection<Promotion> Promotions { get; set; }
+
+        public ObservableCollection<MenuItem> AvaibleItems { get; set; }
+        public ObservableCollection<MenuItem> SelectedItems { get; set; }
+
+        public Promotion NewPromotion { get; set; }
 
         public PromotionManagementViewModel()
         {
             _dao = Service.GetKeyedSingleton<IDao>();
-            var promos = _dao.Promotions.GetAll();
-            Promotions = new ObservableHashSet<Promotion>(promos);
-        }
 
+            Promotions = new ObservableCollection<Promotion>(_dao.Promotions.GetAll());
+            AvaibleItems = new ObservableCollection<MenuItem>(_dao.MenuItems.GetAll());
+            SelectedItems = new ObservableCollection<MenuItem>();
+            NewPromotion = new Promotion();
+        }
     }
 }

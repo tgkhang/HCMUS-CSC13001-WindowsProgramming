@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:POS_For_Small_Shop.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:form="using:POS_For_Small_Shop.Views.PromotionPopupForm"
     xmlns:local="using:POS_For_Small_Shop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:POS_For_Small_Shop.Data.Models"
@@ -15,7 +16,7 @@
         <converter:PromotionStatusConverter x:Key="PromotionStatusConverter" />
 
         <DataTemplate x:Key="PromotionItemTemplate" x:DataType="model:Promotion">
-            <Grid Padding="10" Background="{x:Bind Path=PromoID, Converter={StaticResource PromotionStatusConverter}, ConverterParameter=Stripe}">
+            <Grid Padding="10" Background="{x:Bind Converter={StaticResource PromotionStatusConverter}, ConverterParameter=Stripe}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="2*" />
@@ -79,7 +80,9 @@
                         Height="36"
                         Padding="0"
                         Background="LightBlue"
-                        CornerRadius="4">
+                        CornerRadius="4"
+                        ToolTipService.Placement="Bottom"
+                        ToolTipService.ToolTip="View Details">
                         <FontIcon Glyph="" />
                     </Button>
                     <Button
@@ -87,7 +90,9 @@
                         Height="36"
                         Padding="0"
                         Background="LightCoral"
-                        CornerRadius="4">
+                        CornerRadius="4"
+                        ToolTipService.Placement="Bottom"
+                        ToolTipService.ToolTip="Delete Promotion">
                         <FontIcon Glyph="" />
                     </Button>
                     <Button
@@ -95,13 +100,18 @@
                         Height="36"
                         Padding="0"
                         Background="LightGoldenrodYellow"
-                        CornerRadius="4">
+                        CornerRadius="4"
+                        ToolTipService.Placement="Bottom"
+                        ToolTipService.ToolTip="Update Promotion">
                         <FontIcon Glyph="" />
                     </Button>
                 </StackPanel>
             </Grid>
         </DataTemplate>
     </Page.Resources>
+
+
+
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -134,33 +144,65 @@
                 Text="Promotions" />
         </StackPanel>
 
-        <!--  Search and Filters  -->
         <Grid Grid.Row="1" Margin="0,10,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Spacing="10">
+
+            <!--  Search and Filters Section  -->
+            <Grid Grid.Column="0" Margin="0,0,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
                 <TextBox
                     Width="300"
                     MinWidth="200"
                     MaxWidth="400"
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Left"
+                    CornerRadius="6"
                     PlaceholderText="Search by Promo Name" />
-                <Expander Header="Advanced Filters" IsExpanded="False">
-                    <StackPanel Orientation="Vertical" Spacing="5">
-                        <TextBox Width="200" PlaceholderText="Discount Type" />
-                        <TextBox Width="200" PlaceholderText="Discount Value" />
+
+                <Expander
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    Header="Advanced Filters"
+                    IsExpanded="False">
+                    <StackPanel
+                        MinWidth="300"
+                        Margin="0,5,0,5"
+                        Orientation="Vertical">
+                        <ComboBox Margin="0,0,0,8" PlaceholderText="Select Discount Type">
+                            <ComboBoxItem Content="Percentage" />
+                            <ComboBoxItem Content="Fixed Amount" />
+                            <ComboBoxItem Content="Buy One Get One" />
+                        </ComboBox>
+                        <TextBox
+                            Margin="0,0,0,8"
+                            CornerRadius="6"
+                            PlaceholderText="Discount Value" />
                     </StackPanel>
                 </Expander>
-            </StackPanel>
+            </Grid>
+
+            <!--  Button Section  -->
             <Button
                 Grid.Column="1"
-                Padding="10,5"
-                Background="#005670"
+                MinWidth="140"
+                Margin="10,0,0,0"
+                Padding="12,6"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="#007A99"
+                Click="AddPromotionButton_Click"
                 Content="Add Promotion"
-                CornerRadius="4"
+                CornerRadius="6"
                 Foreground="White" />
         </Grid>
+
 
         <!--  Styled ListView (Striped Table with Dark Blue Header)  -->
         <ListView
@@ -268,5 +310,17 @@
                 Content="Next"
                 CornerRadius="4" />
         </StackPanel>
+
+
+        <Popup
+            x:Name="addPromotionPopup"
+            MaxWidth="800"
+            MaxHeight="200"
+            IsLightDismissEnabled="True"
+            IsOpen="False">
+            <form:AddPromotionForm x:Name="addPromotionForm" />
+        </Popup>
+
+
     </Grid>
 </Page>

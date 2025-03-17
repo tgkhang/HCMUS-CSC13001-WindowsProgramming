@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.ViewModels;
 using POS_For_Small_Shop.Data.Models;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -41,6 +42,19 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
         private void UnselectAllButton_Click(object sender, RoutedEventArgs e)
         {
             ItemGridView.SelectedItems.Clear();
+        }
+
+        private void SaveButton_CLick(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine($"Promotion Name: {ViewModel.NewPromotion.PromoName}");
+            Debug.WriteLine($"Promotion Discount Type: {ViewModel.NewPromotion.Details.DiscountType}");
+            Debug.WriteLine($"Promotion Discount Value: {ViewModel.NewPromotion.Details.DiscountValue}");
+
+        }
+
+        private void CancelButton_CLick(object sender, RoutedEventArgs e)
+        {
+            
         }
 
     }

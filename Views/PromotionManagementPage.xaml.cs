@@ -37,14 +37,13 @@ namespace POS_For_Small_Shop.Views
 
         public void AddPromotionButton_Click(object sender, RoutedEventArgs e)
         {
+            double windowHeight = this.ActualHeight;
 
-            double windowWidth = this.ActualWidth;
+            double popupHeight = windowHeight - 50;
+            addPromotionFormContainer.Height = popupHeight;
 
-           
-            
-
-
-            addPromotionPopup.HorizontalOffset = (windowWidth - 800) / 2;
+            addPromotionPopup.HorizontalOffset = 0;
+            addPromotionPopup.VerticalOffset = (windowHeight-popupHeight)/2;
 
             // Show the popup
             addPromotionPopup.IsOpen = true;

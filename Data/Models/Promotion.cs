@@ -25,5 +25,11 @@ namespace POS_For_Small_Shop.Data.Models
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+
+        public Promotion()
+        {
+            Details = new PromotionDetails();
+        }
     }
 }

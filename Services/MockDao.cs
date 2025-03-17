@@ -34,11 +34,11 @@ namespace POS_For_Small_Shop.Services
     {
         private List<MenuItem> _menuItems = new List<MenuItem>
         {
-            new MenuItem { MenuItemID = 1, Name = "Espresso", CategoryID = 1, SellingPrice = 2.50f, ImagePath = "Assets/espresso.png" },
-            new MenuItem { MenuItemID = 2, Name = "Cappuccino", CategoryID = 1, SellingPrice = 3.00f, ImagePath = "Assets/cappuccino.png" },
-            new MenuItem { MenuItemID = 3, Name = "Latte", CategoryID = 1, SellingPrice = 3.50f, ImagePath = "Assets/latte.png" },
-            new MenuItem { MenuItemID = 4, Name = "Croissant", CategoryID = 2, SellingPrice = 2.00f, ImagePath = "Assets/croissant.png" },
-            new MenuItem { MenuItemID = 5, Name = "Muffin", CategoryID = 2, SellingPrice = 2.20f, ImagePath = "Assets/muffin.png" },
+            new MenuItem { MenuItemID = 1, Name = "Espresso", CategoryID = 1, SellingPrice = 2.50f, ImagePath = "Assets/Images/espresso.jpg" },
+            new MenuItem { MenuItemID = 2, Name = "Cappuccino", CategoryID = 1, SellingPrice = 3.00f, ImagePath = "Assets/Images/cappuccino.jpg" },
+            new MenuItem { MenuItemID = 3, Name = "Latte", CategoryID = 1, SellingPrice = 3.50f, ImagePath = "Assets/Images/latte.jpg" },
+            new MenuItem { MenuItemID = 4, Name = "Croissant", CategoryID = 2, SellingPrice = 2.00f, ImagePath = "Assets/Images/croissant.jpg" },
+            new MenuItem { MenuItemID = 5, Name = "Muffin", CategoryID = 2, SellingPrice = 2.20f, ImagePath = "Assets/Images/muffin.jpg" },
         };
 
         public List<MenuItem> GetAll()

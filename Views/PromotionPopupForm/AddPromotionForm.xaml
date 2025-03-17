@@ -12,6 +12,7 @@
 
     <UserControl.Resources>
         <converter:CurrencyFormatter x:Key="CurrencyConverter" />
+        <converter:ImageFullPathConverter x:Key="ImageFullPathConverter" />
     </UserControl.Resources>
 
     <ScrollViewer
@@ -136,10 +137,10 @@
                                     <Image
                                         Width="100"
                                         Height="100"
-                                        Source="{x:Bind ImagePath}"
+                                        Source="{Binding ImagePath, Converter={StaticResource ImageFullPathConverter}}"
                                         Stretch="Uniform" />
                                     <TextBlock Text="{x:Bind Name}" TextAlignment="Center" />
-                                    <TextBlock Text="{x:Bind SellingPrice, Converter={StaticResource CurrencyConverter}}" TextAlignment="Center" />
+                                    <TextBlock Text="{x:Bind SellingPrice}" TextAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </GridView.ItemTemplate>
@@ -186,13 +187,17 @@
                         x:Name="SaveButton"
                         MinWidth="100"
                         Margin="0,0,10,0"
+                        Click="SaveButton_CLick"
                         Content="Save" />
                     <Button
                         x:Name="CancelButton"
                         MinWidth="100"
+                        Click="CancelButton_CLick"
                         Content="Cancel" />
                 </StackPanel>
             </Grid>
         </StackPanel>
     </ScrollViewer>
+
+
 </UserControl>

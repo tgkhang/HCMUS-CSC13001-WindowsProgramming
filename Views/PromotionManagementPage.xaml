@@ -316,9 +316,13 @@
             x:Name="addPromotionPopup"
             MaxWidth="800"
             MaxHeight="200"
-            IsLightDismissEnabled="True"
+            IsLightDismissEnabled="False"
             IsOpen="False">
-            <form:AddPromotionForm x:Name="addPromotionForm" />
+            <Grid x:Name="addPromotionFormContainer" Width="800">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <form:AddPromotionForm x:Name="addPromotionForm" />
+                </ScrollViewer>
+            </Grid>
         </Popup>
 
 

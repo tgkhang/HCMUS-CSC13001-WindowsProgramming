@@ -97,6 +97,7 @@
                         <GridView
                             x:Name="ItemGridView"
                             MaxHeight="300"
+                            Padding="5"
                             ItemsSource="{x:Bind ViewModel.AvaibleItems}"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             SelectionChanged="AssignSelectedItem"

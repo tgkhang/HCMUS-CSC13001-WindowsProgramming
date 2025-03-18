@@ -81,6 +81,7 @@
                         Height="36"
                         Padding="0"
                         Background="LightBlue"
+                        Click="ViewDetailsButton_Click"
                         CornerRadius="4"
                         ToolTipService.Placement="Bottom"
                         ToolTipService.ToolTip="View Details">
@@ -325,6 +326,20 @@
                 </ScrollViewer>
             </Grid>
         </Popup>
+
+        <Popup
+            x:Name="viewPromotionDetailsPopup"
+            MaxWidth="800"
+            MaxHeight="200"
+            IsLightDismissEnabled="False"
+            IsOpen="False">
+            <Grid x:Name="viewPromotionDetailsFormContainer" Width="800">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <form:ViewPromotionDetailsForm x:Name="viewPromotionDetailsForm" />
+                </ScrollViewer>
+            </Grid>
+        </Popup>
+
 
 
     </Grid>

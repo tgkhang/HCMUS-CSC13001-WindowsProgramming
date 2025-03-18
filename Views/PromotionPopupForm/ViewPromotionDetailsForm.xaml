@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="POS_For_Small_Shop.Views.PromotionPopupForm.ViewPromotionDetailsForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:POS_For_Small_Shop.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:POS_For_Small_Shop.Views.PromotionPopupForm"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converter:CurrencyFormatter x:Key="CurrencyConverter" />
+        <converter:ImageFullPathConverter x:Key="ImageFullPathConverter" />
+        <converter:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
+    </UserControl.Resources>
+
+    <ScrollViewer
+        HorizontalScrollBarVisibility="Disabled"
+        HorizontalScrollMode="Enabled"
+        VerticalScrollBarVisibility="Auto"
+        VerticalScrollMode="Disabled">
+        <StackPanel MaxWidth="800" Margin="10">
+            <!--  Header  -->
+            <Border
+                Padding="15"
+                Background="#003D57"
+                CornerRadius="5">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="24"
+                    Foreground="White"
+                    Text="Promotion Details" />
+            </Border>
+
+            <!--  Body  -->
+            <Grid
+                Margin="0,10,0,0"
+                Padding="15"
+                Background="White"
+                CornerRadius="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" MinWidth="200" />
+                    <ColumnDefinition Width="1*" MinWidth="200" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--  Promotion Name  -->
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,10">
+                    <TextBlock FontWeight="SemiBold" Text="Promotion Name" />
+                    <TextBlock Margin="0,5,0,0" Text="{x:Bind ViewModel.SelectedPromotion.PromoName}" />
+                </StackPanel>
+
+                <!--  Discount Type & Value  -->
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,0,5,10">
+                    <TextBlock FontWeight="SemiBold" Text="Discount Type" />
+                    <TextBlock Margin="0,5,0,0" Text="{x:Bind ViewModel.SelectedPromotion.Details.DiscountType}" />
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5,0,0,10">
+                    <TextBlock FontWeight="SemiBold" Text="Discount Value" />
+                    <TextBlock Margin="0,5,0,0" Text="{x:Bind ViewModel.SelectedPromotion.Details.DiscountValue}" />
+                </StackPanel>
+
+                <!--  Start & End Date  -->
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="0,0,5,10">
+                    <TextBlock FontWeight="SemiBold" Text="Start Date" />
+                    <TextBlock Margin="0,5,0,0" Text="{x:Bind ViewModel.SelectedPromotion.StartDate}" />
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="5,0,0,10">
+                    <TextBlock FontWeight="SemiBold" Text="End Date" />
+                    <TextBlock Margin="0,5,0,0" Text="{x:Bind ViewModel.SelectedPromotion.EndDate}" />
+                </StackPanel>
+
+                <!--  Selected Items  -->
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,10">
+                    <TextBlock FontWeight="SemiBold" Text="Promotional Items" />
+                    <GridView
+                        MaxHeight="300"
+                        Margin="0,5,0,0"
+                        IsEnabled="False"
+                        ItemsSource="{x:Bind ViewModel.SelectedItems}"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="models:MenuItem">
+                                <StackPanel Padding="5" Orientation="Vertical">
+                                    <Image
+                                        Width="100"
+                                        Height="100"
+                                        Source="{Binding ImagePath, Converter={StaticResource ImageFullPathConverter}}"
+                                        Stretch="Uniform" />
+                                    <TextBlock Text="{x:Bind Name}" TextAlignment="Center" />
+                                    <TextBlock Text="{x:Bind SellingPrice}" TextAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </StackPanel>
+
+                <!--  Description  -->
+                <StackPanel
+                    Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,10">
+                    <TextBlock FontWeight="SemiBold" Text="Description" />
+                    <TextBlock
+                        Margin="0,5,0,0"
+                        Text="{x:Bind ViewModel.SelectedPromotion.Details.Description}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+
+                <!--  Close Button  -->
+                <StackPanel
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right">
+                    <Button
+                        x:Name="CloseButton"
+                        MinWidth="100"
+                        Click="CloseButton_Click"
+                        Content="Close" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

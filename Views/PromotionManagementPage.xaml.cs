@@ -15,6 +15,8 @@ using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.ViewModels;
 using Microsoft.UI;
 using System.Diagnostics;
+using POS_For_Small_Shop.Views.PromotionPopupForm;
+using POS_For_Small_Shop.Data.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,31 +35,43 @@ namespace POS_For_Small_Shop.Views
             this.InitializeComponent();
             this.DataContext = ViewModel;
             addPromotionForm.ViewModel = ViewModel;
+            viewPromotionDetailsForm.ViewModel = ViewModel;
             addPromotionForm.CloseRequested += CloseAddFormPopup;
+            viewPromotionDetailsForm.CloseRequested += CloseViewFormPopup;
         }
 
 
         public void AddPromotionButton_Click(object sender, RoutedEventArgs e)
         {
-            AdjustPopupPosition();
+            AdjustPopupPosition(addPromotionPopup, addPromotionFormContainer);
 
             // Show the popup
             addPromotionPopup.IsOpen = true;
 
         }
 
-        public void AdjustPopupPosition()
+        public void AdjustPopupPosition(Popup popup, FrameworkElement container)
         {
             double windowHeight = this.ActualHeight;
             double popupHeight = windowHeight - 50;
-            addPromotionFormContainer.Height = popupHeight;
-            addPromotionPopup.HorizontalOffset = 0;
-            addPromotionPopup.VerticalOffset = (windowHeight - popupHeight) / 2;
+
+            container.Height = popupHeight;
+
+
+            popup.HorizontalOffset = 0;
+            popup.VerticalOffset = (windowHeight - popupHeight) / 2;
         }
 
         public void OnPageSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            AdjustPopupPosition();
+            if (addPromotionPopup.IsOpen)
+            {
+                AdjustPopupPosition(addPromotionPopup, addPromotionFormContainer);
+            }
+            if (viewPromotionDetailsPopup.IsOpen)
+            {
+                AdjustPopupPosition(viewPromotionDetailsPopup, viewPromotionDetailsFormContainer);
+            }
         }
 
         public void CloseAddFormPopup()
@@ -65,6 +79,35 @@ namespace POS_For_Small_Shop.Views
             addPromotionPopup.IsOpen = false;
         }
 
+        public void CloseViewFormPopup()
+        {
+            viewPromotionDetailsPopup.IsOpen = false;
+        }
+
+
+        public async void ViewDetailsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is Promotion promotion)
+            {
+                // Set the promotion data
+                ViewModel.SelectedPromotion = promotion;
+                ViewModel.setSelectedItems(promotion.ItemIDs);
+
+                //Debug.WriteLine($"Promotion Name: {promotion.PromoName}");
+                //Debug.WriteLine($"Promotion Discount Type: {promotion.Details.DiscountType}");
+                //Debug.WriteLine($"Promotion Discount Value: {promotion.Details.DiscountValue}");
+                //Debug.WriteLine($"Promotion Description: {promotion.Details.Description}");
+                //Debug.WriteLine($"Promotion Items: {promotion.ItemIDs.Count}");
+                //foreach (var item in promotion.ItemIDs)
+                //{
+                //    Debug.WriteLine($"Item: {item}");
+                //}
+
+                // Adjust position and show popup
+                AdjustPopupPosition(viewPromotionDetailsPopup, viewPromotionDetailsFormContainer);
+                viewPromotionDetailsPopup.IsOpen = true;
+            }
+        }
 
     }
 }

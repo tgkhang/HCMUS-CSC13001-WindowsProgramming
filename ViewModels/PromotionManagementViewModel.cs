@@ -24,6 +24,8 @@ namespace POS_For_Small_Shop.ViewModels
         public ObservableCollection<MenuItem> AvaibleItems { get; set; }
         public ObservableCollection<MenuItem> SelectedItems { get; set; }
 
+        public Promotion SelectedPromotion { get; set; }
+
         public Promotion NewPromotion { get; set; }
 
         public PromotionManagementViewModel()
@@ -42,8 +44,16 @@ namespace POS_For_Small_Shop.ViewModels
             Promotions.Add(NewPromotion);
             NewPromotion = new Promotion();
 
-            Debug.WriteLine($"Count: {Promotions.Count}, {_dao.Promotions.GetAll().Count}");
         }
 
+
+        public void setSelectedItems(List<int> menuIDs)
+        {
+            SelectedItems.Clear();
+            foreach (int id in menuIDs)
+            {
+                SelectedItems.Add(_dao.MenuItems.GetById(id));
+            }
+        }
     }
 }

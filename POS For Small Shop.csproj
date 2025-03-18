@@ -122,6 +122,11 @@
   <ItemGroup>
     <Folder Include="Assets\Images\" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionPopupForm\ViewPromotionDetailsForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution

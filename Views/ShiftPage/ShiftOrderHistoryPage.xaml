@@ -6,10 +6,154 @@
     xmlns:local="using:POS_For_Small_Shop.Views.ShiftPage"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    xmlns:converters="using:POS_For_Small_Shop.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <converters:OrderStringFormatter x:Key="OrderStringFormatter"/>
+    </Page.Resources>
 
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Shift Orders" 
+                   Style="{StaticResource TitleTextBlockStyle}" 
+                   Margin="0,0,0,10"/>
+            <AutoSuggestBox 
+            x:Name="SearchBox" 
+            PlaceholderText="Search orders..." 
+            Width="400"
+            HorizontalAlignment="Left"
+            QueryIcon="Find"
+            TextChanged="SearchBox_TextChanged"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <!--Orders List-->
+            <ListView 
+                x:Name="OrderListView"
+                Grid.Column="0"
+                SelectionMode="Single"
+                SelectionChanged="OrderListView_SelectionChanged"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                Padding="0"
+                Margin="0,0,20,0">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Order">
+                        <Grid Padding="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Order info -->
+                            <StackPanel Grid.Column="0" Spacing="4">
+                                <TextBlock Text="{x:Bind OrderID, Mode=OneWay}" FontWeight="SemiBold"/>
+                                <TextBlock Text="{Binding PaymentMethod, Converter={StaticResource OrderStringFormatter}, ConverterParameter='Payment: {0}'}" FontSize="12" Opacity="0.7"/>
+                                <TextBlock Text="{Binding Status, Converter={StaticResource OrderStringFormatter}, ConverterParameter='Status: {0}'}" FontSize="12" Opacity="0.7"/>
+                            </StackPanel>
+
+                            <!-- Amounts -->
+                            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding TotalAmount, Converter={StaticResource OrderStringFormatter}, ConverterParameter='Total: ₫{0}'}" FontSize="12"/>
+                                <TextBlock Text="{Binding Discount, Converter={StaticResource OrderStringFormatter}, ConverterParameter='Discount: ₫{0}'}" FontSize="12"/>
+                                <TextBlock Text="{Binding FinalAmount, Converter={StaticResource OrderStringFormatter}, ConverterParameter='Final: ₫{0}'}" FontWeight="Bold"/>
+                            </StackPanel>
+
+                            <!-- Placeholder for actions -->
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                <Button Content="Details" Click="OrderListView_SelectionChanged" Tag="{x:Bind OrderID}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+
+
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <!--Edit form-->
+            <Grid 
+                x:Name="OrderDetailsPanel" 
+                Grid.Column="1" 
+                Width="350"
+                Padding="20"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Form header -->
+                <TextBlock 
+                    Grid.Row="0" 
+                    x:Name="FormHeaderText" 
+                    Text="Order Details" 
+                    Style="{StaticResource SubtitleTextBlockStyle}" 
+                    Margin="0,0,0,20"/>
+
+                <!-- Form fields -->
+                <StackPanel Grid.Row="1" Spacing="15">
+                    <!--
+                    <TextBox x:Name="NameTextBox" Header="Name" PlaceholderText="Enter customer name"/>
+                    <TextBox x:Name="PhoneTextBox" Header="Phone" PlaceholderText="Enter phone number"/>
+                    <TextBox x:Name="EmailTextBox" Header="Email" PlaceholderText="Enter email address"/>
+                    <TextBox x:Name="AddressTextBox" Header="Address" PlaceholderText="Enter address" TextWrapping="Wrap" Height="80"/>
+                    <NumberBox x:Name="LoyaltyPointsBox" Header="Loyalty Points" Value="0" SpinButtonPlacementMode="Compact"/>
+                    -->
+                    
+                </StackPanel>
+
+                <!-- Form actions -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,20,0,0">
+                    <!--
+                    <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click"/>
+                    <Button x:Name="SaveButton" Content="Save" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
+                    
+                    -->
+                    
+                </StackPanel>
+            </Grid>
+
+
+        </Grid>
+        
+        
+       
+        <!-- Empty state -->
+        <TextBlock 
+            x:Name="EmptyStateText" 
+            Grid.Row="1" 
+            Text="This shift has no orders found yet." 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            Opacity="0.7"
+            Visibility="Collapsed"/>
     </Grid>
 </Page>

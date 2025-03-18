@@ -14,7 +14,7 @@
         <converters:CurrencyFormatter x:Key="CurrencyFormatter"/>
     </Page.Resources>
 
-    <Grid>
+    <Grid Padding="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

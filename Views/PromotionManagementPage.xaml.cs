@@ -36,8 +36,10 @@ namespace POS_For_Small_Shop.Views
             this.DataContext = ViewModel;
             addPromotionForm.ViewModel = ViewModel;
             viewPromotionDetailsForm.ViewModel = ViewModel;
+            updatePromotionForm.ViewModel = ViewModel;
             addPromotionForm.CloseRequested += CloseAddFormPopup;
             viewPromotionDetailsForm.CloseRequested += CloseViewFormPopup;
+            updatePromotionForm.CloseRequested += CloseUpdateFormPopup;
         }
 
 
@@ -72,6 +74,10 @@ namespace POS_For_Small_Shop.Views
             {
                 AdjustPopupPosition(viewPromotionDetailsPopup, viewPromotionDetailsFormContainer);
             }
+            if(updatePromotionPopup.IsOpen)
+            {
+                AdjustPopupPosition(updatePromotionPopup, updatePromotionFormContainer);
+            }
         }
 
         public void CloseAddFormPopup()
@@ -84,8 +90,13 @@ namespace POS_For_Small_Shop.Views
             viewPromotionDetailsPopup.IsOpen = false;
         }
 
+        public void CloseUpdateFormPopup()
+        {
+            updatePromotionPopup.IsOpen = false;
+        }
 
-        public async void ViewDetailsButton_Click(object sender, RoutedEventArgs e)
+
+        public void ViewDetailsButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is Promotion promotion)
             {
@@ -109,5 +120,17 @@ namespace POS_For_Small_Shop.Views
             }
         }
 
+        public void UpdatePromotionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is Promotion promotion)
+            {
+                // Set the promotion data
+                ViewModel.SelectedPromotion = promotion;
+                ViewModel.setSelectedItems(promotion.ItemIDs);
+                // Adjust position and show popup
+                AdjustPopupPosition(updatePromotionPopup, updatePromotionFormContainer);
+                updatePromotionPopup.IsOpen = true;
+            }
+        }
     }
 }

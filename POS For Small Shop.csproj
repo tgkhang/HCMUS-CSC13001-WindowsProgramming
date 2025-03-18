@@ -20,6 +20,7 @@
     <None Remove="Views\NewOrderPage.xaml" />
     <None Remove="Views\OpenShiftPage.xaml" />
     <None Remove="Views\PromotionPopupForm\AddPromotionForm.xaml" />
+    <None Remove="Views\PromotionPopupForm\UpdatePromotionForm.xaml" />
     <None Remove="Views\ShiftPage\ShiftCustomerPage.xaml" />
     <None Remove="Views\ShiftPage\ShiftOrderHistoryPage.xaml" />
     <None Remove="Views\ShiftPage\TestPage.xaml" />
@@ -121,6 +122,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionPopupForm\UpdatePromotionForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\PromotionPopupForm\ViewPromotionDetailsForm.xaml">

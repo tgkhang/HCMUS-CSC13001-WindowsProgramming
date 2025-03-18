@@ -102,6 +102,7 @@
                         Height="36"
                         Padding="0"
                         Background="LightGoldenrodYellow"
+                        Click="UpdatePromotionButton_Click"
                         CornerRadius="4"
                         ToolTipService.Placement="Bottom"
                         ToolTipService.ToolTip="Update Promotion">
@@ -340,7 +341,18 @@
             </Grid>
         </Popup>
 
-
+        <Popup
+            x:Name="updatePromotionPopup"
+            MaxWidth="800"
+            MaxHeight="200"
+            IsLightDismissEnabled="False"
+            IsOpen="False">
+            <Grid x:Name="updatePromotionFormContainer" Width="800">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <form:UpdatePromotionForm x:Name="updatePromotionForm" />
+                </ScrollViewer>
+            </Grid>
+        </Popup>
 
     </Grid>
 </Page>

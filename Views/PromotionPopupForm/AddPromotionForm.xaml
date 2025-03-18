@@ -13,6 +13,7 @@
     <UserControl.Resources>
         <converter:CurrencyFormatter x:Key="CurrencyConverter" />
         <converter:ImageFullPathConverter x:Key="ImageFullPathConverter" />
+        <converter:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
     </UserControl.Resources>
 
     <ScrollViewer
@@ -24,7 +25,7 @@
             <!--  Header  -->
             <Border
                 Padding="15"
-                Background="DarkBlue"
+                Background="#003D57"
                 CornerRadius="5">
                 <TextBlock
                     HorizontalAlignment="Center"
@@ -76,7 +77,8 @@
                         Margin="0,5,0,0"
                         HorizontalAlignment="Stretch"
                         ItemsSource="{x:Bind discountTypeValues}"
-                        PlaceholderText="Select discount type" />
+                        PlaceholderText="Select discount type"
+                        SelectedValue="{x:Bind ViewModel.NewPromotion.Details.DiscountType, Mode=TwoWay}" />
                 </StackPanel>
 
                 <StackPanel
@@ -101,6 +103,7 @@
                         x:Name="StartDate"
                         Margin="0,5,0,0"
                         HorizontalAlignment="Stretch"
+                        Date="{x:Bind ViewModel.NewPromotion.StartDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                         DateFormat="{}{day.integer}/{month.integer}/{year.full}"
                         PlaceholderText="dd / mm / yyyy" />
                 </StackPanel>
@@ -114,6 +117,7 @@
                         x:Name="EndDate"
                         Margin="0,5,0,0"
                         HorizontalAlignment="Stretch"
+                        Date="{x:Bind ViewModel.NewPromotion.EndDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
                         DateFormat="{}{day.integer}/{month.integer}/{year.full}"
                         PlaceholderText="dd / mm / yyyy" />
                 </StackPanel>
@@ -130,6 +134,7 @@
                         Margin="0,5,0,0"
                         ItemsSource="{x:Bind ViewModel.AvaibleItems}"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        SelectionChanged="AssignSelectedItem"
                         SelectionMode="Multiple">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="models:MenuItem">
@@ -187,8 +192,10 @@
                         x:Name="SaveButton"
                         MinWidth="100"
                         Margin="0,0,10,0"
+                        Background="#003D57"
                         Click="SaveButton_CLick"
-                        Content="Save" />
+                        Content="Save"
+                        Foreground="White" />
                     <Button
                         x:Name="CancelButton"
                         MinWidth="100"

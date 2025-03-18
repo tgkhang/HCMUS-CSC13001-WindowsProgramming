@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Data;
@@ -34,5 +35,15 @@ namespace POS_For_Small_Shop.ViewModels
             SelectedItems = new ObservableCollection<MenuItem>();
             NewPromotion = new Promotion();
         }
+
+        public void AddPromotion()
+        {
+            _dao.Promotions.Insert(NewPromotion);
+            Promotions.Add(NewPromotion);
+            NewPromotion = new Promotion();
+
+            Debug.WriteLine($"Count: {Promotions.Count}, {_dao.Promotions.GetAll().Count}");
+        }
+
     }
 }

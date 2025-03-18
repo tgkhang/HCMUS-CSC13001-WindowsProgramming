@@ -150,8 +150,8 @@ namespace POS_For_Small_Shop.Services
             if (item == null || _promotions.Any(p => p.PromoID == item.PromoID))
                 return false; 
 
-            if (item.Details != null)
-                item.Details.PromoID = item.PromoID;
+            item.PromoID = _promotions.Count > 0 ? _promotions.Max(p => p.PromoID) + 1 : 1;
+            item.Details.PromoDetailsID = _promotions.Max(p => p.Details.PromoDetailsID) + 1;
 
             _promotions.Add(item);
             return true;

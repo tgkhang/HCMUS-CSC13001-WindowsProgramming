@@ -32,22 +32,37 @@ namespace POS_For_Small_Shop.Views
         {
             this.InitializeComponent();
             this.DataContext = ViewModel;
+            addPromotionForm.ViewModel = ViewModel;
+            addPromotionForm.CloseRequested += CloseAddFormPopup;
         }
 
 
         public void AddPromotionButton_Click(object sender, RoutedEventArgs e)
         {
-            double windowHeight = this.ActualHeight;
-
-            double popupHeight = windowHeight - 50;
-            addPromotionFormContainer.Height = popupHeight;
-
-            addPromotionPopup.HorizontalOffset = 0;
-            addPromotionPopup.VerticalOffset = (windowHeight-popupHeight)/2;
+            AdjustPopupPosition();
 
             // Show the popup
             addPromotionPopup.IsOpen = true;
 
+        }
+
+        public void AdjustPopupPosition()
+        {
+            double windowHeight = this.ActualHeight;
+            double popupHeight = windowHeight - 50;
+            addPromotionFormContainer.Height = popupHeight;
+            addPromotionPopup.HorizontalOffset = 0;
+            addPromotionPopup.VerticalOffset = (windowHeight - popupHeight) / 2;
+        }
+
+        public void OnPageSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            AdjustPopupPosition();
+        }
+
+        public void CloseAddFormPopup()
+        {
+            addPromotionPopup.IsOpen = false;
         }
 
 

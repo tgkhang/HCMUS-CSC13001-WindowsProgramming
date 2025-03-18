@@ -23,7 +23,7 @@ namespace POS_For_Small_Shop.Converters
             {
                 string rootPath = AppContext.BaseDirectory;
                 string fullPath = Path.Combine(rootPath, relativePath);
-                Debug.WriteLine($"Converted {relativePath} to {fullPath}");
+               
                 return fullPath;
             }
 

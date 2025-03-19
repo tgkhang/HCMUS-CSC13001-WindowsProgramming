@@ -19,6 +19,7 @@
     <None Remove="Views\CustomerManagementPage.xaml" />
     <None Remove="Views\HelpPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
+    <None Remove="Views\MenuManagement\MenuItemListPage.xaml" />
     <None Remove="Views\MenuManagement\MenuManagementPage.xaml" />
     <None Remove="Views\NewOrderPage.xaml" />
     <None Remove="Views\OpenShiftPage.xaml" />
@@ -71,6 +72,11 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="9.0.4" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\MenuManagement\MenuItemListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\CustomerManagementPage.xaml">

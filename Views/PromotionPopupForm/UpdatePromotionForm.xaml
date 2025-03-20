@@ -98,7 +98,7 @@
                             x:Name="ItemGridView"
                             MaxHeight="300"
                             Padding="5"
-                            ItemsSource=""
+                            ItemsSource="{x:Bind ViewModel.AvaibleItems, Mode=OneWay}"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             SelectionChanged="AssignSelectedItem"
                             SelectionMode="Multiple">
@@ -143,7 +143,7 @@
                         x:Name="PromotionName"
                         Margin="0,5,0,0"
                         PlaceholderText="Enter promotion name"
-                        Text="{x:Bind ViewModel.SelectedPromotion.PromoName, Mode=TwoWay}" />
+                        Text="{Binding SelectedPromotion.PromoName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
                 <!--  Discount Type & Value  -->
@@ -156,9 +156,9 @@
                         x:Name="DiscountType"
                         Margin="0,5,0,0"
                         HorizontalAlignment="Stretch"
-                        ItemsSource=""
+                        ItemsSource="{x:Bind discountTypeValues}"
                         PlaceholderText="Select discount type"
-                        SelectedValue="" />
+                        SelectedValue="{Binding SelectedPromotion.Details.DiscountType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
                 <StackPanel
@@ -170,7 +170,7 @@
                         x:Name="DiscountValue"
                         Margin="0,5,0,0"
                         PlaceholderText="Enter discount value"
-                        Text="" />
+                        Text="{Binding SelectedPromotion.Details.DiscountValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
                 <!--  Start & End Date  -->
@@ -183,6 +183,7 @@
                         x:Name="StartDate"
                         Margin="0,5,0,0"
                         HorizontalAlignment="Stretch"
+                        Date="{Binding SelectedPromotion.StartDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         DateFormat="{}{day.integer}/{month.integer}/{year.full}"
                         PlaceholderText="dd / mm / yyyy" />
                 </StackPanel>
@@ -196,6 +197,7 @@
                         x:Name="EndDate"
                         Margin="0,5,0,0"
                         HorizontalAlignment="Stretch"
+                        Date="{Binding SelectedPromotion.EndDate, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         DateFormat="{}{day.integer}/{month.integer}/{year.full}"
                         PlaceholderText="dd / mm / yyyy" />
                 </StackPanel>
@@ -212,7 +214,7 @@
                         Margin="0,5,0,0"
                         AcceptsReturn="True"
                         PlaceholderText="Enter description"
-                        Text="" />
+                        Text="{Binding SelectedPromotion.Details.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
                 <!--  Buttons  -->

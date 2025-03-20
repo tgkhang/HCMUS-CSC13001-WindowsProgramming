@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class Promotion
     {
+
         [Key]
         public int PromoID { get; set; }
 

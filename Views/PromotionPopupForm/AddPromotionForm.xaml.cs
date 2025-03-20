@@ -32,6 +32,7 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
         public DiscountType[] discountTypeValues => Enum.GetValues<DiscountType>();
 
         public Action? CloseRequested;
+        public Action? AddPromotionRequested;
 
         public AddPromotionForm()
         {
@@ -51,18 +52,7 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
 
         private void SaveButton_CLick(object sender, RoutedEventArgs e)
         {
-            //Debug.WriteLine("");
-            //Debug.WriteLine($"Promotion Name: {ViewModel.NewPromotion.PromoName}");
-            //Debug.WriteLine($"Promotion Discount Type: {ViewModel.NewPromotion.Details.DiscountType}");
-            //Debug.WriteLine($"Promotion Discount Value: {ViewModel.NewPromotion.Details.DiscountValue}");
-            //Debug.WriteLine($"Promotion Description: {ViewModel.NewPromotion.Details.Description}");
-            //Debug.WriteLine($"Promotion Items: {ViewModel.SelectedItems.Count}");
-            //foreach (var item in ViewModel.SelectedItems)
-            //{
-            //    Debug.WriteLine($"Item: {item.Name}");
-            //}
-            //Debug.WriteLine($"Promotion StartDate: {ViewModel.NewPromotion.StartDate.ToString()}");
-            //Debug.WriteLine($"Promotion EndDate: {ViewModel.NewPromotion.EndDate.ToString()}");
+            
 
             ViewModel.NewPromotion.ItemIDs = ViewModel.SelectedItems.Select(x => x.MenuItemID).ToList();
 
@@ -74,10 +64,10 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
 
         private void ClearAddPromotionForm()
         {
-            PromotionName.Text = "";
+            PromotionName.Text = String.Empty;
             DiscountType.SelectedIndex = 0;
-            DiscountValue.Text = "";
-            Description.Text = "";
+            DiscountValue.Text = String.Empty;
+            Description.Text = String.Empty;
             StartDate.Date = null;
             EndDate.Date = null;
             ItemGridView.SelectedItems.Clear();

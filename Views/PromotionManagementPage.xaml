@@ -8,15 +8,18 @@
     xmlns:form="using:POS_For_Small_Shop.Views.PromotionPopupForm"
     xmlns:local="using:POS_For_Small_Shop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:POS_For_Small_Shop.Data.Models"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     SizeChanged="OnPageSizeChanged"
     mc:Ignorable="d">
 
     <Page.Resources>
         <converter:PromotionStatusConverter x:Key="PromotionStatusConverter" />
+        <converter:CurrencyFormatter x:Key="CurrencyConverter" />
+        <converter:ImageFullPathConverter x:Key="ImageFullPathConverter" />
+        <converter:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
 
-        <DataTemplate x:Key="PromotionItemTemplate" x:DataType="model:Promotion">
+        <DataTemplate x:Key="PromotionItemTemplate" x:DataType="models:Promotion">
             <Grid Padding="10" Background="{x:Bind Converter={StaticResource PromotionStatusConverter}, ConverterParameter=Stripe}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />

@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.ViewModels;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,6 +32,7 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
         public ViewPromotionDetailsForm()
         {
             this.InitializeComponent();
+            this.DataContext = ViewModel;
         }
 
         public void CloseButton_Click(object sender, RoutedEventArgs e)

@@ -1,55 +1,104 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Foundation.Collections;
+using PropertyChanged;
 
 namespace POS_For_Small_Shop.Utils
 {
+    [AddINotifyPropertyChangedInterface]
     public sealed class FullObservableCollection<T> : ObservableCollection<T>
         where T : INotifyPropertyChanged
     {
-        public FullObservableCollection()
+        public bool IsReadOnly { get; set; }
+
+        private int _updateCount;
+        public int UpdateCount
+        {
+            get => _updateCount;
+            set => _updateCount = value;
+        }
+
+        public FullObservableCollection() : base()
+        {
+            InitializeEventHandlers();
+        }
+
+        public FullObservableCollection(IEnumerable<T> items) : base(items)
+        {
+            InitializeEventHandlers();
+            SubscribeToPropertyChanged(items);
+        }
+
+        private void InitializeEventHandlers()
         {
             CollectionChanged += FullObservableCollectionCollectionChanged;
         }
 
-        public FullObservableCollection(IEnumerable<T> pItems) : this()
-        {
-            foreach (var item in pItems)
-            {
-                this.Add(item);
-            }
-        }
-
-        private void FullObservableCollectionCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        private void FullObservableCollectionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
-            {
-                foreach (Object item in e.NewItems)
-                {
-                    ((INotifyPropertyChanged)item).PropertyChanged += ItemPropertyChanged;
-                }
-            }
+                SubscribeToPropertyChanged(e.NewItems);
+
             if (e.OldItems != null)
+                UnsubscribeFromPropertyChanged(e.OldItems);
+
+            UpdateCount++;
+        }
+
+        private void SubscribeToPropertyChanged(IEnumerable<T> items)
+        {
+            foreach (var item in items)
             {
-                foreach (Object item in e.OldItems)
-                {
-                    ((INotifyPropertyChanged)item).PropertyChanged -= ItemPropertyChanged;
-                }
+                if (item != null)
+                    item.PropertyChanged += ItemPropertyChanged;
             }
         }
 
-        private void ItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void SubscribeToPropertyChanged(IList items)
         {
-            var args = new NotifyCollectionChangedEventArgs(
-                NotifyCollectionChangedAction.Replace, sender, sender, IndexOf((T)sender!)
-            );
-            OnCollectionChanged(args);
+            foreach (var item in items)
+            {
+                if (item is INotifyPropertyChanged notifyItem)
+                    notifyItem.PropertyChanged += ItemPropertyChanged;
+            }
+        }
+
+        private void UnsubscribeFromPropertyChanged(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                if (item != null)
+                    item.PropertyChanged -= ItemPropertyChanged;
+            }
+        }
+
+        private void UnsubscribeFromPropertyChanged(IList items)
+        {
+            foreach (var item in items)
+            {
+                if (item is INotifyPropertyChanged notifyItem)
+                    notifyItem.PropertyChanged -= ItemPropertyChanged;
+            }
+        }
+
+        private void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            int index = IndexOf((T)sender);
+            if (index != -1)
+            {
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(
+                    NotifyCollectionChangedAction.Replace, sender, sender, index
+                ));
+                UpdateCount++;
+            }
+        }
+
+        public void ToggleReadOnly()
+        {
+            IsReadOnly = !IsReadOnly;
         }
     }
 }

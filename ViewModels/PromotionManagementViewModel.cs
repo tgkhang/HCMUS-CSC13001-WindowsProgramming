@@ -13,11 +13,16 @@ using Microsoft.UI.Xaml.Media;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using PropertyChanged;
+using POS_For_Small_Shop.Utils;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace POS_For_Small_Shop.ViewModels
 {
-    public class PromotionManagementViewModel
+    public class PromotionManagementViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         private IDao _dao;
         public ObservableCollection<Promotion> Promotions { get; set; }
 
@@ -25,7 +30,6 @@ namespace POS_For_Small_Shop.ViewModels
         public ObservableCollection<MenuItem> SelectedItems { get; set; }
 
         public Promotion SelectedPromotion { get; set; }
-
         public Promotion NewPromotion { get; set; }
 
         public PromotionManagementViewModel()
@@ -36,6 +40,7 @@ namespace POS_For_Small_Shop.ViewModels
             AvaibleItems = new ObservableCollection<MenuItem>(_dao.MenuItems.GetAll());
             SelectedItems = new ObservableCollection<MenuItem>();
             NewPromotion = new Promotion();
+           
         }
 
         public void AddPromotion()
@@ -55,5 +60,6 @@ namespace POS_For_Small_Shop.ViewModels
                 SelectedItems.Add(_dao.MenuItems.GetById(id));
             }
         }
+
     }
 }

@@ -17,6 +17,7 @@ using Microsoft.UI;
 using System.Diagnostics;
 using POS_For_Small_Shop.Views.PromotionPopupForm;
 using POS_For_Small_Shop.Data.Models;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,28 +30,26 @@ namespace POS_For_Small_Shop.Views
     public sealed partial class PromotionManagementPage : Page
     {
         public PromotionManagementViewModel ViewModel { get; set; } = new PromotionManagementViewModel();
-
+        public DiscountType[] discountTypeValues => Enum.GetValues<DiscountType>();
         public PromotionManagementPage()
         {
             this.InitializeComponent();
             this.DataContext = ViewModel;
             addPromotionForm.ViewModel = ViewModel;
             viewPromotionDetailsForm.ViewModel = ViewModel;
-            updatePromotionForm.ViewModel = ViewModel;
+            //updatePromotionForm.ViewModel = ViewModel;
+
+            // Set up event handlers
+
+
+
             addPromotionForm.CloseRequested += CloseAddFormPopup;
             viewPromotionDetailsForm.CloseRequested += CloseViewFormPopup;
             updatePromotionForm.CloseRequested += CloseUpdateFormPopup;
         }
 
 
-        public void AddPromotionButton_Click(object sender, RoutedEventArgs e)
-        {
-            AdjustPopupPosition(addPromotionPopup, addPromotionFormContainer);
-
-            // Show the popup
-            addPromotionPopup.IsOpen = true;
-
-        }
+        
 
         public void AdjustPopupPosition(Popup popup, FrameworkElement container)
         {
@@ -95,11 +94,19 @@ namespace POS_For_Small_Shop.Views
             updatePromotionPopup.IsOpen = false;
         }
 
+        public void AddPromotionButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdjustPopupPosition(addPromotionPopup, addPromotionFormContainer);
+            addPromotionPopup.IsOpen = true;
+            addPromotionForm.DataContext = ViewModel;
+        }
 
-        public void ViewDetailsButton_Click(object sender, RoutedEventArgs e)
+        public async void ViewDetailsButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is Promotion promotion)
             {
+
+                viewPromotionDetailsPopup.IsOpen = true;
                 // Set the promotion data
                 ViewModel.SelectedPromotion = promotion;
                 ViewModel.setSelectedItems(promotion.ItemIDs);
@@ -116,7 +123,7 @@ namespace POS_For_Small_Shop.Views
 
                 // Adjust position and show popup
                 AdjustPopupPosition(viewPromotionDetailsPopup, viewPromotionDetailsFormContainer);
-                viewPromotionDetailsPopup.IsOpen = true;
+                
             }
         }
 
@@ -124,13 +131,21 @@ namespace POS_For_Small_Shop.Views
         {
             if (sender is Button button && button.DataContext is Promotion promotion)
             {
+
                 // Set the promotion data
                 ViewModel.SelectedPromotion = promotion;
                 ViewModel.setSelectedItems(promotion.ItemIDs);
+                updatePromotionForm.DataContext = ViewModel;
+                updatePromotionPopup.IsOpen = true;
+
                 // Adjust position and show popup
                 AdjustPopupPosition(updatePromotionPopup, updatePromotionFormContainer);
-                updatePromotionPopup.IsOpen = true;
+                
             }
         }
+
+
+
+
     }
 }

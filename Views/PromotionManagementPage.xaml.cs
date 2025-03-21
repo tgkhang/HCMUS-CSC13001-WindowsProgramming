@@ -41,7 +41,7 @@ namespace POS_For_Small_Shop.Views
             // Set up event handlers
 
             addPromotionForm.AddPromotionRequested += SaveNewPromotion;
-
+            updatePromotionForm.UpdateRequested += UpdatePromotion;
 
 
             addPromotionForm.CloseRequested += CloseAddFormPopup;
@@ -95,6 +95,11 @@ namespace POS_For_Small_Shop.Views
             updatePromotionPopup.IsOpen = false;
         }
 
+        public void CLoseDeleteFormPopup()
+        {
+            deletePromotionPopup.IsOpen = false;
+        }
+
         public void AddPromotionButton_Click(object sender, RoutedEventArgs e)
         {
             AdjustPopupPosition(addPromotionPopup, addPromotionFormContainer);
@@ -102,7 +107,7 @@ namespace POS_For_Small_Shop.Views
             addPromotionForm.DataContext = ViewModel;
         }
 
-        public async void ViewDetailsButton_Click(object sender, RoutedEventArgs e)
+        public void ViewDetailsButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is Promotion promotion)
             {
@@ -138,11 +143,22 @@ namespace POS_For_Small_Shop.Views
                 ViewModel.setSelectedItems(promotion.ItemIDs);
                 updatePromotionForm.TempSelectedItems = ViewModel.SelectedItems;
                 updatePromotionForm.DataContext = ViewModel;
+                
                 updatePromotionPopup.IsOpen = true;
-
                 // Adjust position and show popup
                 AdjustPopupPosition(updatePromotionPopup, updatePromotionFormContainer);
                 
+            }
+        }
+
+        public void DeletePromotionButton_Click(Object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is Promotion promotion)
+            {
+                ViewModel.SelectedPromotion = promotion;
+                deletePromotionPopup.IsOpen = true;
+
+
             }
         }
 
@@ -153,6 +169,22 @@ namespace POS_For_Small_Shop.Views
             CloseAddFormPopup();
         }
 
+        public void UpdatePromotion()
+        {
+            ViewModel.SelectedItems = updatePromotionForm.TempSelectedItems;
+            ViewModel.UpdateSelectedPromotion();
+            CloseUpdateFormPopup();
+        }
 
+        public void ConfirmDeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.DeleteSelectedPromotion();
+            deletePromotionPopup.IsOpen = false;
+        }
+
+        public void CancelDeletenButton_Click(object obj, RoutedEventArgs e)
+        {
+            CLoseDeleteFormPopup();
+        }
     }
 }

@@ -61,5 +61,39 @@ namespace POS_For_Small_Shop.ViewModels
             }
         }
 
+        public void UpdateSelectedPromotion()
+        {
+            if (SelectedPromotion != null)
+            {
+                // Update the ItemIDs list
+                SelectedPromotion.ItemIDs = SelectedItems.Select(item => item.MenuItemID).ToList();
+
+                // Update the database
+                _dao.Promotions.Update(SelectedPromotion.PromoID, SelectedPromotion);
+
+                // Find the index of the selected promotion in the ObservableCollection
+                var index = Promotions.IndexOf(SelectedPromotion);
+                if (index >= 0)
+                {
+                    Promotions[index] = SelectedPromotion; // Triggers UI update
+                }
+            }
+        }
+
+        public void DeleteSelectedPromotion()
+        {
+            if (SelectedPromotion != null)
+            {
+                bool isDeleted = _dao.Promotions.Delete(SelectedPromotion.PromoID);
+                if (isDeleted)
+                {
+                    Promotions.Remove(SelectedPromotion);
+                }
+                else
+                {
+                    Debug.WriteLine($"Failed to delete Promotion: {SelectedPromotion.PromoName}");
+                }
+            }
+        }
     }
 }

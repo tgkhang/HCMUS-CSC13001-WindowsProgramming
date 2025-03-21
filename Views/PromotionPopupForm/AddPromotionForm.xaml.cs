@@ -37,6 +37,11 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
         public AddPromotionForm()
         {
             this.InitializeComponent();
+            this.Loaded += (sender, e) =>
+            {
+                StartDate.Date = null;
+                EndDate.Date = null;
+            };
         }
 
 
@@ -53,6 +58,7 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
         private void SaveButton_CLick(object sender, RoutedEventArgs e)
         {
             AddPromotionRequested?.Invoke();
+            ClearAddPromotionForm();
         }
 
         private void ClearAddPromotionForm()
@@ -74,8 +80,8 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
 
         private void CancelButton_CLick(object sender, RoutedEventArgs e)
         {
-            ClosePopUp();
             ClearAddPromotionForm();
+            ClosePopUp();
         }
 
         private void ClosePopUp()

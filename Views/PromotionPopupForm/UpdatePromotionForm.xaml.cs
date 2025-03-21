@@ -16,6 +16,10 @@ using NetTopologySuite.Geometries;
 using POS_For_Small_Shop.ViewModels;
 using POS_For_Small_Shop.Data.Models;
 using System.Collections.ObjectModel;
+using Windows.Storage.Pickers;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,59 +32,52 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
         public ObservableCollection<MenuItem> TempSelectedItems { get; set; } = new ObservableCollection<MenuItem>();
         public Action? CloseRequested;
         public Action? UpdateRequested;
-        public DiscountType[] discountTypeValues => Enum.GetValues<DiscountType>();
+        public Array discountTypeValues => Enum.GetValues(typeof(DiscountType));
 
         public UpdatePromotionForm()
         {
             this.InitializeComponent();
-            this.Loaded += UpdatePromotionForm_Loaded;
+            this.Loaded += UpdateGridViewLoaded;
         }
 
-        private void UpdatePromotionForm_Loaded(object sender, RoutedEventArgs e)
+        public void UpdateGridViewLoaded(object sender, RoutedEventArgs e)
         {
-            try
+            UpdateItemGridView.DispatcherQueue.TryEnqueue(() =>
             {
-                ItemGridView.SelectedItems.Clear();
+                UpdateItemGridView.SelectedItems.Clear();
                 foreach (var item in TempSelectedItems)
                 {
-                    ItemGridView.SelectedItems.Add(item);
+                    Debug.WriteLine(item.Name);
+                    UpdateItemGridView.SelectedItems.Add(item);
                 }
-            }
-            catch (Exception ex)
-            {
-                // Do nothing
-            }
+            });
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            CloseRequested?.Invoke();
-        }
+
 
         private void SelectAllButton_Click(object sender, RoutedEventArgs e)
         {
-            ItemGridView.SelectAll();
+            UpdateItemGridView.SelectAll();
         }
 
         private void UnselectAllButton_Click(object sender, RoutedEventArgs e)
         {
-            ItemGridView.SelectedItems.Clear();
+            UpdateItemGridView.SelectedItems.Clear();
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            // Logic to save updated promotion
-            // e.g., ViewModel.UpdatePromotion();
+            UpdateRequested?.Invoke();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            CloseButton_Click(sender, e);
+            CloseRequested?.Invoke();
         }
 
         private void AssignSelectedItem(object sender, SelectionChangedEventArgs e)
         {
-            TempSelectedItems = new ObservableCollection<MenuItem>(ItemGridView.SelectedItems.Cast<MenuItem>());
+            TempSelectedItems = new ObservableCollection<MenuItem>(UpdateItemGridView.SelectedItems.Cast<MenuItem>());
         }
     }
 }

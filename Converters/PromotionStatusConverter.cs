@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using POS_For_Small_Shop.Data.Models;
 using System.Diagnostics;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Hosting;
 
 namespace POS_For_Small_Shop.Converters
 {
@@ -26,6 +29,7 @@ namespace POS_For_Small_Shop.Converters
                     if (param == "Stripe")
                     {
                         // Alternate background colors based on PromoID for striping
+                        //int index = GetItemIndex(promo);
                         return promo.PromoID % 2 == 0
                             ? new SolidColorBrush(Colors.White)
                             : new SolidColorBrush(Windows.UI.Color.FromArgb(255, 245, 245, 245)); 
@@ -58,10 +62,10 @@ namespace POS_For_Small_Shop.Converters
             throw new NotImplementedException();
         }
 
-        
+
+
         public static string GetStatus(Promotion promo)
         {
-            Debug.WriteLine($"Checking status of {promo.PromoName}");
             if (DateTime.Now < promo.StartDate)
                 return "Upcoming";
             else if (DateTime.Now < promo.EndDate)

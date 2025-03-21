@@ -14,6 +14,7 @@
         <converter:CurrencyFormatter x:Key="CurrencyConverter" />
         <converter:ImageFullPathConverter x:Key="ImageFullPathConverter" />
         <converter:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
+        <converter:FloatToStringConverter x:Key="FloatToStringConverter" />
     </UserControl.Resources>
 
     <ScrollViewer
@@ -158,7 +159,7 @@
                         HorizontalAlignment="Stretch"
                         ItemsSource="{x:Bind discountTypeValues}"
                         PlaceholderText="Select discount type"
-                        SelectedValue="{Binding NewPromotion.Details.DiscountType, Mode=TwoWay}" />
+                        SelectedItem="{Binding NewPromotion.Details.DiscountType, Mode=TwoWay}" />
                 </StackPanel>
 
                 <StackPanel
@@ -170,7 +171,7 @@
                         x:Name="DiscountValue"
                         Margin="0,5,0,0"
                         PlaceholderText="Enter discount value"
-                        Text="{Binding NewPromotion.Details.DiscountValue, Mode=TwoWay}" />
+                        Text="{Binding NewPromotion.Details.DiscountValue, Converter={StaticResource FloatToStringConverter}, Mode=TwoWay}" />
                 </StackPanel>
 
                 <!--  Start & End Date  -->

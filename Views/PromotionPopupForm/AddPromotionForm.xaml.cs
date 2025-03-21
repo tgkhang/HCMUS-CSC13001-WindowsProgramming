@@ -27,7 +27,7 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
 {
     public sealed partial class AddPromotionForm : UserControl
     {
-        public PromotionManagementViewModel ViewModel { get; set; }
+        public ObservableCollection<MenuItem> TempSelectedItems { get; set; } = new ObservableCollection<MenuItem>();
 
         public DiscountType[] discountTypeValues => Enum.GetValues<DiscountType>();
 
@@ -52,14 +52,7 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
 
         private void SaveButton_CLick(object sender, RoutedEventArgs e)
         {
-            
-
-            ViewModel.NewPromotion.ItemIDs = ViewModel.SelectedItems.Select(x => x.MenuItemID).ToList();
-
-            ViewModel.AddPromotion();
-            ClosePopUp();
-            ClearAddPromotionForm();
-
+            AddPromotionRequested?.Invoke();
         }
 
         private void ClearAddPromotionForm()
@@ -75,7 +68,7 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
 
         private void AssignSelectedItem(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.SelectedItems = new ObservableCollection<MenuItem>(ItemGridView.SelectedItems.Cast<MenuItem>());
+            TempSelectedItems = new ObservableCollection<MenuItem>(ItemGridView.SelectedItems.Cast<MenuItem>());
         }
 
 

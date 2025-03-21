@@ -35,11 +35,12 @@ namespace POS_For_Small_Shop.Views
         {
             this.InitializeComponent();
             this.DataContext = ViewModel;
-            addPromotionForm.ViewModel = ViewModel;
             viewPromotionDetailsForm.ViewModel = ViewModel;
             //updatePromotionForm.ViewModel = ViewModel;
 
             // Set up event handlers
+
+            addPromotionForm.AddPromotionRequested += SaveNewPromotion;
 
 
 
@@ -135,6 +136,7 @@ namespace POS_For_Small_Shop.Views
                 // Set the promotion data
                 ViewModel.SelectedPromotion = promotion;
                 ViewModel.setSelectedItems(promotion.ItemIDs);
+                updatePromotionForm.TempSelectedItems = ViewModel.SelectedItems;
                 updatePromotionForm.DataContext = ViewModel;
                 updatePromotionPopup.IsOpen = true;
 
@@ -144,7 +146,12 @@ namespace POS_For_Small_Shop.Views
             }
         }
 
-
+        public void SaveNewPromotion()
+        {
+            ViewModel.SelectedItems = addPromotionForm.TempSelectedItems;
+            ViewModel.AddPromotion();
+            CloseAddFormPopup();
+        }
 
 
     }

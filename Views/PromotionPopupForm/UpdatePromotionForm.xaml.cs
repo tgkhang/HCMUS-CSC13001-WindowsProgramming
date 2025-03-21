@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Navigation;
 using NetTopologySuite.Geometries;
 using POS_For_Small_Shop.ViewModels;
 using POS_For_Small_Shop.Data.Models;
+using System.Collections.ObjectModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,30 +25,31 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
     public sealed partial class UpdatePromotionForm : UserControl
     {
 
-        public PromotionManagementViewModel ViewModel { get; set; }
+        public ObservableCollection<MenuItem> TempSelectedItems { get; set; } = new ObservableCollection<MenuItem>();
         public Action? CloseRequested;
+        public Action? UpdateRequested;
         public DiscountType[] discountTypeValues => Enum.GetValues<DiscountType>();
 
         public UpdatePromotionForm()
         {
             this.InitializeComponent();
-            this.DataContext = ViewModel;
             this.Loaded += UpdatePromotionForm_Loaded;
         }
 
         private void UpdatePromotionForm_Loaded(object sender, RoutedEventArgs e)
         {
-            // Pre-select items when the form loads
-            //if (this.DataContext?.SelectedItems != null && ViewModel?.AvaibleItems != null)
-            //{
-            //    foreach (var item in ViewModel.SelectedItems)
-            //    {
-            //        if (ViewModel.AvaibleItems.Contains(item))
-            //        {
-            //            ItemGridView.SelectedItems.Add(item);
-            //        }
-            //    }
-            //}
+            try
+            {
+                ItemGridView.SelectedItems.Clear();
+                foreach (var item in TempSelectedItems)
+                {
+                    ItemGridView.SelectedItems.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Do nothing
+            }
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -78,7 +80,7 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
 
         private void AssignSelectedItem(object sender, SelectionChangedEventArgs e)
         {
-            // Update ViewModel.SelectedPromotion.Items if needed
+            TempSelectedItems = new ObservableCollection<MenuItem>(ItemGridView.SelectedItems.Cast<MenuItem>());
         }
     }
 }

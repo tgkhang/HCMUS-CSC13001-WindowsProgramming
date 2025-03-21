@@ -45,10 +45,10 @@ namespace POS_For_Small_Shop.ViewModels
 
         public void AddPromotion()
         {
+            NewPromotion.ItemIDs = SelectedItems.Select(item => item.MenuItemID).ToList();
             _dao.Promotions.Insert(NewPromotion);
             Promotions.Add(NewPromotion);
             NewPromotion = new Promotion();
-
         }
 
 

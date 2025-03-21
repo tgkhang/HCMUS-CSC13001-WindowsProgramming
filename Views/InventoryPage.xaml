@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.InventoryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:POS_For_Small_Shop.Data.Models"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <!-- NavigationView -->
+        <NavigationView x:Name="navi"
+                        PaneDisplayMode="Auto"
+                        IsSettingsVisible="False"
+                        OpenPaneLength="220"
+                        SelectionChanged="NavigationView_SelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="All Ingredients" Icon="List" Tag="AllIngredients" />
+                <NavigationViewItem Content="Add Ingredient" Icon="Add" Tag="AddIngredient" />
+                <NavigationViewItem Content="Edit Ingredient" Icon="Edit" Tag="EditIngredient" />
+                <NavigationViewItem Content="Delete Ingredient" Icon="Delete" Tag="DeleteIngredient" />
+            </NavigationView.MenuItems>
+        </NavigationView>
+
+        <!-- CommandBar -->
+        <CommandBar VerticalAlignment="Top">
+            <AppBarButton Icon="Add" Label="Add" Click="AddIngredient_Click" />
+            <AppBarButton Icon="Edit" Label="Edit" Click="EditIngredient_Click" />
+            <AppBarButton Icon="Delete" Label="Delete" Click="DeleteIngredient_Click" />
+        </CommandBar>
+
+        <!-- GridView cho danh sách nguyên liệu -->
+        <GridView x:Name="IngredientListView"
+                  Margin="0,60,0,0"
+                  SelectionMode="Single"
+                  IsItemClickEnabled="True">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="model:Ingredient">
+                    <StackPanel Orientation="Horizontal" Padding="10">
+                        <TextBlock Text="{Binding IngredientName}" Width="150" />
+                        <TextBlock Text="{Binding Stock}" Width="100" />
+                        <TextBlock Text="{Binding Unit}" Width="80" />
+                        <TextBlock Text="{Binding PurchasePrice}" Width="100" />
+                        <TextBlock Text="{Binding Supplier}" Width="150" />
+                        <TextBlock Text="{Binding FormattedExpiryDate}" Width="150" />
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+
+        <!-- Form: Thêm nguyên liệu -->
+        <Popup x:Name="addIngredient">
+            <Grid x:Name="addIngredientForm"
+                  Width="400"
+                  Height="300"
+                  Background="White">
+                <StackPanel>
+                    <TextBlock Text="Add Ingredient" FontSize="20" />
+                    <!-- Nội dung form thêm nguyên liệu -->
+                </StackPanel>
+            </Grid>
+        </Popup>
+
+        <!-- Form: Sửa nguyên liệu -->
+        <Popup x:Name="editIngredient">
+            <Grid x:Name="editIngredientForm"
+                  Width="400"
+                  Height="300"
+                  Background="White">
+                <StackPanel>
+                    <TextBlock Text="Edit Ingredient" FontSize="20" />
+                    <!-- Nội dung form sửa nguyên liệu -->
+                </StackPanel>
+            </Grid>
+        </Popup>
+
+        <!-- Form: Xóa nguyên liệu -->
+        <Popup x:Name="deleteIngredient">
+            <Grid x:Name="deleteIngredientForm"
+                  Width="400"
+                  Height="200"
+                  Background="White">
+                <StackPanel>
+                    <TextBlock Text="Delete Ingredient?" FontSize="20" />
+                    <!-- Nội dung xác nhận xóa -->
+                </StackPanel>
+            </Grid>
+        </Popup>
+
+    </Grid>
+</Page>

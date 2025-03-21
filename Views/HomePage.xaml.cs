@@ -35,7 +35,7 @@ namespace POS_For_Small_Shop.Views
 
         private void InventoryButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(InventoryPage));
         }
 
         private void CustomersButton_Click(object sender, RoutedEventArgs e)

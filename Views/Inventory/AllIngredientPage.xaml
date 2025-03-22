@@ -4,14 +4,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:POS_For_Small_Shop.Views.Inventory"
-    xmlns:models="using:POS_For_Small_Shop.Models"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
     xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 	<Grid Padding="10">
-		<ListView ItemsSource="{Binding Ingredients}" SelectionMode="Single">
+		<ListView ItemsSource="{Binding Ingredients}" 
+                  IsItemClickEnabled="True"
+                  ItemClick="IngredientList_ItemClick">
 			<ListView.ItemTemplate>
-				<DataTemplate>
+                <DataTemplate x:DataType="models:Ingredient">
 					<StackPanel Orientation="Horizontal" Margin="5">
 						<TextBlock Text="{Binding IngredientName}" FontSize="18" Margin="0,0,10,0"/>
 						<TextBlock Text="{Binding Stock}" FontSize="18"/>

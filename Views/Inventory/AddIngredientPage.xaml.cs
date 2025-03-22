@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.ViewModels;
 
 
@@ -23,7 +24,29 @@ namespace POS_For_Small_Shop.Views.Inventory
 
         private void AddIngredient_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.AddIngredient();
+            var ingredient = new Ingredient
+            {
+                IngredientName = IngredientNameTextBox.Text,
+                CategoryID = int.TryParse(CategoryIDTextBox.Text, out int categoryId) ? categoryId : 0,
+                Stock = int.TryParse(StockTextBox.Text, out int stock) ? stock : 0,
+                Unit = UnitTextBox.Text,
+                PurchasePrice = float.TryParse(PurchasePriceTextBox.Text, out float price) ? price : 0f,
+                Supplier = SupplierTextBox.Text,
+                ExpiryDate = DateTime.TryParse(ExpiryDateTextBox.Text, out DateTime expiry) ? expiry : DateTime.MinValue
+            };
+
+            ViewModel.AddIngredient(ingredient);
+        }
+
+        private void ClearFields()
+        {
+            IngredientNameTextBox.Text = "";
+            CategoryIDTextBox.Text = "";
+            StockTextBox.Text = "";
+            UnitTextBox.Text = "";
+            PurchasePriceTextBox.Text = "";
+            SupplierTextBox.Text = "";
+            ExpiryDateTextBox.Text = "";
         }
     }
 }

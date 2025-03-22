@@ -14,6 +14,7 @@ namespace POS_For_Small_Shop.ViewModels
     public class InventoryViewModel
     {
         public ObservableCollection<Ingredient> Ingredients { get; set; }
+        public Ingredient? SelectedIngredient { get; set; }
 
         private IDao _dao;
 
@@ -26,9 +27,8 @@ namespace POS_For_Small_Shop.ViewModels
             Ingredients = new ObservableCollection<Ingredient>(items);
         }
 
-        public void AddIngredient()
+        public void AddIngredient(Ingredient ingredient)
         {
-            Ingredient ingredient = new Ingredient();
             if (ingredient != null)
             {
                 // Dùng Insert từ MockIngredientRepository
@@ -40,9 +40,8 @@ namespace POS_For_Small_Shop.ViewModels
             }
         }
 
-        public void SaveIngredient()
+        public void SaveIngredient(Ingredient ingredient)
         {
-            Ingredient ingredient = new Ingredient();
             if (ingredient != null)
             {
                 // Dùng Update từ MockIngredientRepository
@@ -58,12 +57,10 @@ namespace POS_For_Small_Shop.ViewModels
             }
         }
 
-        public void DeleteIngredient()
+        public void DeleteIngredient(Ingredient ingredient)
         {
-            Ingredient ingredient = new Ingredient();
             if (ingredient != null)
             {
-                // Dùng Delete từ MockIngredientRepository
                 var result = _dao.Ingredients.Delete(ingredient.IngredientID);
                 if (result)
                 {

@@ -3,13 +3,32 @@
     x:Class="POS_For_Small_Shop.Views.Inventory.EditIngredientPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-	<Grid Padding="20">
-		<StackPanel>
-			<TextBox Header="Ingredient Name" Text="{Binding SelectedIngredient.IngredientName, Mode=TwoWay}" />
-			<TextBox Header="Stock" Text="{Binding SelectedIngredient.Stock, Mode=TwoWay}" />
-			<Button Content="Save" Click="SaveIngredient_Click" />
-		</StackPanel>
-	</Grid>
+    <Grid Padding="10">
+
+        <StackPanel Spacing="10">
+            <TextBox Header="Ingredient Name" 
+                     Text="{Binding SelectedIngredient.IngredientName, Mode=TwoWay}" />
+            <TextBox Header="Stock" 
+                     Text="{Binding SelectedIngredient.Stock, Mode=TwoWay}" />
+            <TextBox Header="Unit" 
+                     Text="{Binding SelectedIngredient.Unit, Mode=TwoWay}" />
+            <TextBox Header="Purchase Price" 
+                     Text="{Binding SelectedIngredient.PurchasePrice, Mode=TwoWay}" />
+            <TextBox Header="Supplier" 
+                     Text="{Binding SelectedIngredient.Supplier, Mode=TwoWay}" />
+            <DatePicker Header="Expiry Date" 
+                        Date="{Binding SelectedIngredient.ExpiryDate, Mode=TwoWay}" />
+        </StackPanel>
+
+        <!-- Nút Save -->
+        <Button Content="Save" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" 
+                Margin="0,10,0,0"
+                Click="SaveIngredient_Click" />
+    </Grid>
 </Page>

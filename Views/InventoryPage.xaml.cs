@@ -16,141 +16,78 @@ namespace POS_For_Small_Shop.Views
 {
     public sealed partial class InventoryPage : Page
     {
-        public InventoryViewModel ViewModel { get; set; } = new InventoryViewModel();
-        //private InventoryViewModel _viewModel;
+        public InventoryViewModel ViewModel { get; set; }
 
         public InventoryPage()
         {
             this.InitializeComponent();
-            ViewModel = new InventoryViewModel(); // Khởi tạo một lần duy nhất
+
+            // Khởi tạo ViewModel và gán vào DataContext
+            ViewModel = new InventoryViewModel();
             this.DataContext = ViewModel;
 
             // 🚀 Load dữ liệu khi mở trang
             ViewModel.LoadIngredients();
         }
 
-        // 👉 Xử lý khi chọn mục trong NavigationView
-        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        // 👉 Xử lý thêm nguyên liệu
+        private async void AddIngredient_Click(object sender, RoutedEventArgs e)
         {
-            if (args.SelectedItem is NavigationViewItem item)
+            try
             {
-                switch (item.Tag)
+                ViewModel.AddIngredient();
+                await ShowMessage("Ingredient added successfully! ✅");
+            }
+            catch (Exception ex)
+            {
+                await ShowMessage($"Failed to add ingredient: {ex.Message}");
+            }
+        }
+
+        // 👉 Xử lý chỉnh sửa nguyên liệu
+        private async void EditIngredient_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.SelectedIngredient != null)
+            {
+                try
                 {
-                    case "AllIngredients":
-                        // Tải lại danh sách nguyên liệu
-                        ViewModel.LoadIngredients();
-                        break;
-                    case "AddIngredient":
-                        OpenAddIngredientForm();
-                        break;
-                    case "EditIngredient":
-                        OpenEditIngredientForm();
-                        break;
-                    case "DeleteIngredient":
-                        OpenDeleteIngredientForm();
-                        break;
+                    ViewModel.EditIngredient();
+                    await ShowMessage("Ingredient updated successfully! ✅");
+                }
+                catch (Exception ex)
+                {
+                    await ShowMessage($"Failed to update ingredient: {ex.Message}");
                 }
             }
-        }
-
-        // 👉 Xử lý khi nhấn vào CommandBar
-        private void AddIngredient_Click(object sender, RoutedEventArgs e)
-        {
-            OpenAddIngredientForm();
-        }
-
-        private void EditIngredient_Click(object sender, RoutedEventArgs e)
-        {
-            OpenEditIngredientForm();
-        }
-
-        private void DeleteIngredient_Click(object sender, RoutedEventArgs e)
-        {
-            OpenDeleteIngredientForm();
-        }
-
-        // 👉 Xử lý khi mở Popup Thêm nguyên liệu
-        private void OpenAddIngredientForm()
-        {
-            AdjustPosition(addIngredient, addIngredientForm);
-            addIngredient.IsOpen = true;
-        }
-
-        // 👉 Xử lý khi mở Popup Sửa nguyên liệu
-        private void OpenEditIngredientForm()
-        {
-            if (IngredientListView.SelectedItem is Ingredient selected)
+            else
             {
-                ViewModel.SelectedIngredient = selected;
-                AdjustPosition(editIngredient, editIngredientForm);
-                editIngredient.IsOpen = true;
+                await ShowMessage("Please select an ingredient to edit. 🚨");
+            }
+        }
+
+        // 👉 Xử lý xóa nguyên liệu
+        private async void DeleteIngredient_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.SelectedIngredient != null)
+            {
+                try
+                {
+                    ViewModel.DeleteIngredient();
+                    await ShowMessage("Ingredient deleted successfully! ✅");
+                }
+                catch (Exception ex)
+                {
+                    await ShowMessage($"Failed to delete ingredient: {ex.Message}");
+                }
             }
             else
             {
-                ShowMessage("Please select an ingredient to edit.");
-            }
-        }
-
-        // 👉 Xử lý khi mở Popup Xóa nguyên liệu
-        private void OpenDeleteIngredientForm()
-        {
-            if (IngredientListView.SelectedItem is Ingredient selected)
-            {
-                ViewModel.SelectedIngredient = selected;
-                AdjustPosition(deleteIngredient, deleteIngredientForm);
-                deleteIngredient.IsOpen = true;
-            }
-            else
-            {
-                ShowMessage("Please select an ingredient to delete.");
-            }
-        }
-
-        // 👉 Đóng Popup
-        private void CloseAddIngredientForm()
-        {
-            addIngredient.IsOpen = false;
-        }
-
-        private void CloseEditIngredientForm()
-        {
-            editIngredient.IsOpen = false;
-        }
-
-        private void CloseDeleteIngredientForm()
-        {
-            deleteIngredient.IsOpen = false;
-        }
-
-        // 👉 Căn chỉnh vị trí Popup theo kích thước màn hình
-        private void AdjustPosition(Popup popup, FrameworkElement container)
-        {
-            double windowHeight = this.ActualHeight;
-            double popupHeight = container.ActualHeight;
-
-            popup.HorizontalOffset = (this.ActualWidth - container.ActualWidth) / 2;
-            popup.VerticalOffset = (windowHeight - popupHeight) / 2;
-        }
-
-        // 👉 Xử lý khi thay đổi kích thước trang
-        private void OnPageSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (addIngredient.IsOpen)
-            {
-                AdjustPosition(addIngredient, addIngredientForm);
-            }
-            if (editIngredient.IsOpen)
-            {
-                AdjustPosition(editIngredient, editIngredientForm);
-            }
-            if (deleteIngredient.IsOpen)
-            {
-                AdjustPosition(deleteIngredient, deleteIngredientForm);
+                await ShowMessage("Please select an ingredient to delete. 🚨");
             }
         }
 
         // 👉 Hiển thị thông báo
-        private async void ShowMessage(string message)
+        private async System.Threading.Tasks.Task ShowMessage(string message)
         {
             var dialog = new ContentDialog
             {

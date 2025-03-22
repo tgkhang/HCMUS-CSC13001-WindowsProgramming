@@ -18,7 +18,9 @@
     <None Remove="ShopDatabase.db" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\InventoryPage.xaml" />
-    <None Remove="Views\Inventory\addIngredientForm.xaml" />
+    <None Remove="Views\Inventory\AllIngredientPage.xaml" />
+    <None Remove="Views\Inventory\DeleteIngredientPage.xaml" />
+    <None Remove="Views\Inventory\EditIngredientPage.xaml" />
     <None Remove="Views\NewOrderPage.xaml" />
     <None Remove="Views\OpenShiftPage.xaml" />
     <None Remove="Views\ShiftPage\ShiftCustomerPage.xaml" />
@@ -71,6 +73,19 @@
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\Inventory\DeleteIngredientPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Inventory\EditIngredientPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Inventory\AllIngredientPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\InventoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -116,7 +131,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Inventory\AddIngredientForm.xaml">
+    <Page Update="Views\Inventory\AddIngredientPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

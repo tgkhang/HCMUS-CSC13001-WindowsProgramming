@@ -75,7 +75,7 @@ namespace POS_For_Small_Shop.ViewModels
             if (NewIngredient != null)
             {
                 _dao.Ingredients.Insert(NewIngredient);
-                Ingredients.Add(NewIngredient);
+                LoadIngredients(); // Load lại danh sách sau khi thêm
                 NewIngredient = new Ingredient(); // Reset lại form sau khi thêm
             }
         }
@@ -86,7 +86,9 @@ namespace POS_For_Small_Shop.ViewModels
             if (SelectedIngredient != null)
             {
                 _dao.Ingredients.Update(SelectedIngredient.IngredientID, SelectedIngredient);
-                var index = Ingredients.IndexOf(SelectedIngredient);
+
+                // Cập nhật lại vị trí trong ObservableCollection
+                var index = Ingredients.IndexOf(Ingredients.First(x => x.IngredientID == SelectedIngredient.IngredientID));
                 if (index >= 0)
                 {
                     Ingredients[index] = SelectedIngredient;
@@ -99,19 +101,20 @@ namespace POS_For_Small_Shop.ViewModels
         {
             if (SelectedIngredient != null)
             {
-                _dao.Ingredients.Delete(SelectedIngredient.IngredientID);
-                Ingredients.Remove(SelectedIngredient);
+                if (Ingredients.Contains(SelectedIngredient))
+                {
+                    _dao.Ingredients.Delete(SelectedIngredient.IngredientID);
+                    Ingredients.Remove(SelectedIngredient);
+                    SelectedIngredient = null;
+                }
             }
         }
-
-        public DateTime ExpiryDate { get; set; }
-
-        public string FormattedExpiryDate => ExpiryDate.ToString("dd/MM/yyyy");
 
         // 🚀 Kích hoạt sự kiện PropertyChanged để cập nhật UI
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

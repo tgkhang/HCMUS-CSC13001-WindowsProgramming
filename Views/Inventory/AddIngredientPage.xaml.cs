@@ -9,23 +9,23 @@ using POS_For_Small_Shop.ViewModels;
 
 namespace POS_For_Small_Shop.Views.Inventory
 {
-    public sealed partial class AddIngredientForm : UserControl
+    public sealed partial class AddIngredientPage : Page
     {
         public InventoryViewModel ViewModel { get; set; }
 
-        public AddIngredientForm()
+        public AddIngredientPage()
         {
             this.InitializeComponent();
+            ViewModel = new InventoryViewModel();
+            this.DataContext = ViewModel;
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void Add_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.AddIngredient();
-        }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Visibility = Visibility.Collapsed;
+            // Quay lại trang AllIngredients sau khi thêm xong
+            Frame.Navigate(typeof(AllIngredientPage));
         }
     }
 }

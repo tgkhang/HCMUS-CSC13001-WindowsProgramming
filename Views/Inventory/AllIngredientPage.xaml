@@ -4,15 +4,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:POS_For_Small_Shop.Views.Inventory"
+    xmlns:models="using:POS_For_Small_Shop.Models"
+    xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-	<Grid>
-		<ListView ItemsSource="{Binding Ingredients}" SelectedItem="{Binding SelectedIngredient, Mode=TwoWay}">
+	<Grid Padding="10">
+		<ListView ItemsSource="{Binding Ingredients}" SelectionMode="Single">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<StackPanel Orientation="Horizontal" Padding="10">
-						<TextBlock Text="{Binding IngredientName}" FontSize="16" Margin="0,0,10,0" />
-						<TextBlock Text="{Binding Stock}" FontSize="16" />
+					<StackPanel Orientation="Horizontal" Margin="5">
+						<TextBlock Text="{Binding IngredientName}" FontSize="18" Margin="0,0,10,0"/>
+						<TextBlock Text="{Binding Stock}" FontSize="18"/>
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>

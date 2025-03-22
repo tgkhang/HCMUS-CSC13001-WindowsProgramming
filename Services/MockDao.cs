@@ -87,10 +87,13 @@ namespace POS_For_Small_Shop.Services
     public class MockIngredientRepository : IRepository<Ingredient>
     {
         private List<Ingredient> _ingredients = new List<Ingredient>
-        {
-            new Ingredient { IngredientID = 1, IngredientName = "Coffee Beans", CategoryID = 1, Stock = 10, Unit = "kg", PurchasePrice = 5.0f, Supplier = "Supplier A", ExpiryDate = new DateTime(2025, 12, 31) },
-            new Ingredient { IngredientID = 2, IngredientName = "Milk", CategoryID = 2, Stock = 20, Unit = "L", PurchasePrice = 1.5f, Supplier = "Supplier B", ExpiryDate = new DateTime(2025, 11, 30) }
-        };
+    {
+        new Ingredient { IngredientID = 1, IngredientName = "Coffee Beans", CategoryID = 1, Stock = 10.0f, Unit = "kg", PurchasePrice = 20.0f, Supplier = "BachHoaXanh", ExpiryDate = DateTime.Now.AddMonths(6) },
+        new Ingredient { IngredientID = 2, IngredientName = "Milk", CategoryID = 2, Stock = 5.0f, Unit = "L", PurchasePrice = 15.0f, Supplier = "Vinamilk", ExpiryDate = DateTime.Now.AddMonths(2) },
+        new Ingredient { IngredientID = 3, IngredientName = "Sugar", CategoryID = 1, Stock = 8.0f, Unit = "kg", PurchasePrice = 5.0f, Supplier = "BachHoaXanh", ExpiryDate = DateTime.Now.AddMonths(12) },
+        new Ingredient { IngredientID = 4, IngredientName = "Butter", CategoryID = 2, Stock = 3.0f, Unit = "kg", PurchasePrice = 25.0f, Supplier = "Vinamilk", ExpiryDate = DateTime.Now.AddMonths(1) },
+        new Ingredient { IngredientID = 5, IngredientName = "Flour", CategoryID = 3, Stock = 12.0f, Unit = "kg", PurchasePrice = 10.0f, Supplier = "BachHoaXanh", ExpiryDate = DateTime.Now.AddMonths(6) }
+    };
 
         public List<Ingredient> GetAll()
         {
@@ -104,6 +107,7 @@ namespace POS_For_Small_Shop.Services
 
         public bool Insert(Ingredient item)
         {
+            // Tự động tạo ID
             item.IngredientID = _ingredients.Count > 0 ? _ingredients.Max(x => x.IngredientID) + 1 : 1;
             _ingredients.Add(item);
             return true;
@@ -121,7 +125,6 @@ namespace POS_For_Small_Shop.Services
             existing.PurchasePrice = item.PurchasePrice;
             existing.Supplier = item.Supplier;
             existing.ExpiryDate = item.ExpiryDate;
-
             return true;
         }
 
@@ -134,5 +137,4 @@ namespace POS_For_Small_Shop.Services
             return true;
         }
     }
-
 }

@@ -3,19 +3,13 @@
     x:Class="POS_For_Small_Shop.Views.Inventory.EditIngredientPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:POS_For_Small_Shop.Views.Inventory"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Padding="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <StackPanel Width="300">
-            <TextBox Header="Name" Text="{Binding SelectedIngredient.IngredientName, Mode=TwoWay}" />
-            <TextBox Header="Stock" Text="{Binding SelectedIngredient.Stock, Mode=TwoWay}" />
-            <ComboBox Header="Category"
-                      ItemsSource="{Binding Categories}" 
-                      DisplayMemberPath="Name" 
-                      SelectedItem="{Binding SelectedIngredient.CategoryID, Mode=TwoWay}" />
-
-            <Button Content="Save" Margin="0,10,0,0" Click="Save_Click" />
-        </StackPanel>
-    </Grid>
+	<Grid Padding="20">
+		<StackPanel>
+			<TextBox Header="Ingredient Name" Text="{Binding SelectedIngredient.IngredientName, Mode=TwoWay}" />
+			<TextBox Header="Stock" Text="{Binding SelectedIngredient.Stock, Mode=TwoWay}" />
+			<Button Content="Save" Click="SaveIngredient_Click" />
+		</StackPanel>
+	</Grid>
 </Page>

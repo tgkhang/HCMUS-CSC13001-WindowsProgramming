@@ -16,87 +16,34 @@ namespace POS_For_Small_Shop.Views
 {
     public sealed partial class InventoryPage : Page
     {
-        public InventoryViewModel ViewModel { get; set; }
+        // Ánh xạ các Tag trong NavigationView với các Page tương ứng
+        private readonly Dictionary<string, Type> _pageMappings = new()
+        {
+            { "AllIngredientPage", typeof(AllIngredientPage) },
+            { "AddIngredientPage", typeof(AddIngredientPage) },
+            { "EditIngredientPage", typeof(EditIngredientPage) },
+            { "DeleteIngredientPage", typeof(DeleteIngredientPage) },
+        };
 
         public InventoryPage()
         {
             this.InitializeComponent();
-
-            // Khởi tạo ViewModel và gán vào DataContext
-            ViewModel = new InventoryViewModel();
-            this.DataContext = ViewModel;
-
-            // 🚀 Load dữ liệu khi mở trang
-            ViewModel.LoadIngredients();
+            // Mở mặc định trang AllIngredientsPage khi khởi động
+            Container.Navigate(typeof(AllIngredientPage));
         }
 
-        // 👉 Xử lý thêm nguyên liệu
-        private async void AddIngredient_Click(object sender, RoutedEventArgs e)
+        // 👉 Xử lý sự kiện khi chọn mục trong NavigationView
+        private void Navigation_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            try
-            {
-                ViewModel.AddIngredient();
-                await ShowMessage("Ingredient added successfully! ✅");
-            }
-            catch (Exception ex)
-            {
-                await ShowMessage($"Failed to add ingredient: {ex.Message}");
-            }
-        }
+            if (args.IsSettingsInvoked) return;
 
-        // 👉 Xử lý chỉnh sửa nguyên liệu
-        private async void EditIngredient_Click(object sender, RoutedEventArgs e)
-        {
-            if (ViewModel.SelectedIngredient != null)
+            // Lấy ra NavigationViewItem được chọn
+            var item = (NavigationViewItem)sender.SelectedItem;
+            if (item?.Tag is string tag && _pageMappings.ContainsKey(tag))
             {
-                try
-                {
-                    ViewModel.EditIngredient();
-                    await ShowMessage("Ingredient updated successfully! ✅");
-                }
-                catch (Exception ex)
-                {
-                    await ShowMessage($"Failed to update ingredient: {ex.Message}");
-                }
+                // Chuyển trang theo tag
+                Container.Navigate(_pageMappings[tag]);
             }
-            else
-            {
-                await ShowMessage("Please select an ingredient to edit. 🚨");
-            }
-        }
-
-        // 👉 Xử lý xóa nguyên liệu
-        private async void DeleteIngredient_Click(object sender, RoutedEventArgs e)
-        {
-            if (ViewModel.SelectedIngredient != null)
-            {
-                try
-                {
-                    ViewModel.DeleteIngredient();
-                    await ShowMessage("Ingredient deleted successfully! ✅");
-                }
-                catch (Exception ex)
-                {
-                    await ShowMessage($"Failed to delete ingredient: {ex.Message}");
-                }
-            }
-            else
-            {
-                await ShowMessage("Please select an ingredient to delete. 🚨");
-            }
-        }
-
-        // 👉 Hiển thị thông báo
-        private async System.Threading.Tasks.Task ShowMessage(string message)
-        {
-            var dialog = new ContentDialog
-            {
-                Title = "Notification",
-                Content = message,
-                CloseButtonText = "OK",
-                XamlRoot = this.XamlRoot
-            };
-            await dialog.ShowAsync();
         }
     }
 }

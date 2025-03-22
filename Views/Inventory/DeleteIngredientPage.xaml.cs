@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
 using POS_For_Small_Shop.ViewModels;
+using POS_For_Small_Shop.Data.Models;
 
 namespace POS_For_Small_Shop.Views.Inventory
 {
@@ -20,18 +21,9 @@ namespace POS_For_Small_Shop.Views.Inventory
             this.DataContext = ViewModel;
         }
 
-        private void Delete_Click(object sender, RoutedEventArgs e)
+        private void DeleteIngredient_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DeleteIngredient();
-
-            // Quay lại trang AllIngredients sau khi xóa xong
-            Frame.Navigate(typeof(AllIngredientPage));
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            // Hủy thao tác và quay về trang danh sách
-            Frame.Navigate(typeof(AllIngredientPage));
         }
     }
 }

@@ -20,12 +20,9 @@ namespace POS_For_Small_Shop.Views.Inventory
             this.DataContext = ViewModel;
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void SaveIngredient_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.EditIngredient();
-
-            // Quay lại trang AllIngredients sau khi sửa xong
-            Frame.Navigate(typeof(AllIngredientPage));
+            ViewModel.SaveIngredient();
         }
     }
 }

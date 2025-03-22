@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using POS_For_Small_Shop.ViewModels;
 
+
 namespace POS_For_Small_Shop.Views.Inventory
 {
     public sealed partial class AddIngredientPage : Page
@@ -20,13 +21,11 @@ namespace POS_For_Small_Shop.Views.Inventory
             this.DataContext = ViewModel;
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private void AddIngredient_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.AddIngredient();
-
-            // Quay lại trang AllIngredients sau khi thêm xong
-            Frame.Navigate(typeof(AllIngredientPage));
         }
     }
 }
+
 

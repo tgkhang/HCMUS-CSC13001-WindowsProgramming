@@ -22,7 +22,6 @@ namespace POS_For_Small_Shop.ViewModels
         {
             _dao = Service.GetKeyedSingleton<IDao>();
 
-            // Lấy danh sách nguyên liệu từ MockDao
             var items = _dao.Ingredients.GetAll();
             Ingredients = new ObservableCollection<Ingredient>(items);
         }
@@ -31,7 +30,6 @@ namespace POS_For_Small_Shop.ViewModels
         {
             if (ingredient != null)
             {
-                // Dùng Insert từ MockIngredientRepository
                 var result = _dao.Ingredients.Insert(ingredient);
                 if (result)
                 {
@@ -44,7 +42,6 @@ namespace POS_For_Small_Shop.ViewModels
         {
             if (ingredient != null)
             {
-                // Dùng Update từ MockIngredientRepository
                 var result = _dao.Ingredients.Update(ingredient.IngredientID, ingredient);
                 if (result)
                 {

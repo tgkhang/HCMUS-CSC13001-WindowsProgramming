@@ -37,17 +37,6 @@ namespace POS_For_Small_Shop.Views.Inventory
 
             ViewModel.AddIngredient(ingredient);
         }
-
-        private void ClearFields()
-        {
-            IngredientNameTextBox.Text = "";
-            CategoryIDTextBox.Text = "";
-            StockTextBox.Text = "";
-            UnitTextBox.Text = "";
-            PurchasePriceTextBox.Text = "";
-            SupplierTextBox.Text = "";
-            ExpiryDateTextBox.Text = "";
-        }
     }
 }
 

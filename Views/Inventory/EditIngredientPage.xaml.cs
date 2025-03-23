@@ -20,31 +20,11 @@ namespace POS_For_Small_Shop.Views.Inventory
             this.DataContext = ViewModel;
         }
 
-        private async void SaveIngredient_Click(object sender, RoutedEventArgs e)
+        private void SaveIngredient_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.SelectedIngredient != null)
             {
                 ViewModel.SaveIngredient(ViewModel.SelectedIngredient);
-
-                ContentDialog successDialog = new ContentDialog
-                {
-                    Title = "Success",
-                    Content = $"Ingredient \"{ViewModel.SelectedIngredient.IngredientName}\" updated successfully!",
-                    CloseButtonText = "OK"
-                };
-
-                await successDialog.ShowAsync();
-            }
-            else
-            {
-                ContentDialog errorDialog = new ContentDialog
-                {
-                    Title = "Error",
-                    Content = "Please select an ingredient to edit.",
-                    CloseButtonText = "OK"
-                };
-
-                await errorDialog.ShowAsync();
             }
         }
     }

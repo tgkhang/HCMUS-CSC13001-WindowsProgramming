@@ -32,7 +32,7 @@
             <TextBlock Text="{Binding SelectedIngredient.Supplier}" FontSize="16"/>
 
             <TextBlock Text="Expiry Date:" FontWeight="Bold"/>
-            <TextBlock Text="{Binding SelectedIngredient.FormattedExpiryDate}" FontSize="16"/>
+            <TextBlock Text="{Binding SelectedIngredient.ExpiryDate}" FontSize="16"/>
 
             <Button Content="Back" Click="Back_Click" Margin="0,20,0,0"/>
         </StackPanel>

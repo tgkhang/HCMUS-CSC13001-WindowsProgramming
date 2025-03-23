@@ -21,35 +21,11 @@ namespace POS_For_Small_Shop.Views.Inventory
             this.DataContext = ViewModel;
         }
 
-        private async void DeleteIngredient_Click(object sender, RoutedEventArgs e)
+        private void DeleteIngredient_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.SelectedIngredient != null)
             {
-                ContentDialog dialog = new ContentDialog
-                {
-                    Title = "Delete Ingredient",
-                    Content = $"Are you sure you want to delete \"{ViewModel.SelectedIngredient.IngredientName}\"?",
-                    PrimaryButtonText = "Delete",
-                    CloseButtonText = "Cancel"
-                };
-
-                var result = await dialog.ShowAsync();
-
-                if (result == ContentDialogResult.Primary)
-                {
-                    ViewModel.DeleteIngredient(ViewModel.SelectedIngredient);
-                }
-            }
-            else
-            {
-                ContentDialog errorDialog = new ContentDialog
-                {
-                    Title = "Error",
-                    Content = "Please select an ingredient to delete.",
-                    CloseButtonText = "OK"
-                };
-
-                await errorDialog.ShowAsync();
+                ViewModel.DeleteIngredient(ViewModel.SelectedIngredient);
             }
         }
     }

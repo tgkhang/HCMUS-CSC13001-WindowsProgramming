@@ -31,7 +31,6 @@
             <TextBlock Text="Expiry Date" FontWeight="Bold" />
             <TextBox x:Name="ExpiryDateTextBox" PlaceholderText="Enter expiry date (yyyy-MM-dd)" />
 
-            <!-- Nút thêm nguyên liệu -->
             <Button Content="Add Ingredient" 
                     HorizontalAlignment="Center"
                     Click="AddIngredient_Click"

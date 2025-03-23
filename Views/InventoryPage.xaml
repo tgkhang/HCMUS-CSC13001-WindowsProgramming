@@ -11,7 +11,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <!-- NavigationView for managing ingredients -->
         <NavigationView x:Name="navi"
                         AlwaysShowHeader="False"
                         PaneDisplayMode="Left"
@@ -21,7 +20,6 @@
                         CompactModeThresholdWidth="100"
                         ItemInvoked="Navigation_ItemInvoked">
 
-            <!-- Main Menu Items -->
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="AllIngredientPage" Padding="20">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
@@ -52,9 +50,6 @@
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
-            <!-- Footer Menu Items -->
-
-            <!-- Content Frame -->
             <Frame x:Name="Container" Margin="10"/>
         </NavigationView>
     </Grid>

@@ -34,7 +34,6 @@
                      Text="{Binding SelectedIngredient.ExpiryDate, Mode=TwoWay, Converter={StaticResource DateFormatter}}" />
         </StackPanel>
 
-        <!-- Nút Save -->
         <Button Content="Save" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Bottom" 

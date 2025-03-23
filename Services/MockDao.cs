@@ -13,7 +13,6 @@ namespace POS_For_Small_Shop.Services
         public IRepository<Customer> Customers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Promotion> Promotions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Shift> Shifts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        //public IRepository<Ingredient> Ingredients { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Order> Orders { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<OrderDetail> OrderDetails { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Transaction> Transactions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -23,7 +22,6 @@ namespace POS_For_Small_Shop.Services
 
 
 
-        //Done
         public IRepository<MenuItem> MenuItems { get; set; } = new MockMenuItemRepository();
         public IRepository<Ingredient> Ingredients { get; set; } = new MockIngredientRepository();
     }
@@ -42,7 +40,7 @@ namespace POS_For_Small_Shop.Services
 
         public List<MenuItem> GetAll()
         {
-            return _menuItems.ToList(); // Return a copy
+            return _menuItems.ToList();
         }
 
         public MenuItem GetById(int id)
@@ -54,7 +52,6 @@ namespace POS_For_Small_Shop.Services
 
         public bool Insert(MenuItem item)
         {
-            // Auto-generate ID
             item.MenuItemID = _menuItems.Count > 0 ? _menuItems.Max(x => x.MenuItemID) + 1 : 1;
             _menuItems.Add(item);
             return true;
@@ -107,7 +104,6 @@ namespace POS_For_Small_Shop.Services
 
         public bool Insert(Ingredient item)
         {
-            // Tự động tạo ID
             item.IngredientID = _ingredients.Count > 0 ? _ingredients.Max(x => x.IngredientID) + 1 : 1;
             _ingredients.Add(item);
             return true;

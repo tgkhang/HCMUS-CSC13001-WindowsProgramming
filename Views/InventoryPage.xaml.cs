@@ -16,7 +16,6 @@ namespace POS_For_Small_Shop.Views
 {
     public sealed partial class InventoryPage : Page
     {
-        // Ánh xạ các Tag trong NavigationView với các Page tương ứng
         private readonly Dictionary<string, Type> _pageMappings = new()
         {
             { "AllIngredientPage", typeof(AllIngredientPage) },
@@ -28,20 +27,16 @@ namespace POS_For_Small_Shop.Views
         public InventoryPage()
         {
             this.InitializeComponent();
-            // Mở mặc định trang AllIngredientsPage khi khởi động
             Container.Navigate(typeof(AllIngredientPage));
         }
 
-        // 👉 Xử lý sự kiện khi chọn mục trong NavigationView
         private void Navigation_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             if (args.IsSettingsInvoked) return;
 
-            // Lấy ra NavigationViewItem được chọn
             var item = (NavigationViewItem)sender.SelectedItem;
             if (item?.Tag is string tag && _pageMappings.ContainsKey(tag))
             {
-                // Chuyển trang theo tag
                 Container.Navigate(_pageMappings[tag]);
             }
         }

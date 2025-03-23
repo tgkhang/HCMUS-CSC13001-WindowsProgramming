@@ -8,7 +8,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Padding="10">
-        <!-- Danh sách nguyên liệu -->
         <ListView ItemsSource="{Binding Ingredients}" 
                   SelectedItem="{Binding SelectedIngredient, Mode=TwoWay}" 
                   SelectionMode="Single">
@@ -22,7 +21,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <!-- Nút Xóa -->
         <Button Content="Delete" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Bottom" 

@@ -1,6 +1,8 @@
 using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using POS_For_Small_Shop.Views.MenuManagement;
+using POS_For_Small_Shop.Views.ShiftPage;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 
@@ -43,6 +45,7 @@ namespace POS_For_Small_Shop.Views
         private void CustomersButton_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to Customers Management page
+            Frame.Navigate(typeof(CustomerManagementPage));
         }
 
         private void ReceiptButton_Click(object sender, RoutedEventArgs e)
@@ -58,6 +61,7 @@ namespace POS_For_Small_Shop.Views
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to Menu Items page
+            Frame.Navigate(typeof(MenuManagementPage));
         }
 
         private void PromotionButton_Click(object sender, RoutedEventArgs e)

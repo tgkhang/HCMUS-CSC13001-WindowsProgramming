@@ -9,7 +9,6 @@ namespace POS_For_Small_Shop.Services
 {
     public class MockDao : IDao
     {
-        public IRepository<Promotion> Promotions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Shift> Shifts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<OrderDetail> OrderDetails { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Transaction> Transactions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -19,6 +18,9 @@ namespace POS_For_Small_Shop.Services
 
         //Done
         public IRepository<MenuItem> MenuItems { get; set; } = new MockMenuItemRepository();
+
+        public IRepository<Promotion> Promotions { get; set; } = new MockPromotionRepository();
+
         public IRepository<Category> Categories { get; set; } = new MockCategoryRepository();
         public IRepository<Customer> Customers { get; set; } = new MockCustomerRepository();
         public IRepository<Order> Orders { get; set; } = new  MockOrderRepository();
@@ -55,7 +57,6 @@ namespace POS_For_Small_Shop.Services
             };
         }
     }
-
 
     public class MockMenuItemRepository : BaseMockRepository<MenuItem>
     {
@@ -187,6 +188,115 @@ namespace POS_For_Small_Shop.Services
             if (existing == null) return false;
 
             _ingredients.Remove(existing);
+            return true;
+        }
+    }
+    public class MockPromotionRepository : IRepository<Promotion>
+    {
+        private List<Promotion> _promotions = new List<Promotion>
+    {
+        new Promotion
+        {
+            PromoID = 1,
+            PromoName = "Summer Sale",
+            StartDate = DateTime.UtcNow.AddDays(2),
+            EndDate = DateTime.UtcNow.AddDays(7),
+            ItemIDs = new List<int> { 1, 2 }, 
+            Details = new PromotionDetails
+            {
+                PromoDetailsID = 1,
+                PromoID = 1,
+                DiscountType = DiscountType.Percentage,
+                DiscountValue = 10,
+                Description = "10% off summer drinks"
+            }
+        },
+        new Promotion
+        {
+            PromoID = 2,
+            PromoName = "Weekend Special",
+            StartDate = DateTime.UtcNow.AddDays(-5),
+            EndDate = DateTime.UtcNow.AddDays(-1),
+            ItemIDs = new List<int> { 3 }, 
+            Details = new PromotionDetails
+            {
+                PromoDetailsID = 2,
+                PromoID = 2,
+                DiscountType = DiscountType.FixedAmount,
+                DiscountValue = 500,
+                Description = "$5 off espressos"
+            }
+        },
+        new Promotion
+        {
+            PromoID = 3,
+            PromoName = "Holiday Offer",
+            StartDate = DateTime.UtcNow,
+            EndDate = DateTime.UtcNow.AddDays(14),
+            ItemIDs = new List<int> { 1, 3 }, 
+            Details = new PromotionDetails
+            {
+                PromoDetailsID = 3,
+                PromoID = 3,
+                DiscountType = DiscountType.Percentage,
+                DiscountValue = 15,
+                Description = "15% off holiday specials"
+            }
+        }
+    };
+
+        public List<Promotion> GetAll()
+        {
+            return _promotions.ToList();
+        }
+
+        public Promotion GetById(int id)
+        {
+            return _promotions.FirstOrDefault(p => p.PromoID == id); 
+        }
+
+        public bool Insert(Promotion item)
+        {
+            if (item == null || _promotions.Any(p => p.PromoID == item.PromoID))
+                return false; 
+
+            item.PromoID = _promotions.Count > 0 ? _promotions.Max(p => p.PromoID) + 1 : 1;
+            item.Details.PromoDetailsID = _promotions.Max(p => p.Details.PromoDetailsID) + 1;
+
+            _promotions.Add(item);
+            return true;
+        }
+
+        public bool Update(int id, Promotion item)
+        {
+            if (item == null)
+                return false;
+
+            var existing = _promotions.FirstOrDefault(p => p.PromoID == id);
+            if (existing == null)
+                return false; 
+
+            // Update fields
+            existing.PromoName = item.PromoName;
+            existing.StartDate = item.StartDate;
+            existing.EndDate = item.EndDate;
+            existing.ItemIDs = item.ItemIDs ?? new List<int>(); 
+            existing.Details = item.Details ?? existing.Details; 
+
+            // Ensure PromoID consistency in Details
+            if (existing.Details != null)
+                existing.Details.PromoID = id;
+
+            return true;
+        }
+
+        public bool Delete(int id)
+        {
+            var promotion = _promotions.FirstOrDefault(p => p.PromoID == id);
+            if (promotion == null)
+                return false; 
+
+            _promotions.Remove(promotion);
             return true;
         }
     }

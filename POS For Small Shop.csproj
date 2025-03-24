@@ -29,6 +29,8 @@
     <None Remove="Views\NewOrderPage.xaml" />
     <None Remove="Views\OpenShiftPage.xaml" />
     <None Remove="Views\ShiftPage\CloseShiftPage.xaml" />
+    <None Remove="Views\PromotionPopupForm\AddPromotionForm.xaml" />
+    <None Remove="Views\PromotionPopupForm\UpdatePromotionForm.xaml" />
     <None Remove="Views\ShiftPage\ShiftCustomerPage.xaml" />
     <None Remove="Views\ShiftPage\ShiftOrderHistoryPage.xaml" />
     <None Remove="Views\ShiftPage\TestPage.xaml" />
@@ -106,6 +108,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\PromotionManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\ShiftPage\TestPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +155,24 @@
   <ItemGroup>
     <Page Update="Views\Inventory\AddIngredientPage.xaml">
     <Page Update="Views\MenuManagement\MenuManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionPopupForm\AddPromotionForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionPopupForm\UpdatePromotionForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionPopupForm\ViewPromotionDetailsForm.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

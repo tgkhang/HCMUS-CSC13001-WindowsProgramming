@@ -8,7 +8,7 @@ using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using PropertyChanged;
 
-namespace POS_For_Small_Shop.ViewModels
+namespace POS_For_Small_Shop.ViewModels.ShiftPage
 {
     [AddINotifyPropertyChangedInterface]
     public class MenuItemViewModel

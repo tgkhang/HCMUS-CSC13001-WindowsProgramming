@@ -14,6 +14,7 @@ namespace POS_For_Small_Shop.Data.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
+        public DbSet<PromotionDetails> PromotionDetails { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<ShiftOrder> ShiftOrders { get; set; }
@@ -56,6 +57,11 @@ namespace POS_For_Small_Shop.Data.Models
                 .HasOne<MenuItem>()
                 .WithMany()
                 .HasForeignKey(od => od.MenuItemID);
+
+            modelBuilder.Entity<Promotion>()
+                .HasOne(p => p.Details)
+                .WithOne(pd => pd.Promotion)
+                .HasForeignKey<PromotionDetails>(pd => pd.PromoID);
 
             modelBuilder.Entity<Transaction>()
                 .HasOne<Order>()
@@ -160,12 +166,26 @@ namespace POS_For_Small_Shop.Data.Models
 
             // Promotion
             modelBuilder.Entity<Promotion>().HasData(
-                new Promotion { PromoID = 1, PromoName = "Summer Sale", DiscountType = "Percentage", DiscountValue = 10, StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(7) },
-                new Promotion { PromoID = 2, PromoName = "Weekend Special", DiscountType = "Fixed", DiscountValue = 500, StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(2) },
-                new Promotion { PromoID = 3, PromoName = "Holiday Offer", DiscountType = "Percentage", DiscountValue = 15, StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(14) },
-                new Promotion { PromoID = 4, PromoName = "Loyalty Bonus", DiscountType = "Fixed", DiscountValue = 1000, StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(30) },
-                new Promotion { PromoID = 5, PromoName = "New Year Deal", DiscountType = "Percentage", DiscountValue = 20, StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(45) }
+                new Promotion { PromoID = 1, PromoName = "Summer Sale", StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(7) },
+                new Promotion { PromoID = 2, PromoName = "Weekend Special", StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(2) },
+                new Promotion { PromoID = 3, PromoName = "Holiday Offer", StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(14) },
+                new Promotion { PromoID = 4, PromoName = "Loyalty Bonus", StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(30) },
+                new Promotion { PromoID = 5, PromoName = "New Year Deal", StartDate = staticDateUtc, EndDate = staticDateUtc.AddDays(45) }
             );
+
+            modelBuilder.Entity<PromotionDetails>().HasData(
+                new PromotionDetails { PromoDetailsID = 1, PromoID = 1, DiscountType = DiscountType.Percentage, DiscountValue = 10 },
+                new PromotionDetails { PromoDetailsID = 2, PromoID = 2, DiscountType = DiscountType.FixedAmount, DiscountValue = 500 },
+                new PromotionDetails { PromoDetailsID = 3, PromoID = 3, DiscountType = DiscountType.Percentage, DiscountValue = 15 },
+                new PromotionDetails { PromoDetailsID = 4, PromoID = 4, DiscountType = DiscountType.FixedAmount, DiscountValue = 1000 },
+                new PromotionDetails { PromoDetailsID = 5, PromoID = 5, DiscountType = DiscountType.Percentage, DiscountValue = 20 }
+            );
+
+            // Ensure the relationship is configured
+            modelBuilder.Entity<Promotion>()
+                .HasOne(p => p.Details)
+                .WithOne(pd => pd.Promotion)
+                .HasForeignKey<PromotionDetails>(pd => pd.PromoID);
 
             // Shift
             modelBuilder.Entity<Shift>().HasData(

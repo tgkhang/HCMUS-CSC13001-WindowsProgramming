@@ -9,7 +9,6 @@ namespace POS_For_Small_Shop.Services
 {
     public interface IDao
     {
-        // IRepository<Category> Categories { get; set; }
         IRepository<Category> Categories { get; set; }
         IRepository<Customer> Customers { get; set; }
         IRepository<Promotion> Promotions { get; set; }

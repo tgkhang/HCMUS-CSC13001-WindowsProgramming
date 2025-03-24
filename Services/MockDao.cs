@@ -9,8 +9,6 @@ namespace POS_For_Small_Shop.Services
 {
     public class MockDao : IDao
     {
-        public IRepository<Category> Categories { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<Customer> Customers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Shift> Shifts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Ingredient> Ingredients { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<OrderDetail> OrderDetails { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

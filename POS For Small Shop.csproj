@@ -14,7 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Components\ProductItem.xaml" />
     <None Remove="DashboardWindow.xaml" />
     <None Remove="ShopDatabase.db" />
     <None Remove="Views\CustomerManagementPage.xaml" />
@@ -138,9 +137,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="DashboardWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Components\ProductItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Inventory\AddIngredientPage.xaml">

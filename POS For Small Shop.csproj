@@ -146,6 +146,7 @@
 
   <ItemGroup>
     <Folder Include="Assets\Images\" />
+    <Folder Include="Views\CustomerManagement\" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

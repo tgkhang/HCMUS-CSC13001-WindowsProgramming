@@ -47,7 +47,6 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
                 UpdateItemGridView.SelectedItems.Clear();
                 foreach (var item in TempSelectedItems)
                 {
-                    Debug.WriteLine(item.Name);
                     UpdateItemGridView.SelectedItems.Add(item);
                 }
             });

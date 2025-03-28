@@ -176,7 +176,7 @@ namespace POS_For_Small_Shop.Views
         public void SaveNewPromotion()
         {
             ViewModel.SelectedItems = addPromotionForm.TempSelectedItems;
-            ViewModel.AddPromotion();
+            //ViewModel.AddPromotion();
             CloseAddFormPopup();
         }
 
@@ -196,6 +196,11 @@ namespace POS_For_Small_Shop.Views
         public void CancelDeletenButton_Click(object obj, RoutedEventArgs e)
         {
             CLoseDeleteFormPopup();
+        }
+        public void SearchPromotionByNameOnChanged(object sender, RoutedEventArgs e)
+        {
+            var searchBar = sender as TextBox;
+            ViewModel.SearchPromotionByName(searchBar.Text);
         }
     }
 }

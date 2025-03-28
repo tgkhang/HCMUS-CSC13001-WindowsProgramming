@@ -28,9 +28,15 @@ namespace POS_For_Small_Shop.ViewModels
 
         public ObservableCollection<MenuItem> AvaibleItems { get; set; }
         public ObservableCollection<MenuItem> SelectedItems { get; set; }
-
         public Promotion SelectedPromotion { get; set; }
         public Promotion NewPromotion { get; set; }
+
+        public ICommand AddPromotionCommand { get; }
+        public ICommand UpdatePromotionCommand { get; }
+        public ICommand DeletePromotionCommand { get; }
+        public ICommand SetSelectedItemsCommand { get; }
+        public ICommand GetByPromotionNameCommand { get; }
+
 
         public PromotionManagementViewModel()
         {
@@ -40,7 +46,12 @@ namespace POS_For_Small_Shop.ViewModels
             AvaibleItems = new ObservableCollection<MenuItem>(_dao.MenuItems.GetAll());
             SelectedItems = new ObservableCollection<MenuItem>();
             NewPromotion = new Promotion();
-           
+
+
+            // Initialize the commands
+            AddPromotionCommand = new RelayCommand(AddPromotion, () => true);
+            UpdatePromotionCommand = new RelayCommand(UpdateSelectedPromotion, () => SelectedPromotion != null);
+            DeletePromotionCommand = new RelayCommand(DeleteSelectedPromotion, () => SelectedPromotion != null);
         }
 
         public void AddPromotion()
@@ -95,5 +106,21 @@ namespace POS_For_Small_Shop.ViewModels
                 }
             }
         }
+
+        public void SearchPromotionByName(string query)
+        {
+            //Debug.WriteLine($"Searching for promotions with name: {query}");
+            var filteredResults = _dao.Promotions.GetAll()
+                .Where(p => p.PromoName.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .ToList(); 
+
+            Promotions.Clear(); 
+
+            foreach (var promo in filteredResults)
+            {
+                Promotions.Add(promo); 
+            }
+        }
+
     }
 }

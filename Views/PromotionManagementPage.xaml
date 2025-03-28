@@ -192,7 +192,8 @@
                     Padding="10,8"
                     BorderThickness="1"
                     CornerRadius="6"
-                    PlaceholderText="Search by Promo Name" />
+                    PlaceholderText="Search by Promo Name"
+                    TextChanged="SearchPromotionByNameOnChanged" />
             </StackPanel>
 
             <!--  Button Section  -->

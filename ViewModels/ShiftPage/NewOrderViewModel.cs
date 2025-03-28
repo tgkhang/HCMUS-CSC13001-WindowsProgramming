@@ -64,10 +64,10 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             RemoveFromOrderCommand = new RelayCommand<int>(RemoveItemFromOrder);
             IncreaseQuantityCommand = new RelayCommand<int>(IncreaseQuantity);
             DecreaseQuantityCommand = new RelayCommand<int>(DecreaseQuantity);
-            NewOrderCommand = new RelayCommand(CreateNewOrder);
-            CashPaymentCommand = new RelayCommand(ProcessCashPayment);
-            CardPaymentCommand = new RelayCommand(ProcessCardPayment);
-            CancelOrderCommand = new RelayCommand(CancelOrder);
+            //NewOrderCommand = new RelayCommand(CreateNewOrder);
+            //CashPaymentCommand = new RelayCommand(ProcessCashPayment);
+            //CardPaymentCommand = new RelayCommand(ProcessCardPayment);
+            //CancelOrderCommand = new RelayCommand(CancelOrder);
 
             // Add this to the constructor after initializing other commands
             SelectCustomerCommand = new RelayCommand<Customer>(SelectCustomer);

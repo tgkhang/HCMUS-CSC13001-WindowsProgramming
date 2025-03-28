@@ -67,11 +67,13 @@ namespace POS_For_Small_Shop.Views
         private void PromotionButton_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to Promotion page
+            Frame.Navigate(typeof(PromotionManagementPage));
         }
 
         private void InventoryButton_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to Inventory page
+            Frame.Navigate(typeof(InventoryPage));
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)

@@ -9,21 +9,24 @@ namespace POS_For_Small_Shop.Services
 {
     public class MockDao : IDao
     {
-        public IRepository<Promotion> Promotions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Shift> Shifts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<Ingredient> Ingredients { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<OrderDetail> OrderDetails { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Transaction> Transactions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<CashFlow> CashFlows { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Notification> Notifications { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<ShiftOrder> ShiftOrders { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+
+        public IRepository<Ingredient> Ingredients { get; set; } = new MockIngredientRepository();
+
         //Done
         public IRepository<MenuItem> MenuItems { get; set; } = new MockMenuItemRepository();
+
+        public IRepository<Promotion> Promotions { get; set; } = new MockPromotionRepository();
+
         public IRepository<Category> Categories { get; set; } = new MockCategoryRepository();
         public IRepository<Customer> Customers { get; set; } = new MockCustomerRepository();
         public IRepository<Order> Orders { get; set; } = new  MockOrderRepository();
-
     }
 
     public class MockCategoryRepository : BaseMockRepository<Category>
@@ -53,7 +56,6 @@ namespace POS_For_Small_Shop.Services
             };
         }
     }
-
 
     public class MockMenuItemRepository : BaseMockRepository<MenuItem>
     {
@@ -134,5 +136,169 @@ namespace POS_For_Small_Shop.Services
         }
     }
 
+    public class MockPromotionRepository : IRepository<Promotion>
+    {
+        private List<Promotion> _promotions = new List<Promotion>
+    {
+        new Promotion
+        {
+            PromoID = 1,
+            PromoName = "Summer Sale",
+            StartDate = DateTime.UtcNow.AddDays(2),
+            EndDate = DateTime.UtcNow.AddDays(7),
+            ItemIDs = new List<int> { 1, 2 }, 
+            Details = new PromotionDetails
+            {
+                PromoDetailsID = 1,
+                PromoID = 1,
+                DiscountType = DiscountType.Percentage,
+                DiscountValue = 10,
+                Description = "10% off summer drinks"
+            }
+        },
+        new Promotion
+        {
+            PromoID = 2,
+            PromoName = "Weekend Special",
+            StartDate = DateTime.UtcNow.AddDays(-5),
+            EndDate = DateTime.UtcNow.AddDays(-1),
+            ItemIDs = new List<int> { 3 }, 
+            Details = new PromotionDetails
+            {
+                PromoDetailsID = 2,
+                PromoID = 2,
+                DiscountType = DiscountType.FixedAmount,
+                DiscountValue = 500,
+                Description = "$5 off espressos"
+            }
+        },
+        new Promotion
+        {
+            PromoID = 3,
+            PromoName = "Holiday Offer",
+            StartDate = DateTime.UtcNow,
+            EndDate = DateTime.UtcNow.AddDays(14),
+            ItemIDs = new List<int> { 1, 3 }, 
+            Details = new PromotionDetails
+            {
+                PromoDetailsID = 3,
+                PromoID = 3,
+                DiscountType = DiscountType.Percentage,
+                DiscountValue = 15,
+                Description = "15% off holiday specials"
+            }
+        }
+    };
+
+        public List<Promotion> GetAll()
+        {
+            return _promotions.ToList();
+        }
+
+        public Promotion GetById(int id)
+        {
+            return _promotions.FirstOrDefault(p => p.PromoID == id); 
+        }
+
+        public bool Insert(Promotion item)
+        {
+            if (item == null || _promotions.Any(p => p.PromoID == item.PromoID))
+                return false; 
+
+            item.PromoID = _promotions.Count > 0 ? _promotions.Max(p => p.PromoID) + 1 : 1;
+            item.Details.PromoDetailsID = _promotions.Max(p => p.Details.PromoDetailsID) + 1;
+
+            _promotions.Add(item);
+            return true;
+        }
+
+        public bool Update(int id, Promotion item)
+        {
+            if (item == null)
+                return false;
+
+            var existing = _promotions.FirstOrDefault(p => p.PromoID == id);
+            if (existing == null)
+                return false; 
+
+            // Update fields
+            existing.PromoName = item.PromoName;
+            existing.StartDate = item.StartDate;
+            existing.EndDate = item.EndDate;
+            existing.ItemIDs = item.ItemIDs ?? new List<int>(); 
+            existing.Details = item.Details ?? existing.Details; 
+
+            // Ensure PromoID consistency in Details
+            if (existing.Details != null)
+                existing.Details.PromoID = id;
+
+            return true;
+        }
+
+        public bool Delete(int id)
+        {
+            var promotion = _promotions.FirstOrDefault(p => p.PromoID == id);
+            if (promotion == null)
+                return false; 
+
+            _promotions.Remove(promotion);
+            return true;
+        }
+
+
+    }
+
+    public class MockIngredientRepository : IRepository<Ingredient>
+    {
+        private List<Ingredient> _ingredients = new List<Ingredient>
+    {
+        new Ingredient { IngredientID = 1, IngredientName = "Coffee Beans", CategoryID = 1, Stock = 10.0f, Unit = "kg", PurchasePrice = 20.0f, Supplier = "BachHoaXanh", ExpiryDate = DateTime.Now.AddMonths(6) },
+        new Ingredient { IngredientID = 2, IngredientName = "Milk", CategoryID = 2, Stock = 5.0f, Unit = "L", PurchasePrice = 15.0f, Supplier = "Vinamilk", ExpiryDate = DateTime.Now.AddMonths(2) },
+        new Ingredient { IngredientID = 3, IngredientName = "Sugar", CategoryID = 1, Stock = 8.0f, Unit = "kg", PurchasePrice = 5.0f, Supplier = "BachHoaXanh", ExpiryDate = DateTime.Now.AddMonths(12) },
+        new Ingredient { IngredientID = 4, IngredientName = "Butter", CategoryID = 2, Stock = 3.0f, Unit = "kg", PurchasePrice = 25.0f, Supplier = "Vinamilk", ExpiryDate = DateTime.Now.AddMonths(1) },
+        new Ingredient { IngredientID = 5, IngredientName = "Flour", CategoryID = 3, Stock = 12.0f, Unit = "kg", PurchasePrice = 10.0f, Supplier = "BachHoaXanh", ExpiryDate = DateTime.Now.AddMonths(6) }
+    };
+
+        public List<Ingredient> GetAll()
+        {
+            return _ingredients.ToList();
+        }
+
+        public Ingredient GetById(int id)
+        {
+            return _ingredients.FirstOrDefault(x => x.IngredientID == id);
+        }
+
+        public bool Insert(Ingredient item)
+        {
+            item.IngredientID = _ingredients.Count > 0 ? _ingredients.Max(x => x.IngredientID) + 1 : 1;
+            _ingredients.Add(item);
+            return true;
+        }
+
+        public bool Update(int id, Ingredient item)
+        {
+            var existing = GetById(id);
+            if (existing == null) return false;
+
+            existing.IngredientName = item.IngredientName;
+            existing.CategoryID = item.CategoryID;
+            existing.Stock = item.Stock;
+            existing.Unit = item.Unit;
+            existing.PurchasePrice = item.PurchasePrice;
+            existing.Supplier = item.Supplier;
+            existing.ExpiryDate = item.ExpiryDate;
+            return true;
+        }
+
+        public bool Delete(int id)
+        {
+            var existing = GetById(id);
+            if (existing == null) return false;
+
+            _ingredients.Remove(existing);
+            return true;
+        }
+    }
 }
 

@@ -1,0 +1,24 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup": "knex migrate:latest && knex seed:run",
+    "start": "echo 'Database setup is complete!'"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Coffee Shop Database with PostgreSQL and Knex",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "knex": "^3.1.0",
+    "pg": "^8.14.1"
+  },
+  "keywords": [
+    "postgres",
+    "knex",
+    "coffee-shop",
+    "database"
+  ]
+}

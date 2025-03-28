@@ -14,21 +14,20 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
   # Node.js application to run migrations and seeds
-  setup:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: coffee_shop_setup
-    depends_on:
-      - db
-    environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: 1234
-      DB_NAME: database1
+setup:
+  build:
+    context: ./API
+    dockerfile: Dockerfile
+  container_name: coffee_shop_setup
+  depends_on:
+    - db
+  environment:
+    DB_HOST: db
+    DB_PORT: 5432
+    DB_USER: postgres
+    DB_PASSWORD: 1234
+    DB_NAME: database1
 
 volumes:
   postgres_data:

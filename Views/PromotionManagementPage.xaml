@@ -120,7 +120,7 @@
 
 
 
-    <Grid Margin="20">
+    <Grid Margin="20,10,20,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <!--  Header with Breadcrumb  -->
@@ -128,89 +128,94 @@
             <!--  Search and Filters  -->
             <RowDefinition Height="*" />
             <!--  Table  -->
-            <RowDefinition Height="Auto" />
-            <!--  Pagination  -->
         </Grid.RowDefinitions>
 
-        <!--  Header with Breadcrumb  -->
-        <StackPanel
+        <!--  Header  -->
+        <Grid
             Grid.Row="0"
-            Background="#003D57"
-            Orientation="Horizontal"
-            Spacing="5">
-            <TextBlock
-                FontSize="16"
-                Foreground="Gray"
-                Text="Home" />
-            <TextBlock
-                FontSize="16"
-                Foreground="Gray"
-                Text="&gt;" />
-            <TextBlock
-                FontSize="16"
-                FontWeight="Bold"
-                Text="Promotions" />
-        </StackPanel>
+            Padding="16"
+            Background="{ThemeResource CardBackgroundFillColorDefault}">
 
-        <Grid Grid.Row="1" Margin="0,10,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Left Button with Primary Color  -->
+            <Button
+                Grid.Column="0"
+                Padding="10,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="{ThemeResource SystemAccentColor}"
+                Click="GoToHomePage"
+                CornerRadius="4"
+                Foreground="White">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="16"
+                        Glyph="" />
+                    <TextBlock Text="Go to Home" />
+                </StackPanel>
+            </Button>
+
+            <!--  Centered Title  -->
+            <TextBlock
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontWeight="SemiBold"
+                Style="{StaticResource TitleTextBlockStyle}"
+                Text="Promotion Management" />
+
+            <!--  Right spacer  -->
+            <Border Grid.Column="2" />
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="20,20,20,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <!--  Search and Filters Section  -->
-            <Grid Grid.Column="0" Margin="0,0,20,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
+            <StackPanel
+                Grid.Column="0"
+                Orientation="Horizontal"
+                Spacing="10">
                 <TextBox
-                    Width="300"
+                    Width="400"
                     MinWidth="200"
-                    MaxWidth="400"
-                    Margin="0,0,0,10"
-                    HorizontalAlignment="Left"
+                    MaxWidth="600"
+                    Padding="10,8"
+                    BorderThickness="1"
                     CornerRadius="6"
                     PlaceholderText="Search by Promo Name" />
-
-                <Expander
-                    Grid.Row="1"
-                    HorizontalAlignment="Left"
-                    Header="Advanced Filters"
-                    IsExpanded="False">
-                    <StackPanel
-                        MinWidth="300"
-                        Margin="0,5,0,5"
-                        Orientation="Vertical">
-                        <ComboBox Margin="0,0,0,8" PlaceholderText="Select Discount Type">
-                            <ComboBoxItem Content="Percentage" />
-                            <ComboBoxItem Content="Fixed Amount" />
-                            <ComboBoxItem Content="Buy One Get One" />
-                        </ComboBox>
-                        <TextBox
-                            Margin="0,0,0,8"
-                            CornerRadius="6"
-                            PlaceholderText="Discount Value" />
-                    </StackPanel>
-                </Expander>
-            </Grid>
+            </StackPanel>
 
             <!--  Button Section  -->
             <Button
                 Grid.Column="1"
                 MinWidth="140"
                 Margin="10,0,0,0"
-                Padding="12,6"
+                Padding="12,8"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Background="#007A99"
+                VerticalAlignment="Center"
+                Background="{ThemeResource SystemAccentColor}"
                 Click="AddPromotionButton_Click"
-                Content="Add Promotion"
                 CornerRadius="6"
-                Foreground="White" />
+                Foreground="White">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="16"
+                        Glyph="" />
+                    <TextBlock Text="Add Promotion" />
+                </StackPanel>
+            </Button>
         </Grid>
-
 
         <!--  Styled ListView (Striped Table with Dark Blue Header)  -->
         <Border
@@ -306,23 +311,7 @@
             </ListView>
         </Border>
 
-        <!--  Pagination  -->
-        <StackPanel
-            Grid.Row="3"
-            Margin="0,10,0,0"
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Spacing="10">
-            <Button
-                Padding="10,5"
-                Content="Previous"
-                CornerRadius="4" />
-            <TextBlock VerticalAlignment="Center" Text="Page 1 of 10" />
-            <Button
-                Padding="10,5"
-                Content="Next"
-                CornerRadius="4" />
-        </StackPanel>
+
 
 
         <Popup

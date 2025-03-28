@@ -162,6 +162,17 @@ namespace POS_For_Small_Shop.Views
             }
         }
 
+        public void GoToHomePage(object sender, RoutedEventArgs e)
+        {
+            // Close All Popups
+            addPromotionPopup.IsOpen = false;
+            viewPromotionDetailsPopup.IsOpen = false;
+            updatePromotionPopup.IsOpen = false;
+            deletePromotionPopup.IsOpen = false;
+
+            Frame.Navigate(typeof(HomePage));
+        }
+
         public void SaveNewPromotion()
         {
             ViewModel.SelectedItems = addPromotionForm.TempSelectedItems;

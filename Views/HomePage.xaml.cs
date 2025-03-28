@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using POS_For_Small_Shop.Views.MenuManagement;
@@ -77,7 +78,9 @@ namespace POS_For_Small_Shop.Views
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            // Handle logout
+            var screen = new LoginWindow();
+            screen.Activate();
+            DashboardWindow.Instance.Close();
         }
     }
 }

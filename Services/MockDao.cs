@@ -24,8 +24,8 @@ namespace POS_For_Small_Shop.Services
 
         public IRepository<Promotion> Promotions { get; set; } = new MockPromotionRepository();
 
-        public IRepository<Category> Categories { get; set; } = new MockCategoryRepository();
-        public IRepository<Customer> Customers { get; set; } = new MockCustomerRepository();
+        //public IRepository<Category> Categories { get; set; } = new MockCategoryRepository();
+        //public IRepository<Customer> Customers { get; set; } = new MockCustomerRepository();
         public IRepository<Order> Orders { get; set; } = new  MockOrderRepository();
     }
 

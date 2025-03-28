@@ -36,6 +36,7 @@ namespace POS_For_Small_Shop.ViewModels
         public ICommand DeletePromotionCommand { get; }
         public ICommand SetSelectedItemsCommand { get; }
         public ICommand GetByPromotionNameCommand { get; }
+        public ICommand SearchPromotionByNameCommand { get; }
 
 
         public PromotionManagementViewModel()
@@ -52,6 +53,7 @@ namespace POS_For_Small_Shop.ViewModels
             AddPromotionCommand = new RelayCommand(AddPromotion, () => true);
             UpdatePromotionCommand = new RelayCommand(UpdateSelectedPromotion, () => SelectedPromotion != null);
             DeletePromotionCommand = new RelayCommand(DeleteSelectedPromotion, () => SelectedPromotion != null);
+            SearchPromotionByNameCommand = new RelayCommand<string>(SearchPromotionByName);
         }
 
         public void AddPromotion()

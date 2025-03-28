@@ -200,7 +200,7 @@ namespace POS_For_Small_Shop.Views
         public void SearchPromotionByNameOnChanged(object sender, RoutedEventArgs e)
         {
             var searchBar = sender as TextBox;
-            ViewModel.SearchPromotionByName(searchBar.Text);
+            ViewModel.SearchPromotionByNameCommand.Execute(searchBar.Text);
         }
     }
 }

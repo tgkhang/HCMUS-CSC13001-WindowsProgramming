@@ -1,0 +1,23 @@
+docker pull postgres
+$ docker run -d --name db -e POSTGRES_PASSWORD=1234 -p 5432:5432 postgres
+docker start db
+docker exec -it db /bin/bash
+psql -U postgres
+create database MyShop;
+\q
+exit
+knex init
+
+- modify knex innit (ignore if done)
+
+knex migrate:make initial_setup
+knex migrate:latest
+
+SEEDING
+knex seed:make s01-category
+knex seed:run
+
+
+RUN API
+wsl ./postgrest postgrest.conf
+postgraphile -c 'postgres://postgres:1234@localhost:5432/postgres' --watch --enhance-graphiql --dynamic-json

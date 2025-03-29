@@ -18,6 +18,8 @@ using System.Diagnostics;
 using POS_For_Small_Shop.Views.PromotionPopupForm;
 using POS_For_Small_Shop.Data.Models;
 using System.Threading.Tasks;
+using Windows.UI;
+using System.Collections.Specialized;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,6 +37,8 @@ namespace POS_For_Small_Shop.Views
         {
             this.InitializeComponent();
             this.DataContext = ViewModel;
+            ViewModel.Promotions.CollectionChanged += RowColorSetter;
+
             viewPromotionDetailsForm.ViewModel = ViewModel;
             //updatePromotionForm.ViewModel = ViewModel;
 
@@ -201,6 +205,24 @@ namespace POS_For_Small_Shop.Views
         {
             var searchBar = sender as TextBox;
             ViewModel.SearchPromotionByNameCommand.Execute(searchBar.Text);
+        }
+
+        public void RowColorSetter(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //Debug.WriteLine("RowColorSetter called");
+            Color[] colors = new Color[]
+                {
+                    Color.FromArgb(255, 255, 255, 255),
+                    Color.FromArgb(255, 245, 245, 245)
+                };
+            for (int i=0; i < PromotionDataListView.Items.Count; i++)
+            {
+                var item = PromotionDataListView.ContainerFromIndex(i) as ListViewItem;
+                if (item != null)
+                {
+                    item.Background = new SolidColorBrush(colors[i % colors.Length]);
+                }
+            }
         }
     }
 }

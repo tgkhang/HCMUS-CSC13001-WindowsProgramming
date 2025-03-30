@@ -1,3 +1,7 @@
+pnpm-lock.yaml
+.env
+
+
 # Visual Studio and VS Code specific
 .vscode/
 *.code-workspace
@@ -40,8 +44,6 @@ project.lock.json
 Thumbs.db
 Desktop.ini
 
-# Entity Framework
-Migrations/
 
 # SQLite database
 *.db

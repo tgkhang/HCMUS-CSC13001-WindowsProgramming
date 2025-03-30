@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.Inventory.DeleteIngredientPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Padding="10">
+        <ListView ItemsSource="{Binding Ingredients}" 
+                  SelectedItem="{Binding SelectedIngredient, Mode=TwoWay}" 
+                  SelectionMode="Single">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:Ingredient">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="{Binding IngredientName}" FontSize="18" Margin="0,0,10,0"/>
+                        <TextBlock Text="{Binding Stock}" FontSize="18"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Content="Delete" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" 
+                Margin="0,10,0,0"
+                Click="DeleteIngredient_Click" />
+    </Grid>
+</Page>
+

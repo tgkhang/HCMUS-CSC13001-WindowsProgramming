@@ -74,6 +74,7 @@ namespace POS_For_Small_Shop.Views
         private void InventoryButton_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to Inventory page
+            Frame.Navigate(typeof(InventoryPage));
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)

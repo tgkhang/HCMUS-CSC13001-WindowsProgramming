@@ -29,8 +29,10 @@ namespace POS_For_Small_Shop
         public DashboardWindow()
         {
             this.InitializeComponent();
+
             Instance = this;
             //_username = username;
+
             MainFrame.Navigate(typeof(HomePage));
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using POS_For_Small_Shop.Data.Models;
@@ -10,13 +11,19 @@ using PropertyChanged;
 namespace POS_For_Small_Shop.ViewModels.ShiftPage
 {
     [AddINotifyPropertyChangedInterface]
-    public class NewOrderViewModel
+    public class NewOrderViewModel : INotifyPropertyChanged
     {
         private IDao _dao;
         private string _searchText = "";
         private int _selectedCategoryId = 0;
         private float _discountPercentage = 0;
         private string _orderNumber;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public ObservableCollection<MenuItem> AllMenuItems { get; private set; }
         public ObservableCollection<MenuItem> FilteredMenuItems { get; private set; }
@@ -55,7 +62,16 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             _dao = Service.GetKeyedSingleton<IDao>();
 
             // Initialize collections
-            AllMenuItems = new ObservableCollection<MenuItem>(_dao.MenuItems.GetAll());
+            try
+            {
+                AllMenuItems = new ObservableCollection<MenuItem>(_dao.MenuItems.GetAll());
+            }
+            catch (NotImplementedException)
+            {
+                // If repository is not implemented, use empty collection
+                AllMenuItems = new ObservableCollection<MenuItem>();
+            }
+
             FilteredMenuItems = new ObservableCollection<MenuItem>();
             OrderItems = new ObservableCollection<OrderItemViewModel>();
 
@@ -64,10 +80,10 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             RemoveFromOrderCommand = new RelayCommand<int>(RemoveItemFromOrder);
             IncreaseQuantityCommand = new RelayCommand<int>(IncreaseQuantity);
             DecreaseQuantityCommand = new RelayCommand<int>(DecreaseQuantity);
-            //NewOrderCommand = new RelayCommand(CreateNewOrder);
-            //CashPaymentCommand = new RelayCommand(ProcessCashPayment);
-            //CardPaymentCommand = new RelayCommand(ProcessCardPayment);
-            //CancelOrderCommand = new RelayCommand(CancelOrder);
+            NewOrderCommand = new RelayCommand<object>(_ => CreateNewOrder());
+            CashPaymentCommand = new RelayCommand<object>(_ => ProcessCashPayment());
+            CardPaymentCommand = new RelayCommand<object>(_ => ProcessCardPayment());
+            CancelOrderCommand = new RelayCommand<object>(_ => CancelOrder());
 
             // Add this to the constructor after initializing other commands
             SelectCustomerCommand = new RelayCommand<Customer>(SelectCustomer);
@@ -206,12 +222,19 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
 
             // Calculate total
             Total = Subtotal + Tax - Discount;
+
+            // Notify property changed for all summary properties
+            OnPropertyChanged(nameof(Subtotal));
+            OnPropertyChanged(nameof(Tax));
+            OnPropertyChanged(nameof(Discount));
+            OnPropertyChanged(nameof(Total));
         }
 
         private void GenerateOrderNumber()
         {
             // Generate a new order number based on current date/time
             OrderNumber = DateTime.Now.ToString("yyMMddHHmm");
+            OnPropertyChanged(nameof(OrderNumber));
         }
 
         private void CreateNewOrder()
@@ -221,6 +244,10 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
 
             // Reset discount
             _discountPercentage = 0;
+
+            // Reset selected customer
+            SelectedCustomer = null;
+            OnPropertyChanged(nameof(SelectedCustomer));
 
             // Generate a new order number
             GenerateOrderNumber();
@@ -233,10 +260,93 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         {
             if (OrderItems.Count > 0)
             {
-                // In a real app, you would save the order to the database here
-                // and handle the payment processing
+                try
+                {
+                    // Get the current active shift
+                    var activeShift = _dao.Shifts.GetAll().FirstOrDefault(s => s.Status == "Open");
+                    if (activeShift == null)
+                    {
+                        // Create a new shift if no active shift exists
+                        activeShift = new Shift
+                        {
+                            StartTime = DateTime.Now,
+                            OpeningCash = 0,
+                            TotalSales = 0,
+                            TotalOrders = 0,
+                            Status = "Open"
+                        };
+                        _dao.Shifts.Insert(activeShift);
+                    }
 
-                // For now, just create a new order
+                    // Create a new Order object
+                    var order = new Order
+                    {
+                        CustomerID = SelectedCustomer?.CustomerID,
+                        ShiftID = activeShift.ShiftID,
+                        TotalAmount = Subtotal,
+                        Discount = Discount,
+                        FinalAmount = Total,
+                        PaymentMethod = "Cash",
+                        Status = "Completed"
+                    };
+
+                    // Create order items
+                    var orderItems = OrderItems.Select(item => new OrderDetail
+                    {
+                        MenuItemID = item.MenuItemID,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.UnitPrice,
+                        Subtotal = item.Total
+                    }).ToList();
+
+                    // Save order to database
+                    bool success = _dao.Orders.Insert(order);
+                    if (success)
+                    {
+                        // Save order details
+                        foreach (var item in orderItems)
+                        {
+                            item.OrderID = order.OrderID;
+                            _dao.OrderDetails.Insert(item);
+                        }
+
+                        // Update customer loyalty points if applicable
+                        if (SelectedCustomer != null)
+                        {
+                            SelectedCustomer.LoyaltyPoints += (int)(Total / 10); // 1 point per $10 spent
+                            _dao.Customers.Update(SelectedCustomer.CustomerID, SelectedCustomer);
+                        }
+
+                        // Create a transaction record
+                        var transaction = new Transaction
+                        {
+                            OrderID = order.OrderID,
+                            AmountPaid = Total,
+                            PaymentMethod = order.PaymentMethod
+                        };
+                        _dao.Transactions.Insert(transaction);
+
+                        // Link order to the shift
+                        var shiftOrder = new ShiftOrder
+                        {
+                            ShiftID = activeShift.ShiftID,
+                            OrderID = order.OrderID
+                        };
+                        _dao.ShiftOrders.Insert(shiftOrder);
+
+                        // Update shift statistics
+                        activeShift.TotalSales += Total;
+                        activeShift.TotalOrders += 1;
+                        _dao.Shifts.Update(activeShift.ShiftID, activeShift);
+                    }
+                }
+                catch (Exception)
+                {
+                    // Log error or handle exception
+                    // In a real app, you might want to show an error message
+                }
+
+                // Create a new order
                 CreateNewOrder();
             }
         }
@@ -245,10 +355,71 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         {
             if (OrderItems.Count > 0)
             {
-                // In a real app, you would save the order to the database here
-                // and handle the payment processing
+                try
+                {
+                    // Get the current active shift
+                    var activeShift = _dao.Shifts.GetAll().FirstOrDefault(s => s.Status == "Open");
+                    if (activeShift == null)
+                    {
+                        // Create a new shift if no active shift exists
+                        activeShift = new Shift
+                        {
+                            StartTime = DateTime.Now,
+                            OpeningCash = 0,
+                            TotalSales = 0,
+                            TotalOrders = 0,
+                            Status = "Open"
+                        };
+                        _dao.Shifts.Insert(activeShift);
+                    }
 
-                // For now, just create a new order
+                    // Create a new Order object
+                    var order = new Order
+                    {
+                        CustomerID = SelectedCustomer?.CustomerID,
+                        ShiftID = activeShift.ShiftID,
+                        TotalAmount = Subtotal,
+                        Discount = Discount,
+                        FinalAmount = Total,
+                        PaymentMethod = "Card",
+                        Status = "Completed"
+                    };
+
+                    // Create order items
+                    var orderItems = OrderItems.Select(item => new OrderDetail
+                    {
+                        MenuItemID = item.MenuItemID,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.UnitPrice,
+                        Subtotal = item.Total
+                    }).ToList();
+
+                    // Save order to database
+                    bool success = _dao.Orders.Insert(order);
+                    if (success)
+                    {
+                        // Save order details
+                        foreach (var item in orderItems)
+                        {
+                            item.OrderID = order.OrderID;
+                            _dao.OrderDetails.Insert(item);
+                        }
+
+                        // Update customer loyalty points if applicable
+                        if (SelectedCustomer != null)
+                        {
+                            SelectedCustomer.LoyaltyPoints += (int)(Total / 10); // 1 point per $10 spent
+                            _dao.Customers.Update(SelectedCustomer.CustomerID, SelectedCustomer);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    // Log error or handle exception
+                    // In a real app, you might want to show an error message
+                }
+
+                // Create a new order
                 CreateNewOrder();
             }
         }
@@ -264,6 +435,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         {
             SelectedCustomer = customer;
             // You could apply customer-specific discounts or loyalty points here
+            OnPropertyChanged(nameof(SelectedCustomer));
             UpdateOrderSummary();
         }
 
@@ -271,8 +443,8 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         public void ClearSelectedCustomer()
         {
             SelectedCustomer = null;
+            OnPropertyChanged(nameof(SelectedCustomer));
             UpdateOrderSummary();
         }
     }
 }
-

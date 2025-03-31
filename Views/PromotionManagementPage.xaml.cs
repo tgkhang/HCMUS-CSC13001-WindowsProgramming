@@ -180,7 +180,6 @@ namespace POS_For_Small_Shop.Views
         public void SaveNewPromotion()
         {
             ViewModel.SelectedItems = addPromotionForm.TempSelectedItems;
-            //ViewModel.AddPromotion();
             CloseAddFormPopup();
         }
 

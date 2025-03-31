@@ -50,10 +50,10 @@ namespace POS_For_Small_Shop.ViewModels
 
 
             // Initialize the commands
-            AddPromotionCommand = new RelayCommand(AddPromotion, () => true);
-            UpdatePromotionCommand = new RelayCommand(UpdateSelectedPromotion, () => SelectedPromotion != null);
-            DeletePromotionCommand = new RelayCommand(DeleteSelectedPromotion, () => SelectedPromotion != null);
-            SearchPromotionByNameCommand = new RelayCommand<string>(SearchPromotionByName);
+            //AddPromotionCommand = new RelayCommand(AddPromotion, () => true);
+            //UpdatePromotionCommand = new RelayCommand(UpdateSelectedPromotion, () => SelectedPromotion != null);
+            //DeletePromotionCommand = new RelayCommand(DeleteSelectedPromotion, () => SelectedPromotion != null);
+            //SearchPromotionByNameCommand = new RelayCommand<string>(SearchPromotionByName);
         }
 
         public void AddPromotion()

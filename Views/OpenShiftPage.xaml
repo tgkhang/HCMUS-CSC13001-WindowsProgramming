@@ -72,7 +72,7 @@
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
-
+                    <!-- 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Bottom">
                         <Button x:Name="RefreshButton" 
                                 Click="RefreshButton_Click"
@@ -91,6 +91,7 @@
                             </StackPanel>
                         </Button>
                     </StackPanel>
+                    -->
                 </Grid>
             </NavigationView.Header>
 

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.HelpPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Padding="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Help and Support" Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,20"/>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Spacing="24" MaxWidth="800">
+                <!-- Quick Start Guide -->
+                <Expander Header="Quick Start Guide" IsExpanded="True">
+                    <StackPanel Spacing="12" Margin="0,12,0,0">
+                        <TextBlock TextWrapping="Wrap">
+                         <Run FontWeight="SemiBold">1. Create a new order:</Run> Click on "New Order" in the navigation menu to create a new sales transaction.
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap">
+                         <Run FontWeight="SemiBold">2. Add products:</Run> Select products from the catalog to add them to the current order.
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap">
+                         <Run FontWeight="SemiBold">3. Process payment:</Run> Choose a payment method (cash or card) to complete the transaction.
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap">
+                         <Run FontWeight="SemiBold">4. Close shift:</Run> At the end of your work period, click "Close Shift" to reconcile cash and finalize the shift.
+                        </TextBlock>
+                    </StackPanel>
+                </Expander>
+
+                <!-- FAQ -->
+                <Expander Header="Frequently Asked Questions">
+                    <StackPanel Spacing="16" Margin="0,12,0,0">
+                        <StackPanel>
+                            <TextBlock Text="How do I add a new customer?" FontWeight="SemiBold"/>
+                            <TextBlock TextWrapping="Wrap" Margin="0,4,0,0">
+                             Navigate to the Customers page and click the "Add Customer" button. Fill in the required information and click "Save".
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="How do I apply a discount?" FontWeight="SemiBold"/>
+                            <TextBlock TextWrapping="Wrap" Margin="0,4,0,0">
+                             In the order screen, select a discount percentage from the dropdown menu in the order summary section.
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="How do I view past orders?" FontWeight="SemiBold"/>
+                            <TextBlock TextWrapping="Wrap" Margin="0,4,0,0">
+                             Click on "Order History" in the navigation menu to view all past transactions.
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Expander>
+
+                <!-- Contact Support -->
+                <Expander Header="Contact Support">
+                    <StackPanel Spacing="12" Margin="0,12,0,0">
+                        <TextBlock TextWrapping="Wrap">
+                         If you need additional help, please contact our support team:
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE715;" FontSize="16"/>
+                            <TextBlock Text="support@coffeeshoppos.com"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE717;" FontSize="16"/>
+                            <TextBlock Text="+1 (555) 123-4567"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE8F1;" FontSize="16"/>
+                            <TextBlock Text="Available Monday-Friday, 9AM-5PM"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Expander>
+
+                <!-- System Information -->
+                <Expander Header="System Information">
+                    <Grid Margin="0,12,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Version:" Margin="0,0,24,8"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="1.0.0" Margin="0,0,0,8"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Build Date:" Margin="0,0,24,8"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="March 16, 2025" Margin="0,0,0,8"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="License:" Margin="0,0,24,8"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="Commercial" Margin="0,0,0,8"/>
+                    </Grid>
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

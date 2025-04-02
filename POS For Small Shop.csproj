@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
@@ -20,10 +20,7 @@
     <None Remove="Views\CustomerManagementPage.xaml" />
     <None Remove="Views\HelpPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
-    <None Remove="Views\InventoryPage.xaml" />
-    <None Remove="Views\Inventory\AllIngredientPage.xaml" />
-    <None Remove="Views\Inventory\DeleteIngredientPage.xaml" />
-    <None Remove="Views\Inventory\EditIngredientPage.xaml" />
+    <None Remove="Views\Inventory\IngredientListPage.xaml" />
     <None Remove="Views\Inventory\ReadIngredientPage.xaml" />
     <None Remove="Views\MenuManagement\MenuItemListPage.xaml" />
     <None Remove="Views\MenuManagement\MenuManagementPage.xaml" />
@@ -76,20 +73,12 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="9.0.4" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+    <PackageReference Include="Uno.CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.204" />
   </ItemGroup>
 
   <!-- Page Updates -->
   <ItemGroup>
     <Page Update="Views\Inventory\ReadIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Inventory\DeleteIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Inventory\EditIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Inventory\AllIngredientPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\InventoryPage.xaml">
@@ -143,13 +132,16 @@
     <Page Update="Components\ProductItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Inventory\AddIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Assets\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Inventory\IngredientListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

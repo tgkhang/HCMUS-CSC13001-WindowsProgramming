@@ -1,0 +1,1204 @@
+Folder PATH listing for volume DATA
+Volume serial number is 7503-6970
+D:.
+³   .gitignore
+³   app.manifest
+³   App.xaml
+³   App.xaml.cs
+³   FodyWeavers.xml
+³   FodyWeavers.xsd
+³   Package.appxmanifest
+³   POS For Small Shop.csproj
+³   POS For Small Shop.sln
+³   project_structure.txt
+³   README.md
+³   
+ÃÄÄÄAssets
+³   ³   LockScreenLogo.scale-200.png
+³   ³   SplashScreen.scale-200.png
+³   ³   Square150x150Logo.scale-200.png
+³   ³   Square44x44Logo.scale-200.png
+³   ³   Square44x44Logo.targetsize-24_altform-unplated.png
+³   ³   StoreLogo.png
+³   ³   Wide310x150Logo.scale-200.png
+³   ³   
+³   ÀÄÄÄImages
+³           cappuccino.jpg
+³           croissant.jpg
+³           espresso.jpg
+³           latte.jpg
+³           muffin.jpg
+³           
+ÃÄÄÄbin
+³   ÃÄÄÄDebug
+³   ³   ÀÄÄÄnet8.0-windows10.0.19041.0
+³   ³       ÀÄÄÄwin-x64
+³   ³           ÀÄÄÄpublish
+³   ÀÄÄÄx64
+³       ÀÄÄÄDebug
+³           ÀÄÄÄnet8.0-windows10.0.19041.0
+³               ÀÄÄÄwin-x64
+³                   ³   App.xbf
+³                   ³   AppxManifest.xml
+³                   ³   Azure.Core.dll
+³                   ³   Azure.Identity.dll
+³                   ³   clretwrc.dll
+³                   ³   clrgc.dll
+³                   ³   clrjit.dll
+³                   ³   CommunityToolkit.WinUI.UI.Controls.DataGrid.dll
+³                   ³   coreclr.dll
+³                   ³   createdump.exe
+³                   ³   Dapper.dll
+³                   ³   hostfxr.dll
+³                   ³   hostpolicy.dll
+³                   ³   Humanizer.dll
+³                   ³   Microsoft.Bcl.AsyncInterfaces.dll
+³                   ³   Microsoft.Build.Locator.dll
+³                   ³   Microsoft.CodeAnalysis.CSharp.dll
+³                   ³   Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+³                   ³   Microsoft.CodeAnalysis.dll
+³                   ³   Microsoft.CodeAnalysis.Workspaces.dll
+³                   ³   Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+³                   ³   Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+³                   ³   Microsoft.CSharp.dll
+³                   ³   Microsoft.Data.SqlClient.dll
+³                   ³   Microsoft.Data.SqlClient.SNI.dll
+³                   ³   Microsoft.DiaSymReader.Native.amd64.dll
+³                   ³   Microsoft.EntityFrameworkCore.Abstractions.dll
+³                   ³   Microsoft.EntityFrameworkCore.Design.dll
+³                   ³   Microsoft.EntityFrameworkCore.dll
+³                   ³   Microsoft.EntityFrameworkCore.Relational.dll
+³                   ³   Microsoft.EntityFrameworkCore.SqlServer.dll
+³                   ³   Microsoft.Extensions.Caching.Abstractions.dll
+³                   ³   Microsoft.Extensions.Caching.Memory.dll
+³                   ³   Microsoft.Extensions.Configuration.Abstractions.dll
+³                   ³   Microsoft.Extensions.DependencyInjection.Abstractions.dll
+³                   ³   Microsoft.Extensions.DependencyInjection.dll
+³                   ³   Microsoft.Extensions.DependencyModel.dll
+³                   ³   Microsoft.Extensions.Logging.Abstractions.dll
+³                   ³   Microsoft.Extensions.Logging.dll
+³                   ³   Microsoft.Extensions.Options.dll
+³                   ³   Microsoft.Extensions.Primitives.dll
+³                   ³   Microsoft.Identity.Client.dll
+³                   ³   Microsoft.Identity.Client.Extensions.Msal.dll
+³                   ³   Microsoft.IdentityModel.Abstractions.dll
+³                   ³   Microsoft.IdentityModel.JsonWebTokens.dll
+³                   ³   Microsoft.IdentityModel.Logging.dll
+³                   ³   Microsoft.IdentityModel.Protocols.dll
+³                   ³   Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+³                   ³   Microsoft.IdentityModel.Tokens.dll
+³                   ³   Microsoft.InteractiveExperiences.Projection.dll
+³                   ³   Microsoft.SqlServer.Server.dll
+³                   ³   Microsoft.VisualBasic.Core.dll
+³                   ³   Microsoft.VisualBasic.dll
+³                   ³   Microsoft.Web.WebView2.Core.dll
+³                   ³   Microsoft.Web.WebView2.Core.Projection.dll
+³                   ³   Microsoft.Win32.Primitives.dll
+³                   ³   Microsoft.Win32.Registry.dll
+³                   ³   Microsoft.Win32.SystemEvents.dll
+³                   ³   Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll
+³                   ³   Microsoft.Windows.ApplicationModel.Resources.Projection.dll
+³                   ³   Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll
+³                   ³   Microsoft.Windows.AppLifecycle.Projection.dll
+³                   ³   Microsoft.Windows.AppNotifications.Builder.Projection.dll
+³                   ³   Microsoft.Windows.AppNotifications.Projection.dll
+³                   ³   Microsoft.Windows.Management.Deployment.Projection.dll
+³                   ³   Microsoft.Windows.PushNotifications.Projection.dll
+³                   ³   Microsoft.Windows.SDK.NET.dll
+³                   ³   Microsoft.Windows.Security.AccessControl.Projection.dll
+³                   ³   Microsoft.Windows.Storage.Projection.dll
+³                   ³   Microsoft.Windows.System.Power.Projection.dll
+³                   ³   Microsoft.Windows.System.Projection.dll
+³                   ³   Microsoft.Windows.Widgets.Projection.dll
+³                   ³   Microsoft.WindowsAppRuntime.Bootstrap.dll
+³                   ³   Microsoft.WindowsAppRuntime.Bootstrap.Net.dll
+³                   ³   Microsoft.WinUI.dll
+³                   ³   Mono.TextTemplating.dll
+³                   ³   mscordaccore.dll
+³                   ³   mscordaccore_amd64_amd64_8.0.1325.6609.dll
+³                   ³   mscordbi.dll
+³                   ³   mscorlib.dll
+³                   ³   mscorrc.dll
+³                   ³   msquic.dll
+³                   ³   netstandard.dll
+³                   ³   NetTopologySuite.dll
+³                   ³   NetTopologySuite.IO.PostGis.dll
+³                   ³   Npgsql.dll
+³                   ³   Npgsql.EntityFrameworkCore.PostgreSQL.dll
+³                   ³   Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
+³                   ³   Npgsql.NetTopologySuite.dll
+³                   ³   POS For Small Shop.build.appxrecipe
+³                   ³   POS For Small Shop.deps.json
+³                   ³   POS For Small Shop.dll
+³                   ³   POS For Small Shop.exe
+³                   ³   POS For Small Shop.pdb
+³                   ³   POS For Small Shop.runtimeconfig.json
+³                   ³   resources.pri
+³                   ³   System.AppContext.dll
+³                   ³   System.Buffers.dll
+³                   ³   System.ClientModel.dll
+³                   ³   System.CodeDom.dll
+³                   ³   System.Collections.Concurrent.dll
+³                   ³   System.Collections.dll
+³                   ³   System.Collections.Immutable.dll
+³                   ³   System.Collections.NonGeneric.dll
+³                   ³   System.Collections.Specialized.dll
+³                   ³   System.ComponentModel.Annotations.dll
+³                   ³   System.ComponentModel.DataAnnotations.dll
+³                   ³   System.ComponentModel.dll
+³                   ³   System.ComponentModel.EventBasedAsync.dll
+³                   ³   System.ComponentModel.Primitives.dll
+³                   ³   System.ComponentModel.TypeConverter.dll
+³                   ³   System.Composition.AttributedModel.dll
+³                   ³   System.Composition.Convention.dll
+³                   ³   System.Composition.Hosting.dll
+³                   ³   System.Composition.Runtime.dll
+³                   ³   System.Composition.TypedParts.dll
+³                   ³   System.Configuration.ConfigurationManager.dll
+³                   ³   System.Configuration.dll
+³                   ³   System.Console.dll
+³                   ³   System.Core.dll
+³                   ³   System.Data.Common.dll
+³                   ³   System.Data.DataSetExtensions.dll
+³                   ³   System.Data.dll
+³                   ³   System.Diagnostics.Contracts.dll
+³                   ³   System.Diagnostics.Debug.dll
+³                   ³   System.Diagnostics.DiagnosticSource.dll
+³                   ³   System.Diagnostics.FileVersionInfo.dll
+³                   ³   System.Diagnostics.Process.dll
+³                   ³   System.Diagnostics.StackTrace.dll
+³                   ³   System.Diagnostics.TextWriterTraceListener.dll
+³                   ³   System.Diagnostics.Tools.dll
+³                   ³   System.Diagnostics.TraceSource.dll
+³                   ³   System.Diagnostics.Tracing.dll
+³                   ³   System.dll
+³                   ³   System.Drawing.Common.dll
+³                   ³   System.Drawing.dll
+³                   ³   System.Drawing.Primitives.dll
+³                   ³   System.Dynamic.Runtime.dll
+³                   ³   System.Formats.Asn1.dll
+³                   ³   System.Formats.Tar.dll
+³                   ³   System.Globalization.Calendars.dll
+³                   ³   System.Globalization.dll
+³                   ³   System.Globalization.Extensions.dll
+³                   ³   System.IdentityModel.Tokens.Jwt.dll
+³                   ³   System.IO.Compression.Brotli.dll
+³                   ³   System.IO.Compression.dll
+³                   ³   System.IO.Compression.FileSystem.dll
+³                   ³   System.IO.Compression.Native.dll
+³                   ³   System.IO.Compression.ZipFile.dll
+³                   ³   System.IO.dll
+³                   ³   System.IO.FileSystem.AccessControl.dll
+³                   ³   System.IO.FileSystem.dll
+³                   ³   System.IO.FileSystem.DriveInfo.dll
+³                   ³   System.IO.FileSystem.Primitives.dll
+³                   ³   System.IO.FileSystem.Watcher.dll
+³                   ³   System.IO.IsolatedStorage.dll
+³                   ³   System.IO.MemoryMappedFiles.dll
+³                   ³   System.IO.Pipelines.dll
+³                   ³   System.IO.Pipes.AccessControl.dll
+³                   ³   System.IO.Pipes.dll
+³                   ³   System.IO.UnmanagedMemoryStream.dll
+³                   ³   System.Linq.dll
+³                   ³   System.Linq.Expressions.dll
+³                   ³   System.Linq.Parallel.dll
+³                   ³   System.Linq.Queryable.dll
+³                   ³   System.Memory.Data.dll
+³                   ³   System.Memory.dll
+³                   ³   System.Net.dll
+³                   ³   System.Net.Http.dll
+³                   ³   System.Net.Http.Json.dll
+³                   ³   System.Net.HttpListener.dll
+³                   ³   System.Net.Mail.dll
+³                   ³   System.Net.NameResolution.dll
+³                   ³   System.Net.NetworkInformation.dll
+³                   ³   System.Net.Ping.dll
+³                   ³   System.Net.Primitives.dll
+³                   ³   System.Net.Quic.dll
+³                   ³   System.Net.Requests.dll
+³                   ³   System.Net.Security.dll
+³                   ³   System.Net.ServicePoint.dll
+³                   ³   System.Net.Sockets.dll
+³                   ³   System.Net.WebClient.dll
+³                   ³   System.Net.WebHeaderCollection.dll
+³                   ³   System.Net.WebProxy.dll
+³                   ³   System.Net.WebSockets.Client.dll
+³                   ³   System.Net.WebSockets.dll
+³                   ³   System.Numerics.dll
+³                   ³   System.Numerics.Vectors.dll
+³                   ³   System.ObjectModel.dll
+³                   ³   System.Private.CoreLib.dll
+³                   ³   System.Private.DataContractSerialization.dll
+³                   ³   System.Private.Uri.dll
+³                   ³   System.Private.Xml.dll
+³                   ³   System.Private.Xml.Linq.dll
+³                   ³   System.Reflection.DispatchProxy.dll
+³                   ³   System.Reflection.dll
+³                   ³   System.Reflection.Emit.dll
+³                   ³   System.Reflection.Emit.ILGeneration.dll
+³                   ³   System.Reflection.Emit.Lightweight.dll
+³                   ³   System.Reflection.Extensions.dll
+³                   ³   System.Reflection.Metadata.dll
+³                   ³   System.Reflection.Primitives.dll
+³                   ³   System.Reflection.TypeExtensions.dll
+³                   ³   System.Resources.Reader.dll
+³                   ³   System.Resources.ResourceManager.dll
+³                   ³   System.Resources.Writer.dll
+³                   ³   System.Runtime.Caching.dll
+³                   ³   System.Runtime.CompilerServices.Unsafe.dll
+³                   ³   System.Runtime.CompilerServices.VisualC.dll
+³                   ³   System.Runtime.dll
+³                   ³   System.Runtime.Extensions.dll
+³                   ³   System.Runtime.Handles.dll
+³                   ³   System.Runtime.InteropServices.dll
+³                   ³   System.Runtime.InteropServices.JavaScript.dll
+³                   ³   System.Runtime.InteropServices.RuntimeInformation.dll
+³                   ³   System.Runtime.InteropServices.WindowsRuntime.dll
+³                   ³   System.Runtime.Intrinsics.dll
+³                   ³   System.Runtime.Loader.dll
+³                   ³   System.Runtime.Numerics.dll
+³                   ³   System.Runtime.Serialization.dll
+³                   ³   System.Runtime.Serialization.Formatters.dll
+³                   ³   System.Runtime.Serialization.Json.dll
+³                   ³   System.Runtime.Serialization.Primitives.dll
+³                   ³   System.Runtime.Serialization.Xml.dll
+³                   ³   System.Security.AccessControl.dll
+³                   ³   System.Security.Claims.dll
+³                   ³   System.Security.Cryptography.Algorithms.dll
+³                   ³   System.Security.Cryptography.Cng.dll
+³                   ³   System.Security.Cryptography.Csp.dll
+³                   ³   System.Security.Cryptography.dll
+³                   ³   System.Security.Cryptography.Encoding.dll
+³                   ³   System.Security.Cryptography.OpenSsl.dll
+³                   ³   System.Security.Cryptography.Primitives.dll
+³                   ³   System.Security.Cryptography.ProtectedData.dll
+³                   ³   System.Security.Cryptography.X509Certificates.dll
+³                   ³   System.Security.dll
+³                   ³   System.Security.Permissions.dll
+³                   ³   System.Security.Principal.dll
+³                   ³   System.Security.Principal.Windows.dll
+³                   ³   System.Security.SecureString.dll
+³                   ³   System.ServiceModel.Web.dll
+³                   ³   System.ServiceProcess.dll
+³                   ³   System.Text.Encoding.CodePages.dll
+³                   ³   System.Text.Encoding.dll
+³                   ³   System.Text.Encoding.Extensions.dll
+³                   ³   System.Text.Encodings.Web.dll
+³                   ³   System.Text.Json.dll
+³                   ³   System.Text.RegularExpressions.dll
+³                   ³   System.Threading.Channels.dll
+³                   ³   System.Threading.dll
+³                   ³   System.Threading.Overlapped.dll
+³                   ³   System.Threading.Tasks.Dataflow.dll
+³                   ³   System.Threading.Tasks.dll
+³                   ³   System.Threading.Tasks.Extensions.dll
+³                   ³   System.Threading.Tasks.Parallel.dll
+³                   ³   System.Threading.Thread.dll
+³                   ³   System.Threading.ThreadPool.dll
+³                   ³   System.Threading.Timer.dll
+³                   ³   System.Transactions.dll
+³                   ³   System.Transactions.Local.dll
+³                   ³   System.ValueTuple.dll
+³                   ³   System.Web.dll
+³                   ³   System.Web.HttpUtility.dll
+³                   ³   System.Windows.dll
+³                   ³   System.Windows.Extensions.dll
+³                   ³   System.Xml.dll
+³                   ³   System.Xml.Linq.dll
+³                   ³   System.Xml.ReaderWriter.dll
+³                   ³   System.Xml.Serialization.dll
+³                   ³   System.Xml.XDocument.dll
+³                   ³   System.Xml.XmlDocument.dll
+³                   ³   System.Xml.XmlSerializer.dll
+³                   ³   System.Xml.XPath.dll
+³                   ³   System.Xml.XPath.XDocument.dll
+³                   ³   Uno.Diagnostics.Eventing.dll
+³                   ³   Uno.Fonts.Fluent.dll
+³                   ³   Uno.Foundation.Logging.dll
+³                   ³   Uno.UI.Toolkit.dll
+³                   ³   WebView2Loader.dll
+³                   ³   WindowsBase.dll
+³                   ³   WinRT.Runtime.dll
+³                   ³   
+³                   ÃÄÄÄAppX
+³                   ³   ³   AppxManifest.xml
+³                   ³   ³   Azure.Core.dll
+³                   ³   ³   Azure.Identity.dll
+³                   ³   ³   clretwrc.dll
+³                   ³   ³   clrgc.dll
+³                   ³   ³   clrjit.dll
+³                   ³   ³   CommunityToolkit.WinUI.UI.Controls.DataGrid.dll
+³                   ³   ³   coreclr.dll
+³                   ³   ³   createdump.exe
+³                   ³   ³   Dapper.dll
+³                   ³   ³   hostfxr.dll
+³                   ³   ³   hostpolicy.dll
+³                   ³   ³   Humanizer.dll
+³                   ³   ³   Microsoft.Bcl.AsyncInterfaces.dll
+³                   ³   ³   Microsoft.Build.Locator.dll
+³                   ³   ³   Microsoft.CodeAnalysis.CSharp.dll
+³                   ³   ³   Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+³                   ³   ³   Microsoft.CodeAnalysis.dll
+³                   ³   ³   Microsoft.CodeAnalysis.Workspaces.dll
+³                   ³   ³   Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+³                   ³   ³   Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+³                   ³   ³   Microsoft.CSharp.dll
+³                   ³   ³   Microsoft.Data.SqlClient.dll
+³                   ³   ³   Microsoft.Data.SqlClient.SNI.dll
+³                   ³   ³   Microsoft.DiaSymReader.Native.amd64.dll
+³                   ³   ³   Microsoft.EntityFrameworkCore.Abstractions.dll
+³                   ³   ³   Microsoft.EntityFrameworkCore.Design.dll
+³                   ³   ³   Microsoft.EntityFrameworkCore.dll
+³                   ³   ³   Microsoft.EntityFrameworkCore.Relational.dll
+³                   ³   ³   Microsoft.EntityFrameworkCore.SqlServer.dll
+³                   ³   ³   Microsoft.Extensions.Caching.Abstractions.dll
+³                   ³   ³   Microsoft.Extensions.Caching.Memory.dll
+³                   ³   ³   Microsoft.Extensions.Configuration.Abstractions.dll
+³                   ³   ³   Microsoft.Extensions.DependencyInjection.Abstractions.dll
+³                   ³   ³   Microsoft.Extensions.DependencyInjection.dll
+³                   ³   ³   Microsoft.Extensions.DependencyModel.dll
+³                   ³   ³   Microsoft.Extensions.Logging.Abstractions.dll
+³                   ³   ³   Microsoft.Extensions.Logging.dll
+³                   ³   ³   Microsoft.Extensions.Options.dll
+³                   ³   ³   Microsoft.Extensions.Primitives.dll
+³                   ³   ³   Microsoft.Identity.Client.dll
+³                   ³   ³   Microsoft.Identity.Client.Extensions.Msal.dll
+³                   ³   ³   Microsoft.IdentityModel.Abstractions.dll
+³                   ³   ³   Microsoft.IdentityModel.JsonWebTokens.dll
+³                   ³   ³   Microsoft.IdentityModel.Logging.dll
+³                   ³   ³   Microsoft.IdentityModel.Protocols.dll
+³                   ³   ³   Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+³                   ³   ³   Microsoft.IdentityModel.Tokens.dll
+³                   ³   ³   Microsoft.InteractiveExperiences.Projection.dll
+³                   ³   ³   Microsoft.SqlServer.Server.dll
+³                   ³   ³   Microsoft.VisualBasic.Core.dll
+³                   ³   ³   Microsoft.VisualBasic.dll
+³                   ³   ³   Microsoft.Web.WebView2.Core.dll
+³                   ³   ³   Microsoft.Web.WebView2.Core.Projection.dll
+³                   ³   ³   Microsoft.Win32.Primitives.dll
+³                   ³   ³   Microsoft.Win32.Registry.dll
+³                   ³   ³   Microsoft.Win32.SystemEvents.dll
+³                   ³   ³   Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll
+³                   ³   ³   Microsoft.Windows.ApplicationModel.Resources.Projection.dll
+³                   ³   ³   Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll
+³                   ³   ³   Microsoft.Windows.AppLifecycle.Projection.dll
+³                   ³   ³   Microsoft.Windows.AppNotifications.Builder.Projection.dll
+³                   ³   ³   Microsoft.Windows.AppNotifications.Projection.dll
+³                   ³   ³   Microsoft.Windows.Management.Deployment.Projection.dll
+³                   ³   ³   Microsoft.Windows.PushNotifications.Projection.dll
+³                   ³   ³   Microsoft.Windows.SDK.NET.dll
+³                   ³   ³   Microsoft.Windows.Security.AccessControl.Projection.dll
+³                   ³   ³   Microsoft.Windows.Storage.Projection.dll
+³                   ³   ³   Microsoft.Windows.System.Power.Projection.dll
+³                   ³   ³   Microsoft.Windows.System.Projection.dll
+³                   ³   ³   Microsoft.Windows.Widgets.Projection.dll
+³                   ³   ³   Microsoft.WindowsAppRuntime.Bootstrap.dll
+³                   ³   ³   Microsoft.WindowsAppRuntime.Bootstrap.Net.dll
+³                   ³   ³   Microsoft.WinUI.dll
+³                   ³   ³   Mono.TextTemplating.dll
+³                   ³   ³   mscordaccore.dll
+³                   ³   ³   mscordaccore_amd64_amd64_8.0.1325.6609.dll
+³                   ³   ³   mscordbi.dll
+³                   ³   ³   mscorlib.dll
+³                   ³   ³   mscorrc.dll
+³                   ³   ³   msquic.dll
+³                   ³   ³   netstandard.dll
+³                   ³   ³   NetTopologySuite.dll
+³                   ³   ³   NetTopologySuite.IO.PostGis.dll
+³                   ³   ³   Npgsql.dll
+³                   ³   ³   Npgsql.EntityFrameworkCore.PostgreSQL.dll
+³                   ³   ³   Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
+³                   ³   ³   Npgsql.NetTopologySuite.dll
+³                   ³   ³   POS For Small Shop.deps.json
+³                   ³   ³   POS For Small Shop.dll
+³                   ³   ³   POS For Small Shop.exe
+³                   ³   ³   POS For Small Shop.runtimeconfig.json
+³                   ³   ³   PropertyChanged.dll
+³                   ³   ³   resources.pri
+³                   ³   ³   System.AppContext.dll
+³                   ³   ³   System.Buffers.dll
+³                   ³   ³   System.ClientModel.dll
+³                   ³   ³   System.CodeDom.dll
+³                   ³   ³   System.Collections.Concurrent.dll
+³                   ³   ³   System.Collections.dll
+³                   ³   ³   System.Collections.Immutable.dll
+³                   ³   ³   System.Collections.NonGeneric.dll
+³                   ³   ³   System.Collections.Specialized.dll
+³                   ³   ³   System.ComponentModel.Annotations.dll
+³                   ³   ³   System.ComponentModel.DataAnnotations.dll
+³                   ³   ³   System.ComponentModel.dll
+³                   ³   ³   System.ComponentModel.EventBasedAsync.dll
+³                   ³   ³   System.ComponentModel.Primitives.dll
+³                   ³   ³   System.ComponentModel.TypeConverter.dll
+³                   ³   ³   System.Composition.AttributedModel.dll
+³                   ³   ³   System.Composition.Convention.dll
+³                   ³   ³   System.Composition.Hosting.dll
+³                   ³   ³   System.Composition.Runtime.dll
+³                   ³   ³   System.Composition.TypedParts.dll
+³                   ³   ³   System.Configuration.ConfigurationManager.dll
+³                   ³   ³   System.Configuration.dll
+³                   ³   ³   System.Console.dll
+³                   ³   ³   System.Core.dll
+³                   ³   ³   System.Data.Common.dll
+³                   ³   ³   System.Data.DataSetExtensions.dll
+³                   ³   ³   System.Data.dll
+³                   ³   ³   System.Diagnostics.Contracts.dll
+³                   ³   ³   System.Diagnostics.Debug.dll
+³                   ³   ³   System.Diagnostics.DiagnosticSource.dll
+³                   ³   ³   System.Diagnostics.FileVersionInfo.dll
+³                   ³   ³   System.Diagnostics.Process.dll
+³                   ³   ³   System.Diagnostics.StackTrace.dll
+³                   ³   ³   System.Diagnostics.TextWriterTraceListener.dll
+³                   ³   ³   System.Diagnostics.Tools.dll
+³                   ³   ³   System.Diagnostics.TraceSource.dll
+³                   ³   ³   System.Diagnostics.Tracing.dll
+³                   ³   ³   System.dll
+³                   ³   ³   System.Drawing.Common.dll
+³                   ³   ³   System.Drawing.dll
+³                   ³   ³   System.Drawing.Primitives.dll
+³                   ³   ³   System.Dynamic.Runtime.dll
+³                   ³   ³   System.Formats.Asn1.dll
+³                   ³   ³   System.Formats.Tar.dll
+³                   ³   ³   System.Globalization.Calendars.dll
+³                   ³   ³   System.Globalization.dll
+³                   ³   ³   System.Globalization.Extensions.dll
+³                   ³   ³   System.IdentityModel.Tokens.Jwt.dll
+³                   ³   ³   System.IO.Compression.Brotli.dll
+³                   ³   ³   System.IO.Compression.dll
+³                   ³   ³   System.IO.Compression.FileSystem.dll
+³                   ³   ³   System.IO.Compression.Native.dll
+³                   ³   ³   System.IO.Compression.ZipFile.dll
+³                   ³   ³   System.IO.dll
+³                   ³   ³   System.IO.FileSystem.AccessControl.dll
+³                   ³   ³   System.IO.FileSystem.dll
+³                   ³   ³   System.IO.FileSystem.DriveInfo.dll
+³                   ³   ³   System.IO.FileSystem.Primitives.dll
+³                   ³   ³   System.IO.FileSystem.Watcher.dll
+³                   ³   ³   System.IO.IsolatedStorage.dll
+³                   ³   ³   System.IO.MemoryMappedFiles.dll
+³                   ³   ³   System.IO.Pipelines.dll
+³                   ³   ³   System.IO.Pipes.AccessControl.dll
+³                   ³   ³   System.IO.Pipes.dll
+³                   ³   ³   System.IO.UnmanagedMemoryStream.dll
+³                   ³   ³   System.Linq.dll
+³                   ³   ³   System.Linq.Expressions.dll
+³                   ³   ³   System.Linq.Parallel.dll
+³                   ³   ³   System.Linq.Queryable.dll
+³                   ³   ³   System.Memory.Data.dll
+³                   ³   ³   System.Memory.dll
+³                   ³   ³   System.Net.dll
+³                   ³   ³   System.Net.Http.dll
+³                   ³   ³   System.Net.Http.Json.dll
+³                   ³   ³   System.Net.HttpListener.dll
+³                   ³   ³   System.Net.Mail.dll
+³                   ³   ³   System.Net.NameResolution.dll
+³                   ³   ³   System.Net.NetworkInformation.dll
+³                   ³   ³   System.Net.Ping.dll
+³                   ³   ³   System.Net.Primitives.dll
+³                   ³   ³   System.Net.Quic.dll
+³                   ³   ³   System.Net.Requests.dll
+³                   ³   ³   System.Net.Security.dll
+³                   ³   ³   System.Net.ServicePoint.dll
+³                   ³   ³   System.Net.Sockets.dll
+³                   ³   ³   System.Net.WebClient.dll
+³                   ³   ³   System.Net.WebHeaderCollection.dll
+³                   ³   ³   System.Net.WebProxy.dll
+³                   ³   ³   System.Net.WebSockets.Client.dll
+³                   ³   ³   System.Net.WebSockets.dll
+³                   ³   ³   System.Numerics.dll
+³                   ³   ³   System.Numerics.Vectors.dll
+³                   ³   ³   System.ObjectModel.dll
+³                   ³   ³   System.Private.CoreLib.dll
+³                   ³   ³   System.Private.DataContractSerialization.dll
+³                   ³   ³   System.Private.Uri.dll
+³                   ³   ³   System.Private.Xml.dll
+³                   ³   ³   System.Private.Xml.Linq.dll
+³                   ³   ³   System.Reflection.DispatchProxy.dll
+³                   ³   ³   System.Reflection.dll
+³                   ³   ³   System.Reflection.Emit.dll
+³                   ³   ³   System.Reflection.Emit.ILGeneration.dll
+³                   ³   ³   System.Reflection.Emit.Lightweight.dll
+³                   ³   ³   System.Reflection.Extensions.dll
+³                   ³   ³   System.Reflection.Metadata.dll
+³                   ³   ³   System.Reflection.Primitives.dll
+³                   ³   ³   System.Reflection.TypeExtensions.dll
+³                   ³   ³   System.Resources.Reader.dll
+³                   ³   ³   System.Resources.ResourceManager.dll
+³                   ³   ³   System.Resources.Writer.dll
+³                   ³   ³   System.Runtime.Caching.dll
+³                   ³   ³   System.Runtime.CompilerServices.Unsafe.dll
+³                   ³   ³   System.Runtime.CompilerServices.VisualC.dll
+³                   ³   ³   System.Runtime.dll
+³                   ³   ³   System.Runtime.Extensions.dll
+³                   ³   ³   System.Runtime.Handles.dll
+³                   ³   ³   System.Runtime.InteropServices.dll
+³                   ³   ³   System.Runtime.InteropServices.JavaScript.dll
+³                   ³   ³   System.Runtime.InteropServices.RuntimeInformation.dll
+³                   ³   ³   System.Runtime.InteropServices.WindowsRuntime.dll
+³                   ³   ³   System.Runtime.Intrinsics.dll
+³                   ³   ³   System.Runtime.Loader.dll
+³                   ³   ³   System.Runtime.Numerics.dll
+³                   ³   ³   System.Runtime.Serialization.dll
+³                   ³   ³   System.Runtime.Serialization.Formatters.dll
+³                   ³   ³   System.Runtime.Serialization.Json.dll
+³                   ³   ³   System.Runtime.Serialization.Primitives.dll
+³                   ³   ³   System.Runtime.Serialization.Xml.dll
+³                   ³   ³   System.Security.AccessControl.dll
+³                   ³   ³   System.Security.Claims.dll
+³                   ³   ³   System.Security.Cryptography.Algorithms.dll
+³                   ³   ³   System.Security.Cryptography.Cng.dll
+³                   ³   ³   System.Security.Cryptography.Csp.dll
+³                   ³   ³   System.Security.Cryptography.dll
+³                   ³   ³   System.Security.Cryptography.Encoding.dll
+³                   ³   ³   System.Security.Cryptography.OpenSsl.dll
+³                   ³   ³   System.Security.Cryptography.Primitives.dll
+³                   ³   ³   System.Security.Cryptography.ProtectedData.dll
+³                   ³   ³   System.Security.Cryptography.X509Certificates.dll
+³                   ³   ³   System.Security.dll
+³                   ³   ³   System.Security.Permissions.dll
+³                   ³   ³   System.Security.Principal.dll
+³                   ³   ³   System.Security.Principal.Windows.dll
+³                   ³   ³   System.Security.SecureString.dll
+³                   ³   ³   System.ServiceModel.Web.dll
+³                   ³   ³   System.ServiceProcess.dll
+³                   ³   ³   System.Text.Encoding.CodePages.dll
+³                   ³   ³   System.Text.Encoding.dll
+³                   ³   ³   System.Text.Encoding.Extensions.dll
+³                   ³   ³   System.Text.Encodings.Web.dll
+³                   ³   ³   System.Text.Json.dll
+³                   ³   ³   System.Text.RegularExpressions.dll
+³                   ³   ³   System.Threading.Channels.dll
+³                   ³   ³   System.Threading.dll
+³                   ³   ³   System.Threading.Overlapped.dll
+³                   ³   ³   System.Threading.Tasks.Dataflow.dll
+³                   ³   ³   System.Threading.Tasks.dll
+³                   ³   ³   System.Threading.Tasks.Extensions.dll
+³                   ³   ³   System.Threading.Tasks.Parallel.dll
+³                   ³   ³   System.Threading.Thread.dll
+³                   ³   ³   System.Threading.ThreadPool.dll
+³                   ³   ³   System.Threading.Timer.dll
+³                   ³   ³   System.Transactions.dll
+³                   ³   ³   System.Transactions.Local.dll
+³                   ³   ³   System.ValueTuple.dll
+³                   ³   ³   System.Web.dll
+³                   ³   ³   System.Web.HttpUtility.dll
+³                   ³   ³   System.Windows.dll
+³                   ³   ³   System.Windows.Extensions.dll
+³                   ³   ³   System.Xml.dll
+³                   ³   ³   System.Xml.Linq.dll
+³                   ³   ³   System.Xml.ReaderWriter.dll
+³                   ³   ³   System.Xml.Serialization.dll
+³                   ³   ³   System.Xml.XDocument.dll
+³                   ³   ³   System.Xml.XmlDocument.dll
+³                   ³   ³   System.Xml.XmlSerializer.dll
+³                   ³   ³   System.Xml.XPath.dll
+³                   ³   ³   System.Xml.XPath.XDocument.dll
+³                   ³   ³   Uno.Diagnostics.Eventing.dll
+³                   ³   ³   Uno.dll
+³                   ³   ³   Uno.Fonts.Fluent.dll
+³                   ³   ³   Uno.Foundation.dll
+³                   ³   ³   Uno.Foundation.Logging.dll
+³                   ³   ³   Uno.UI.Composition.dll
+³                   ³   ³   Uno.UI.Dispatching.dll
+³                   ³   ³   Uno.UI.dll
+³                   ³   ³   Uno.UI.FluentTheme.dll
+³                   ³   ³   Uno.UI.FluentTheme.v1.dll
+³                   ³   ³   Uno.UI.FluentTheme.v2.dll
+³                   ³   ³   Uno.UI.Toolkit.dll
+³                   ³   ³   Uno.UI.Toolkit.pri
+³                   ³   ³   Uno.Xaml.dll
+³                   ³   ³   vs.appxrecipe
+³                   ³   ³   WebView2Loader.dll
+³                   ³   ³   WindowsBase.dll
+³                   ³   ³   WinRT.Runtime.dll
+³                   ³   ³   
+³                   ³   ÃÄÄÄAssets
+³                   ³   ³   ³   LockScreenLogo.scale-200.png
+³                   ³   ³   ³   SplashScreen.scale-200.png
+³                   ³   ³   ³   Square150x150Logo.scale-200.png
+³                   ³   ³   ³   Square44x44Logo.scale-200.png
+³                   ³   ³   ³   Square44x44Logo.targetsize-24_altform-unplated.png
+³                   ³   ³   ³   StoreLogo.png
+³                   ³   ³   ³   Wide310x150Logo.scale-200.png
+³                   ³   ³   ³   
+³                   ³   ³   ÀÄÄÄImages
+³                   ³   ³           cappuccino.jpg
+³                   ³   ³           croissant.jpg
+³                   ³   ³           espresso.jpg
+³                   ³   ³           latte.jpg
+³                   ³   ³           muffin.jpg
+³                   ³   ³           
+³                   ³   ÃÄÄÄcs
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄde
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄes
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄfr
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄit
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄja
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄko
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄpl
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄpt-BR
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄru
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄruntimes
+³                   ³   ³   ÀÄÄÄwin-x64
+³                   ³   ³       ÀÄÄÄnative
+³                   ³   ³               WebView2Loader.dll
+³                   ³   ³               
+³                   ³   ÃÄÄÄtr
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÃÄÄÄUno.UI.Toolkit
+³                   ³   ³   ÀÄÄÄThemes
+³                   ³   ³           Generic.xbf
+³                   ³   ³           
+³                   ³   ÃÄÄÄzh-Hans
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³   ³       
+³                   ³   ÀÄÄÄzh-Hant
+³                   ³           Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³           Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³           Microsoft.CodeAnalysis.resources.dll
+³                   ³           Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³           Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³           
+³                   ÃÄÄÄComponents
+³                   ³       ProductItem.xbf
+³                   ³       
+³                   ÃÄÄÄcs
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄde
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄes
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄfr
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄit
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄja
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄko
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄpl
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄpt-BR
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄru
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄruntimes
+³                   ³   ÀÄÄÄwin-x64
+³                   ³       ÀÄÄÄnative
+³                   ³               WebView2Loader.dll
+³                   ³               
+³                   ÃÄÄÄtr
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÃÄÄÄUno.UI.Toolkit
+³                   ³   ÀÄÄÄThemes
+³                   ³           Generic.xaml
+³                   ³           Generic.xbf
+³                   ³           
+³                   ÃÄÄÄViews
+³                   ³   ³   CustomerManagementPage.xbf
+³                   ³   ³   DashboardWindow.xbf
+³                   ³   ³   HelpPage.xbf
+³                   ³   ³   HomePage.xbf
+³                   ³   ³   InventoryPage.xbf
+³                   ³   ³   LoginWindow.xbf
+³                   ³   ³   OpenShiftPage.xbf
+³                   ³   ³   PromotionManagementPage.xbf
+³                   ³   ³   
+³                   ³   ÃÄÄÄInventory
+³                   ³   ³       AddIngredientPage.xbf
+³                   ³   ³       AllIngredientPage.xbf
+³                   ³   ³       DeleteIngredientPage.xbf
+³                   ³   ³       EditIngredientPage.xbf
+³                   ³   ³       ReadIngredientPage.xbf
+³                   ³   ³       
+³                   ³   ÃÄÄÄMenuManagement
+³                   ³   ³       MenuItemListPage.xbf
+³                   ³   ³       MenuManagementPage.xbf
+³                   ³   ³       
+³                   ³   ÃÄÄÄPromotionPopupForm
+³                   ³   ³       AddPromotionForm.xbf
+³                   ³   ³       UpdatePromotionForm.xbf
+³                   ³   ³       ViewPromotionDetailsForm.xbf
+³                   ³   ³       
+³                   ³   ÀÄÄÄShiftPage
+³                   ³           CloseShiftPage.xbf
+³                   ³           NewOrderPage.xbf
+³                   ³           ShiftCustomerPage.xbf
+³                   ³           ShiftOrderHistoryPage.xbf
+³                   ³           TestPage.xbf
+³                   ³           
+³                   ÃÄÄÄzh-Hans
+³                   ³       Microsoft.CodeAnalysis.CSharp.resources.dll
+³                   ³       Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                   ³       Microsoft.CodeAnalysis.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                   ³       Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                   ³       
+³                   ÀÄÄÄzh-Hant
+³                           Microsoft.CodeAnalysis.CSharp.resources.dll
+³                           Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+³                           Microsoft.CodeAnalysis.resources.dll
+³                           Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+³                           Microsoft.CodeAnalysis.Workspaces.resources.dll
+³                           
+ÃÄÄÄComponents
+³       ProductItem.xaml
+³       ProductItem.xaml.cs
+³       
+ÃÄÄÄConverters
+³       CurrencyFormatter.cs
+³       DateFormatter.cs
+³       DateTimeToDateTimeOffsetConverter.cs
+³       FloatToStringConverter.cs
+³       ImageFullPathConverter.cs
+³       OrderStringFormatter.cs
+³       PromotionStatusConverter.cs
+³       VisibilityConverters.cs
+³       
+ÃÄÄÄData
+³   ÀÄÄÄModels
+³           AppDbContext.cs
+³           CashFlow.cs
+³           Category.cs
+³           Customer.cs
+³           Ingredient.cs
+³           MenuItem.cs
+³           Notification.cs
+³           Order.cs
+³           OrderDetail.cs
+³           Promotion.cs
+³           PromotionDetails.cs
+³           Shift.cs
+³           ShiftOrder.cs
+³           Transaction.cs
+³           
+ÃÄÄÄHelpers
+³       StringExtension.cs
+³       
+ÃÄÄÄobj
+³   ³   POS For Small Shop.csproj.nuget.dgspec.json
+³   ³   POS For Small Shop.csproj.nuget.g.props
+³   ³   POS For Small Shop.csproj.nuget.g.targets
+³   ³   project.assets.json
+³   ³   project.nuget.cache
+³   ³   
+³   ÀÄÄÄx64
+³       ÀÄÄÄDebug
+³           ÀÄÄÄnet8.0-windows10.0.19041.0
+³               ÀÄÄÄwin-x64
+³                   ³   .NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+³                   ³   App.g.cs
+³                   ³   App.g.i.cs
+³                   ³   App.xaml
+³                   ³   App.xbf
+³                   ³   apphost.exe
+³                   ³   EFCoreNpgsqlNetTopologySuite.cs
+³                   ³   excluded.layout.resfiles
+³                   ³   excluded.layout.resfiles.intermediate
+³                   ³   filtered.layout.resfiles
+³                   ³   filtered.layout.resfiles.intermediate
+³                   ³   MultipleQualifiersPerDimensionFound.txt
+³                   ³   POS For .82FB8D40.Up2Date
+³                   ³   POS For Small Shop.AssemblyInfo.cs
+³                   ³   POS For Small Shop.AssemblyInfoInputs.cache
+³                   ³   POS For Small Shop.assets.cache
+³                   ³   POS For Small Shop.csproj.AssemblyReference.cache
+³                   ³   POS For Small Shop.csproj.BuildWithSkipAnalyzers
+³                   ³   POS For Small Shop.csproj.CoreCompileInputs.cache
+³                   ³   POS For Small Shop.csproj.FileListAbsolute.txt
+³                   ³   POS For Small Shop.csproj.Fody.CopyLocal.cache
+³                   ³   POS For Small Shop.csproj.Fody.RuntimeCopyLocal.cache
+³                   ³   POS For Small Shop.deps.json
+³                   ³   POS For Small Shop.dll
+³                   ³   POS For Small Shop.GeneratedMSBuildEditorConfig.editorconfig
+³                   ³   POS For Small Shop.genpublishdeps.cache
+³                   ³   POS For Small Shop.genruntimeconfig.cache
+³                   ³   POS For Small Shop.pdb
+³                   ³   POS For Small Shop.sourcelink.json
+³                   ³   pri.resfiles
+³                   ³   pri.resfiles.intermediate
+³                   ³   priconfig.xml
+³                   ³   priconfig.xml.intermediate
+³                   ³   ProjectArchitectures.txt
+³                   ³   qualifiers.txt
+³                   ³   qualifiers.txt.intermediate
+³                   ³   resources.resfiles
+³                   ³   resources.resfiles.intermediate
+³                   ³   unfiltered.layout.resfiles
+³                   ³   unfiltered.layout.resfiles.intermediate
+³                   ³   XamlSaveStateFile.xml
+³                   ³   XamlTypeInfo.g.cs
+³                   ³   
+³                   ÃÄÄÄComponents
+³                   ³       ProductItem.g.cs
+³                   ³       ProductItem.g.i.cs
+³                   ³       ProductItem.xaml
+³                   ³       ProductItem.xbf
+³                   ³       
+³                   ÃÄÄÄembed
+³                   ³   ³   App.xbf
+³                   ³   ³   embed.resfiles
+³                   ³   ³   embed.resfiles.intermediate
+³                   ³   ³   
+³                   ³   ÃÄÄÄComponents
+³                   ³   ³       ProductItem.xbf
+³                   ³   ³       
+³                   ³   ÀÄÄÄViews
+³                   ³       ³   CustomerManagementPage.xbf
+³                   ³       ³   DashboardWindow.xbf
+³                   ³       ³   HelpPage.xbf
+³                   ³       ³   HomePage.xbf
+³                   ³       ³   InventoryPage.xbf
+³                   ³       ³   LoginWindow.xbf
+³                   ³       ³   OpenShiftPage.xbf
+³                   ³       ³   PromotionManagementPage.xbf
+³                   ³       ³   
+³                   ³       ÃÄÄÄInventory
+³                   ³       ³       AddIngredientForm.xbf
+³                   ³       ³       AddIngredientPage.xbf
+³                   ³       ³       AllIngredientPage.xbf
+³                   ³       ³       DeleteIngredientPage.xbf
+³                   ³       ³       EditIngredientPage.xbf
+³                   ³       ³       ReadIngredientPage.xbf
+³                   ³       ³       
+³                   ³       ÃÄÄÄMenuManagement
+³                   ³       ³       MenuItemListPage.xbf
+³                   ³       ³       MenuManagementPage.xbf
+³                   ³       ³       
+³                   ³       ÃÄÄÄPromotionPopupForm
+³                   ³       ³       AddPromotionForm.xbf
+³                   ³       ³       UpdatePromotionForm.xbf
+³                   ³       ³       ViewPromotionDetailsForm.xbf
+³                   ³       ³       
+³                   ³       ÀÄÄÄShiftPage
+³                   ³               CloseShiftPage.xbf
+³                   ³               NewOrderPage.xbf
+³                   ³               ShiftCustomerPage.xbf
+³                   ³               ShiftOrderHistoryPage.xbf
+³                   ³               TestPage.xbf
+³                   ³               
+³                   ÃÄÄÄintermediatexaml
+³                   ³       POS For Small Shop.dll
+³                   ³       
+³                   ÃÄÄÄref
+³                   ³       POS For Small Shop.dll
+³                   ³       
+³                   ÃÄÄÄrefint
+³                   ³       POS For Small Shop.dll
+³                   ³       
+³                   ÀÄÄÄViews
+³                       ³   CustomerManagementPage.g.cs
+³                       ³   CustomerManagementPage.g.i.cs
+³                       ³   CustomerManagementPage.xaml
+³                       ³   CustomerManagementPage.xbf
+³                       ³   DashboardWindow.g.cs
+³                       ³   DashboardWindow.g.i.cs
+³                       ³   DashboardWindow.xaml
+³                       ³   DashboardWindow.xbf
+³                       ³   HelpPage.g.cs
+³                       ³   HelpPage.g.i.cs
+³                       ³   HelpPage.xaml
+³                       ³   HelpPage.xbf
+³                       ³   HomePage.g.cs
+³                       ³   HomePage.g.i.cs
+³                       ³   HomePage.xaml
+³                       ³   HomePage.xbf
+³                       ³   InventoryPage.g.cs
+³                       ³   InventoryPage.g.i.cs
+³                       ³   InventoryPage.xaml
+³                       ³   InventoryPage.xbf
+³                       ³   LoginWindow.g.cs
+³                       ³   LoginWindow.g.i.cs
+³                       ³   LoginWindow.xaml
+³                       ³   LoginWindow.xbf
+³                       ³   OpenShiftPage.g.cs
+³                       ³   OpenShiftPage.g.i.cs
+³                       ³   OpenShiftPage.xaml
+³                       ³   OpenShiftPage.xbf
+³                       ³   PromotionManagementPage.g.cs
+³                       ³   PromotionManagementPage.g.i.cs
+³                       ³   PromotionManagementPage.xaml
+³                       ³   PromotionManagementPage.xbf
+³                       ³   
+³                       ÃÄÄÄInventory
+³                       ³       AddIngredientPage.g.cs
+³                       ³       AddIngredientPage.g.i.cs
+³                       ³       AddIngredientPage.xaml
+³                       ³       AddIngredientPage.xbf
+³                       ³       AllIngredientPage.g.cs
+³                       ³       AllIngredientPage.g.i.cs
+³                       ³       AllIngredientPage.xaml
+³                       ³       AllIngredientPage.xbf
+³                       ³       DeleteIngredientPage.g.cs
+³                       ³       DeleteIngredientPage.g.i.cs
+³                       ³       DeleteIngredientPage.xaml
+³                       ³       DeleteIngredientPage.xbf
+³                       ³       EditIngredientPage.g.cs
+³                       ³       EditIngredientPage.g.i.cs
+³                       ³       EditIngredientPage.xaml
+³                       ³       EditIngredientPage.xbf
+³                       ³       ReadIngredientPage.g.cs
+³                       ³       ReadIngredientPage.g.i.cs
+³                       ³       ReadIngredientPage.xaml
+³                       ³       ReadIngredientPage.xbf
+³                       ³       
+³                       ÃÄÄÄMenuManagement
+³                       ³       MenuItemListPage.g.cs
+³                       ³       MenuItemListPage.g.i.cs
+³                       ³       MenuItemListPage.xaml
+³                       ³       MenuItemListPage.xbf
+³                       ³       MenuManagementPage.g.cs
+³                       ³       MenuManagementPage.g.i.cs
+³                       ³       MenuManagementPage.xaml
+³                       ³       MenuManagementPage.xbf
+³                       ³       
+³                       ÃÄÄÄPromotionPopupForm
+³                       ³       AddPromotionForm.g.cs
+³                       ³       AddPromotionForm.g.i.cs
+³                       ³       AddPromotionForm.xaml
+³                       ³       AddPromotionForm.xbf
+³                       ³       UpdatePromotionForm.g.cs
+³                       ³       UpdatePromotionForm.g.i.cs
+³                       ³       UpdatePromotionForm.xaml
+³                       ³       UpdatePromotionForm.xbf
+³                       ³       ViewPromotionDetailsForm.g.cs
+³                       ³       ViewPromotionDetailsForm.g.i.cs
+³                       ³       ViewPromotionDetailsForm.xaml
+³                       ³       ViewPromotionDetailsForm.xbf
+³                       ³       
+³                       ÀÄÄÄShiftPage
+³                               CloseShiftPage.g.cs
+³                               CloseShiftPage.g.i.cs
+³                               CloseShiftPage.xaml
+³                               CloseShiftPage.xbf
+³                               NewOrderPage.g.cs
+³                               NewOrderPage.g.i.cs
+³                               NewOrderPage.xaml
+³                               NewOrderPage.xbf
+³                               ShiftCustomerPage.g.cs
+³                               ShiftCustomerPage.g.i.cs
+³                               ShiftCustomerPage.xaml
+³                               ShiftCustomerPage.xbf
+³                               ShiftOrderHistoryPage.g.cs
+³                               ShiftOrderHistoryPage.g.i.cs
+³                               ShiftOrderHistoryPage.xaml
+³                               ShiftOrderHistoryPage.xbf
+³                               TestPage.g.cs
+³                               TestPage.g.i.cs
+³                               TestPage.xaml
+³                               TestPage.xbf
+³                               
+ÃÄÄÄProperties
+³   ³   launchSettings.json
+³   ³   
+³   ÀÄÄÄPublishProfiles
+³           win-arm64.pubxml
+³           win-x64.pubxml
+³           win-x86.pubxml
+³           
+ÃÄÄÄRepositories
+³       Class1.cs
+³       
+ÃÄÄÄServices
+³       BaseMockDao.cs
+³       IDao.cs
+³       IRepository.cs
+³       MockDao.cs
+³       RelayCommand.cs
+³       Service.cs
+³       
+ÃÄÄÄUtils
+³       FullObservableCollection.cs
+³       
+ÃÄÄÄViewModels
+³   ³   AuthViewModel.cs
+³   ³   InventoryViewModel.cs
+³   ³   PromotionManagementViewModel.cs
+³   ³   
+³   ÀÄÄÄShiftPage
+³           MenuItemViewModel.cs
+³           NewOrderViewModel.cs
+³           OrderItemViewModel.cs
+³           
+ÀÄÄÄViews
+    ³   CustomerManagementPage.xaml
+    ³   CustomerManagementPage.xaml.cs
+    ³   DashboardWindow.xaml
+    ³   DashboardWindow.xaml.cs
+    ³   HelpPage.xaml
+    ³   HelpPage.xaml.cs
+    ³   HomePage.xaml
+    ³   HomePage.xaml.cs
+    ³   InventoryPage.xaml
+    ³   InventoryPage.xaml.cs
+    ³   LoginWindow.xaml
+    ³   LoginWindow.xaml.cs
+    ³   OpenShiftPage.xaml
+    ³   OpenShiftPage.xaml.cs
+    ³   PromotionManagementPage.xaml
+    ³   PromotionManagementPage.xaml.cs
+    ³   
+    ÃÄÄÄInventory
+    ³       AddIngredientPage.xaml
+    ³       AddIngredientPage.xaml.cs
+    ³       AllIngredientPage.xaml
+    ³       AllIngredientPage.xaml.cs
+    ³       DeleteIngredientPage.xaml
+    ³       DeleteIngredientPage.xaml.cs
+    ³       EditIngredientPage.xaml
+    ³       EditIngredientPage.xaml.cs
+    ³       IngredientListPage.xaml
+    ³       IngredientListPage.xaml.cs
+    ³       ReadIngredientPage.xaml
+    ³       ReadIngredientPage.xaml.cs
+    ³       
+    ÃÄÄÄMenuManagement
+    ³       MenuItemListPage.xaml
+    ³       MenuItemListPage.xaml.cs
+    ³       MenuManagementPage.xaml
+    ³       MenuManagementPage.xaml.cs
+    ³       
+    ÃÄÄÄPromotionPopupForm
+    ³       AddPromotionForm.xaml
+    ³       AddPromotionForm.xaml.cs
+    ³       UpdatePromotionForm.xaml
+    ³       UpdatePromotionForm.xaml.cs
+    ³       ViewPromotionDetailsForm.xaml
+    ³       ViewPromotionDetailsForm.xaml.cs
+    ³       
+    ÀÄÄÄShiftPage
+            CloseShiftPage.xaml
+            CloseShiftPage.xaml.cs
+            NewOrderPage.xaml
+            NewOrderPage.xaml.cs
+            ShiftCustomerPage.xaml
+            ShiftCustomerPage.xaml.cs
+            ShiftOrderHistoryPage.xaml
+            ShiftOrderHistoryPage.xaml.cs
+            TestPage.xaml
+            TestPage.xaml.cs
+            

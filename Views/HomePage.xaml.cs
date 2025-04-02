@@ -2,6 +2,7 @@ using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using POS_For_Small_Shop.Views.MenuManagement;
+using POS_For_Small_Shop.Views.Inventory;
 using POS_For_Small_Shop.Views.ShiftPage;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;

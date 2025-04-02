@@ -16,13 +16,21 @@ namespace POS_For_Small_Shop.ViewModels
         public ObservableCollection<Ingredient> Ingredients { get; set; }
         public Ingredient? SelectedIngredient { get; set; }
 
-        private IDao _dao;
+        private readonly IDao _dao;
+
+        public RelayCommand LoadIngredientsCommand { get; }
 
         public InventoryViewModel()
         {
             _dao = Service.GetKeyedSingleton<IDao>();
 
-            var items = _dao.Ingredients.GetAll();
+            LoadIngredients();
+
+            LoadIngredientsCommand = new RelayCommand(LoadIngredients);
+        }
+        public void LoadIngredients()
+        {
+            var items = _dao.Ingredients.GetAll().ToList();
             Ingredients = new ObservableCollection<Ingredient>(items);
         }
 
@@ -45,7 +53,7 @@ namespace POS_For_Small_Shop.ViewModels
                 var result = _dao.Ingredients.Update(ingredient.IngredientID, ingredient);
                 if (result)
                 {
-                    var index = Ingredients.IndexOf(ingredient);
+                    var index = Ingredients.IndexOf(Ingredients.First(i => i.IngredientID == ingredient.IngredientID));
                     if (index >= 0)
                     {
                         Ingredients[index] = ingredient;
@@ -54,6 +62,7 @@ namespace POS_For_Small_Shop.ViewModels
             }
         }
 
+        // Xóa nguyên liệu
         public void DeleteIngredient(Ingredient ingredient)
         {
             if (ingredient != null)
@@ -65,5 +74,6 @@ namespace POS_For_Small_Shop.ViewModels
                 }
             }
         }
+
     }
 }

@@ -11,29 +11,39 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
-  </PropertyGroup>
 
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+  <WindowsPackageType>None</WindowsPackageType>
+  <PublishReadyToRun>false</PublishReadyToRun>
+  <PublishTrimmed>false</PublishTrimmed>
+	</PropertyGroup>
+	
+	
   <ItemGroup>
-    <None Remove="DashboardWindow.xaml" />
-    <None Remove="ShopDatabase.db" />
-    <None Remove="Views\CustomerManagementPage.xaml" />
+    <None Remove="Views\CustomerManagement\CustomerManagementPage.xaml" />
+    <None Remove="Views\DashboardWindow.xaml" />
     <None Remove="Views\HelpPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\InventoryPage.xaml" />
+    <None Remove="Views\Inventory\AddIngredientPage.xaml" />
     <None Remove="Views\Inventory\AllIngredientPage.xaml" />
     <None Remove="Views\Inventory\DeleteIngredientPage.xaml" />
     <None Remove="Views\Inventory\EditIngredientPage.xaml" />
     <None Remove="Views\Inventory\ReadIngredientPage.xaml" />
+    <None Remove="Views\LoginWindow.xaml" />
     <None Remove="Views\MenuManagement\MenuItemListPage.xaml" />
     <None Remove="Views\MenuManagement\MenuManagementPage.xaml" />
-    <None Remove="Views\NewOrderPage.xaml" />
     <None Remove="Views\OpenShiftPage.xaml" />
-    <None Remove="Views\ShiftPage\CloseShiftPage.xaml" />
+    <None Remove="Views\PromotionManagementPage.xaml" />
     <None Remove="Views\PromotionPopupForm\AddPromotionForm.xaml" />
     <None Remove="Views\PromotionPopupForm\UpdatePromotionForm.xaml" />
+    <None Remove="Views\PromotionPopupForm\ViewPromotionDetailsForm.xaml" />
+    <None Remove="Views\ShiftPage\CloseShiftPage.xaml" />
+    <None Remove="Views\ShiftPage\NewOrderPage.xaml" />
     <None Remove="Views\ShiftPage\ShiftCustomerPage.xaml" />
     <None Remove="Views\ShiftPage\ShiftOrderHistoryPage.xaml" />
-    <None Remove="Views\ShiftPage\TestPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,105 +60,148 @@
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
+  <!--
+    Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
+    Tools extension to be activated for this project even if the Windows App SDK Nuget
+    package has not yet been restored.
+  -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Fody" Version="6.9.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="9.0.4" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250310001" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
+		<PrivateAssets>all</PrivateAssets>
+	</PackageReference>
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.3" />
   </ItemGroup>
-
-  <!-- Page Updates -->
+  <ItemGroup>
+    <Folder Include="Converters\" />
+    <Folder Include="Data\Models\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Inventory\ReadIngredientPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Inventory\DeleteIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\Inventory\EditIngredientPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Inventory\DeleteIngredientPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\Inventory\AllIngredientPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\InventoryPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\MenuManagement\MenuItemListPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\MenuManagement\MenuManagementPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\PromotionPopupForm\AddPromotionForm.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\PromotionPopupForm\UpdatePromotionForm.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\PromotionPopupForm\ViewPromotionDetailsForm.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\CustomerManagementPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\HelpPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\HomePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\NewOrderPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\OpenShiftPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\ShiftPage\CloseShiftPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\ShiftPage\ShiftCustomerPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\ShiftPage\ShiftOrderHistoryPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\ShiftPage\TestPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="DashboardWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\Inventory\AddIngredientPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="Assets\Images\" />
-    <Folder Include="Views\CustomerManagement\" />
+    <Page Update="Views\InventoryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionPopupForm\ViewPromotionDetailsForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionPopupForm\UpdatePromotionForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionPopupForm\AddPromotionForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PromotionManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\MenuManagement\MenuManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\MenuManagement\MenuItemListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CustomerManagement\CustomerManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ShiftPage\ShiftOrderHistoryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ShiftPage\ShiftCustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ShiftPage\NewOrderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ShiftPage\CloseShiftPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\OpenShiftPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HelpPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DashboardWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
+  <!--
+    Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
+    Explorer "Package and Publish" context menu entry to be enabled for this project even if
+    the Windows App SDK Nuget package has not yet been restored.
+  -->
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>

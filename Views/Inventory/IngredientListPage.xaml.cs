@@ -28,6 +28,8 @@ namespace POS_For_Small_Shop.Views.Inventory
         }
 
 
+
+
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
@@ -65,6 +67,14 @@ namespace POS_For_Small_Shop.Views.Inventory
             PurchasePriceTextBox.Text = string.Empty;
             ExpiryDatePicker.Date = DateTimeOffset.Now;
         }
+
+        //private void ViewIngredientButton_Click(object sender, ItemClickEventArgs e)
+        //{
+        //    if (e.ClickedItem is Ingredient selectedIngredient)
+        //    {
+        //        this.Frame.Navigate(typeof(ReadIngredientPage), selectedIngredient);
+        //    }
+        //}
 
         private void EditIngredientButton_Click(object sender, RoutedEventArgs e)
         {

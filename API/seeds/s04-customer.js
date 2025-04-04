@@ -4,65 +4,65 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('Customer').del();
+  await knex('customers').del();
   
   // Inserts seed entries
-  await knex('Customer').insert([
+  await knex('customers').insert([
     { 
-      CustomerID: 1, 
-      Name: 'John Smith', 
-      Phone: '555-123-4567', 
-      Email: 'john.smith@example.com', 
-      Address: '123 Main St, Anytown', 
-      LoyaltyPoints: 150 
+      customer_id: 1, 
+      name: 'John Smith', 
+      phone: '555-123-4567', 
+      email: 'john.smith@example.com', 
+      address: '123 Main St, Anytown', 
+      loyalty_points: 150 
     },
     { 
-      CustomerID: 2, 
-      Name: 'Emily Johnson', 
-      Phone: '555-234-5678', 
-      Email: 'emily.j@example.com', 
-      Address: '456 Oak Ave, Somewhere', 
-      LoyaltyPoints: 320 
+      customer_id: 2, 
+      name: 'Emily Johnson', 
+      phone: '555-234-5678', 
+      email: 'emily.j@example.com', 
+      address: '456 Oak Ave, Somewhere', 
+      loyalty_points: 320 
     },
     { 
-      CustomerID: 3, 
-      Name: 'Michael Brown', 
-      Phone: '555-345-6789', 
-      Email: 'mbrown@example.com', 
-      Address: null, 
-      LoyaltyPoints: 75 
+      customer_id: 3, 
+      name: 'Michael Brown', 
+      phone: '555-345-6789', 
+      email: 'mbrown@example.com', 
+      address: null, 
+      loyalty_points: 75 
     },
     { 
-      CustomerID: 4, 
-      Name: 'Sarah Davis', 
-      Phone: '555-456-7890', 
-      Email: 'sarah.d@example.com', 
-      Address: '789 Pine St, Elsewhere', 
-      LoyaltyPoints: 220 
+      customer_id: 4, 
+      name: 'Sarah Davis', 
+      phone: '555-456-7890', 
+      email: 'sarah.d@example.com', 
+      address: '789 Pine St, Elsewhere', 
+      loyalty_points: 220 
     },
     { 
-      CustomerID: 5, 
-      Name: 'Alex Rodriguez', 
-      Phone: '555-567-8901', 
-      Email: null, 
-      Address: null, 
-      LoyaltyPoints: 45 
+      customer_id: 5, 
+      name: 'Alex Rodriguez', 
+      phone: '555-567-8901', 
+      email: null, 
+      address: null, 
+      loyalty_points: 45 
     },
     { 
-      CustomerID: 6, 
-      Name: 'Jennifer Wilson', 
-      Phone: '555-678-9012', 
-      Email: 'jwilson@example.com', 
-      Address: '101 Maple Dr, Anytown', 
-      LoyaltyPoints: 175 
+      customer_id: 6, 
+      name: 'Jennifer Wilson', 
+      phone: '555-678-9012', 
+      email: 'jwilson@example.com', 
+      address: '101 Maple Dr, Anytown', 
+      loyalty_points: 175 
     },
     { 
-      CustomerID: 7, 
-      Name: 'David Lee', 
-      Phone: '555-789-0123', 
-      Email: 'dlee@example.com', 
-      Address: null, 
-      LoyaltyPoints: 90 
+      customer_id: 7, 
+      name: 'David Lee', 
+      phone: '555-789-0123', 
+      email: 'dlee@example.com', 
+      address: null, 
+      loyalty_points: 90 
     }
   ]);
 };

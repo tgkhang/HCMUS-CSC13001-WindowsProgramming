@@ -4,109 +4,109 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('Ingredients').del();
+  await knex('ingredients').del();
   
   // Inserts seed entries
-  await knex('Ingredients').insert([
+  await knex('ingredients').insert([
     { 
-      IngredientID: 1, 
-      IngredientName: 'Espresso Beans', 
-      CategoryID: 1, 
-      Stock: 25.0, 
-      Unit: 'kg', 
-      PurchasePrice: 15.50, 
-      Supplier: 'Premium Coffee Co.', 
-      ExpiryDate: new Date('2025-06-30')
+      ingredient_id: 1, 
+      ingredient_name: 'Espresso Beans', 
+      category_id: 1, 
+      stock: 25.0, 
+      unit: 'kg', 
+      purchase_price: 15.50, 
+      supplier: 'Premium Coffee Co.', 
+      expiry_date: new Date('2025-06-30')
     },
     { 
-      IngredientID: 2, 
-      IngredientName: 'Whole Milk', 
-      CategoryID: 5, 
-      Stock: 50.0, 
-      Unit: 'liter', 
-      PurchasePrice: 1.20, 
-      Supplier: 'Local Dairy', 
-      ExpiryDate: new Date('2025-04-15')
+      ingredient_id: 2, 
+      ingredient_name: 'Whole Milk', 
+      category_id: 5, 
+      stock: 50.0, 
+      unit: 'liter', 
+      purchase_price: 1.20, 
+      supplier: 'Local Dairy', 
+      expiry_date: new Date('2025-04-15')
     },
     { 
-      IngredientID: 3, 
-      IngredientName: 'Almond Milk', 
-      CategoryID: 5, 
-      Stock: 30.0, 
-      Unit: 'liter', 
-      PurchasePrice: 2.50, 
-      Supplier: 'Plant Beverage Inc.', 
-      ExpiryDate: new Date('2025-05-20')
+      ingredient_id: 3, 
+      ingredient_name: 'Almond Milk', 
+      category_id: 5, 
+      stock: 30.0, 
+      unit: 'liter', 
+      purchase_price: 2.50, 
+      supplier: 'Plant Beverage Inc.', 
+      expiry_date: new Date('2025-05-20')
     },
     { 
-      IngredientID: 4, 
-      IngredientName: 'Vanilla Syrup', 
-      CategoryID: 6, 
-      Stock: 10.0, 
-      Unit: 'liter', 
-      PurchasePrice: 8.75, 
-      Supplier: 'Flavor Systems', 
-      ExpiryDate: new Date('2025-08-15')
+      ingredient_id: 4, 
+      ingredient_name: 'Vanilla Syrup', 
+      category_id: 6, 
+      stock: 10.0, 
+      unit: 'liter', 
+      purchase_price: 8.75, 
+      supplier: 'Flavor Systems', 
+      expiry_date: new Date('2025-08-15')
     },
     { 
-      IngredientID: 5, 
-      IngredientName: 'Earl Grey Tea', 
-      CategoryID: 2, 
-      Stock: 5.0, 
-      Unit: 'kg', 
-      PurchasePrice: 25.00, 
-      Supplier: 'Luxury Teas', 
-      ExpiryDate: new Date('2025-07-10')
+      ingredient_id: 5, 
+      ingredient_name: 'Earl Grey Tea', 
+      category_id: 2, 
+      stock: 5.0, 
+      unit: 'kg', 
+      purchase_price: 25.00, 
+      supplier: 'Luxury Teas', 
+      expiry_date: new Date('2025-07-10')
     },
     { 
-      IngredientID: 6, 
-      IngredientName: 'Croissant Pastry', 
-      CategoryID: 3, 
-      Stock: 40.0, 
-      Unit: 'piece', 
-      PurchasePrice: 1.25, 
-      Supplier: 'Bakers Delight', 
-      ExpiryDate: new Date('2025-04-05')
+      ingredient_id: 6, 
+      ingredient_name: 'Croissant Pastry', 
+      category_id: 3, 
+      stock: 40.0, 
+      unit: 'piece', 
+      purchase_price: 1.25, 
+      supplier: 'Bakers Delight', 
+      expiry_date: new Date('2025-04-05')
     },
     { 
-      IngredientID: 7, 
-      IngredientName: 'Chocolate Chips', 
-      CategoryID: 6, 
-      Stock: 8.0, 
-      Unit: 'kg', 
-      PurchasePrice: 12.00, 
-      Supplier: 'Sweet Supplies', 
-      ExpiryDate: new Date('2025-09-20')
+      ingredient_id: 7, 
+      ingredient_name: 'Chocolate Chips', 
+      category_id: 6, 
+      stock: 8.0, 
+      unit: 'kg', 
+      purchase_price: 12.00, 
+      supplier: 'Sweet Supplies', 
+      expiry_date: new Date('2025-09-20')
     },
     { 
-      IngredientID: 8, 
-      IngredientName: 'Sliced Turkey', 
-      CategoryID: 4, 
-      Stock: 15.0, 
-      Unit: 'kg', 
-      PurchasePrice: 18.50, 
-      Supplier: 'Fresh Farms', 
-      ExpiryDate: new Date('2025-04-10')
+      ingredient_id: 8, 
+      ingredient_name: 'Sliced Turkey', 
+      category_id: 4, 
+      stock: 15.0, 
+      unit: 'kg', 
+      purchase_price: 18.50, 
+      supplier: 'Fresh Farms', 
+      expiry_date: new Date('2025-04-10')
     },
     { 
-      IngredientID: 9, 
-      IngredientName: 'Cinnamon Powder', 
-      CategoryID: 6, 
-      Stock: 3.0, 
-      Unit: 'kg', 
-      PurchasePrice: 15.00, 
-      Supplier: 'Spice Traders', 
-      ExpiryDate: new Date('2025-10-30')
+      ingredient_id: 9, 
+      ingredient_name: 'Cinnamon Powder', 
+      category_id: 6, 
+      stock: 3.0, 
+      unit: 'kg', 
+      purchase_price: 15.00, 
+      supplier: 'Spice Traders', 
+      expiry_date: new Date('2025-10-30')
     },
     { 
-      IngredientID: 10, 
-      IngredientName: 'Oat Milk', 
-      CategoryID: 5, 
-      Stock: 25.0, 
-      Unit: 'liter', 
-      PurchasePrice: 2.80, 
-      Supplier: 'Plant Beverage Inc.', 
-      ExpiryDate: new Date('2025-05-15')
+      ingredient_id: 10, 
+      ingredient_name: 'Oat Milk', 
+      category_id: 5, 
+      stock: 25.0, 
+      unit: 'liter', 
+      purchase_price: 2.80, 
+      supplier: 'Plant Beverage Inc.', 
+      expiry_date: new Date('2025-05-15')
     }
   ]);
 };

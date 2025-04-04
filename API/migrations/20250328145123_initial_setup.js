@@ -1,183 +1,183 @@
 exports.up = function (knex) {
   return (
     knex.schema
-      // Categories
-      .createTable("Categories", (table) => {
-        table.increments("CategoryID").primary();
-        table.text("Name").notNullable();
-        table.text("Description").nullable();
+      // categories
+      .createTable("categories", (table) => {
+        table.increments("category_id").primary();
+        table.text("name").notNullable();
+        table.text("description").nullable();
       })
 
-      // Ingredients
-      .createTable("Ingredients", (table) => {
-        table.increments("IngredientID").primary();
-        table.text("IngredientName").notNullable();
+      // ingredients
+      .createTable("ingredients", (table) => {
+        table.increments("ingredient_id").primary();
+        table.text("ingredient_name").notNullable();
         table
-          .integer("CategoryID")
+          .integer("category_id")
           .unsigned()
-          .references("CategoryID")
-          .inTable("Categories")
-          .onDelete("CASCADE"); // Ensure that if a category is deleted, the ingredients are also deleted
-        table.float("Stock").notNullable();
-        table.text("Unit").notNullable();
-        table.float("PurchasePrice").notNullable();
-        table.text("Supplier").notNullable();
-        table.date("ExpiryDate").nullable();
+          .references("category_id")
+          .inTable("categories")
+          .onDelete("CASCADE");
+        table.float("stock").notNullable();
+        table.text("unit").notNullable();
+        table.float("purchase_price").notNullable();
+        table.text("supplier").notNullable();
+        table.date("expiry_date").nullable();
       })
 
-      // MenuItems
-      .createTable("MenuItems", (table) => {
-        table.increments("MenuItemID").primary();
-        table.text("Name").notNullable();
+      // menu_items
+      .createTable("menu_items", (table) => {
+        table.increments("menu_item_id").primary();
+        table.text("name").notNullable();
         table
-          .integer("CategoryID")
+          .integer("category_id")
           .unsigned()
-          .references("CategoryID")
-          .inTable("Categories")
-          .onDelete("CASCADE"); // Ensure that if a category is deleted, the menu items are also deleted
-        table.float("SellingPrice").notNullable();
-        table.text("ImagePath").notNullable();
+          .references("category_id")
+          .inTable("categories")
+          .onDelete("CASCADE");
+        table.float("selling_price").notNullable();
+        table.text("image_path").notNullable();
       })
 
-      // Customer
-      .createTable("Customer", (table) => {
-        table.increments("CustomerID").primary();
-        table.text("Name").notNullable();
-        table.text("Phone").notNullable();
-        table.text("Email").nullable();
-        table.text("Address").nullable();
-        table.integer("LoyaltyPoints").defaultTo(0).notNullable();
+      // customers
+      .createTable("customers", (table) => {
+        table.increments("customer_id").primary();
+        table.text("name").notNullable();
+        table.text("phone").notNullable();
+        table.text("email").nullable();
+        table.text("address").nullable();
+        table.integer("loyalty_points").defaultTo(0).notNullable();
       })
 
-      // Shifts
-      .createTable("Shifts", (table) => {
-        table.increments("ShiftID").primary();
-        table.datetime("StartTime").notNullable();
-        table.datetime("EndTime").nullable();
-        table.float("OpeningCash").notNullable();
-        table.float("TotalSales").defaultTo(0).notNullable();
-        table.integer("TotalOrders").defaultTo(0).notNullable();
-        table.text("Status").notNullable();
+      // shifts
+      .createTable("shifts", (table) => {
+        table.increments("shift_id").primary();
+        table.datetime("start_time").notNullable();
+        table.datetime("end_time").nullable();
+        table.float("opening_cash").notNullable();
+        table.float("total_sales").defaultTo(0).notNullable();
+        table.integer("total_orders").defaultTo(0).notNullable();
+        table.text("status").notNullable();
       })
 
-      // Orders
-      .createTable("Orders", (table) => {
-        table.increments("OrderID").primary();
+      // orders
+      .createTable("orders", (table) => {
+        table.increments("order_id").primary();
         table
-          .integer("CustomerID")
+          .integer("customer_id")
           .unsigned()
-          .references("CustomerID")
-          .inTable("Customer")
-          .onDelete("SET NULL"); // Allow deleting customers by setting CustomerID to NULL
+          .references("customer_id")
+          .inTable("customers")
+          .onDelete("SET NULL");
         table
-          .integer("ShiftID")
+          .integer("shift_id")
           .unsigned()
-          .references("ShiftID")
-          .inTable("Shifts")
-          .onDelete("CASCADE"); // Ensure that if a shift is deleted, its orders are also deleted
-        table.float("TotalAmount").notNullable();
-        table.float("Discount").defaultTo(0).notNullable();
-        table.float("FinalAmount").notNullable();
-        table.text("PaymentMethod").notNullable();
-        table.text("Status").notNullable();
+          .references("shift_id")
+          .inTable("shifts")
+          .onDelete("CASCADE");
+        table.float("total_amount").notNullable();
+        table.float("discount").defaultTo(0).notNullable();
+        table.float("final_amount").notNullable();
+        table.text("payment_method").notNullable();
+        table.text("status").notNullable();
       })
 
-      // OrdersDetails
-      .createTable("OrdersDetails", (table) => {
-        table.increments("OrderDetailID").primary();
+      // order_details
+      .createTable("order_details", (table) => {
+        table.increments("order_detail_id").primary();
         table
-          .integer("OrderID")
+          .integer("order_id")
           .unsigned()
-          .references("OrderID")
-          .inTable("Orders")
-          .onDelete("CASCADE"); // Ensure that if an order is deleted, its details are also deleted
+          .references("order_id")
+          .inTable("orders")
+          .onDelete("CASCADE");
         table
-          .integer("MenuItemID")
+          .integer("menu_item_id")
           .unsigned()
-          .references("MenuItemID")
-          .inTable("MenuItems")
-          .onDelete("CASCADE"); // Ensure that if a menu item is deleted, related order details are also deleted
-        table.integer("Quantity").notNullable();
-        table.float("UnitPrice").notNullable();
-        table.float("Subtotal").notNullable();
+          .references("menu_item_id")
+          .inTable("menu_items")
+          .onDelete("CASCADE");
+        table.integer("quantity").notNullable();
+        table.float("unit_price").notNullable();
+        table.float("subtotal").notNullable();
       })
 
-      // Transactions
-      .createTable("Transactions", (table) => {
-        table.increments("TransactionID").primary();
+      // transactions
+      .createTable("transactions", (table) => {
+        table.increments("transaction_id").primary();
         table
-          .integer("OrderID")
+          .integer("order_id")
           .unsigned()
-          .references("OrderID")
-          .inTable("Orders")
-          .onDelete("CASCADE"); // Ensure that if an order is deleted, its transactions are also deleted
-        table.float("AmountPaid").notNullable();
-        table.text("PaymentMethod").notNullable();
+          .references("order_id")
+          .inTable("orders")
+          .onDelete("CASCADE");
+        table.float("amount_paid").notNullable();
+        table.text("payment_method").notNullable();
       })
 
-      // Promotions
-      .createTable("Promotions", (table) => {
-        table.increments("PromoID").primary();
-        table.text("PromoName").notNullable();
-        table.text("DiscountType").notNullable();
-        table.float("DiscountValue").notNullable();
-        table.date("StartDate").notNullable();
-        table.date("EndDate").notNullable();
+      // promotions
+      .createTable("promotions", (table) => {
+        table.increments("promo_id").primary();
+        table.text("promo_name").notNullable();
+        table.text("discount_type").notNullable();
+        table.float("discount_value").notNullable();
+        table.date("start_date").notNullable();
+        table.date("end_date").notNullable();
       })
 
-      // Notifications
-      .createTable("Notifications", (table) => {
-        table.increments("NotificationID").primary();
-        table.text("Message").notNullable();
-        table.datetime("CreatedAt").notNullable();
-        table.boolean("IsRead").defaultTo(false).notNullable();
+      // notifications
+      .createTable("notifications", (table) => {
+        table.increments("notification_id").primary();
+        table.text("message").notNullable();
+        table.datetime("created_at").notNullable();
+        table.boolean("is_read").defaultTo(false).notNullable();
       })
 
-      // ShiftOrders
-      .createTable("ShiftOrders", (table) => {
-        table.increments("ShiftOrderID").primary();
+      // shift_orders
+      .createTable("shift_orders", (table) => {
+        table.increments("shift_order_id").primary();
         table
-          .integer("ShiftID")
+          .integer("shift_id")
           .unsigned()
-          .references("ShiftID")
-          .inTable("Shifts")
-          .onDelete("CASCADE"); // Ensure that if a shift is deleted, its shift orders are also deleted
+          .references("shift_id")
+          .inTable("shifts")
+          .onDelete("CASCADE");
         table
-          .integer("OrderID")
+          .integer("order_id")
           .unsigned()
-          .references("OrderID")
-          .inTable("Orders")
-          .onDelete("CASCADE"); // Ensure that if an order is deleted, its shift orders are also deleted
+          .references("order_id")
+          .inTable("orders")
+          .onDelete("CASCADE");
       })
 
-      // CashFlow
-      .createTable("CashFlow", (table) => {
-        table.increments("CashFlowID").primary();
+      // cash_flow
+      .createTable("cash_flow", (table) => {
+        table.increments("cash_flow_id").primary();
         table
-          .integer("ShiftID")
+          .integer("shift_id")
           .unsigned()
-          .references("ShiftID")
-          .inTable("Shifts")
-          .onDelete("CASCADE"); // Ensure that if a shift is deleted, its cash flow records are also deleted
-        table.text("TransactionType").notNullable();
-        table.float("Amount").notNullable();
-        table.datetime("Timestamp").notNullable();
+          .references("shift_id")
+          .inTable("shifts")
+          .onDelete("CASCADE");
+        table.text("transaction_type").notNullable();
+        table.float("amount").notNullable();
+        table.datetime("timestamp").notNullable();
       })
   );
 };
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTableIfExists("CashFlow")
-    .dropTableIfExists("ShiftOrders")
-    .dropTableIfExists("Notifications")
-    .dropTableIfExists("Promotions")
-    .dropTableIfExists("Transactions")
-    .dropTableIfExists("OrdersDetails")
-    .dropTableIfExists("Orders")
-    .dropTableIfExists("Shifts")
-    .dropTableIfExists("Customer")
-    .dropTableIfExists("MenuItems")
-    .dropTableIfExists("Ingredients")
-    .dropTableIfExists("Categories");
+    .dropTableIfExists("cash_flow")
+    .dropTableIfExists("shift_orders")
+    .dropTableIfExists("notifications")
+    .dropTableIfExists("promotions")
+    .dropTableIfExists("transactions")
+    .dropTableIfExists("order_details")
+    .dropTableIfExists("orders")
+    .dropTableIfExists("shifts")
+    .dropTableIfExists("customers")
+    .dropTableIfExists("menu_items")
+    .dropTableIfExists("ingredients")
+    .dropTableIfExists("categories");
 };

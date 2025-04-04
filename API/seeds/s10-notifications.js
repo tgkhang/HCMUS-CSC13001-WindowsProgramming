@@ -4,51 +4,51 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('Notifications').del();
+  await knex('notifications').del();
   
   // Inserts seed entries
-  await knex('Notifications').insert([
+  await knex('notifications').insert([
     { 
-      NotificationID: 1, 
-      Message: 'Low stock alert: Espresso Beans below 30kg', 
-      CreatedAt: new Date('2025-03-24 09:15:00'), 
-      IsRead: true 
+      notification_id: 1, 
+      message: 'Low stock alert: Espresso Beans below 30kg', 
+      created_at: new Date('2025-03-24 09:15:00'), 
+      is_read: true 
     },
     { 
-      NotificationID: 2, 
-      Message: 'Shift #1 closed successfully', 
-      CreatedAt: new Date('2025-03-25 15:05:00'), 
-      IsRead: true 
+      notification_id: 2, 
+      message: 'Shift #1 closed successfully', 
+      created_at: new Date('2025-03-25 15:05:00'), 
+      is_read: true 
     },
     { 
-      NotificationID: 3, 
-      Message: 'New promotion added: Spring Special', 
-      CreatedAt: new Date('2025-03-01 08:30:00'), 
-      IsRead: true 
+      notification_id: 3, 
+      message: 'New promotion added: Spring Special', 
+      created_at: new Date('2025-03-01 08:30:00'), 
+      is_read: true 
     },
     { 
-      NotificationID: 4, 
-      Message: 'Approaching expiry: Whole Milk (04/15/2025)', 
-      CreatedAt: new Date('2025-03-25 10:00:00'), 
-      IsRead: false 
+      notification_id: 4, 
+      message: 'Approaching expiry: Whole Milk (04/15/2025)', 
+      created_at: new Date('2025-03-25 10:00:00'), 
+      is_read: false 
     },
     { 
-      NotificationID: 5, 
-      Message: 'Daily sales report available', 
-      CreatedAt: new Date('2025-03-26 23:30:00'), 
-      IsRead: false 
+      notification_id: 5, 
+      message: 'Daily sales report available', 
+      created_at: new Date('2025-03-26 23:30:00'), 
+      is_read: false 
     },
     { 
-      NotificationID: 6, 
-      Message: 'System update scheduled for March 30, 2025', 
-      CreatedAt: new Date('2025-03-27 11:45:00'), 
-      IsRead: false 
+      notification_id: 6, 
+      message: 'System update scheduled for March 30, 2025', 
+      created_at: new Date('2025-03-27 11:45:00'), 
+      is_read: false 
     },
     { 
-      NotificationID: 7, 
-      Message: 'New customer registered: David Lee', 
-      CreatedAt: new Date('2025-03-26 14:20:00'), 
-      IsRead: true 
+      notification_id: 7, 
+      message: 'New customer registered: David Lee', 
+      created_at: new Date('2025-03-26 14:20:00'), 
+      is_read: true 
     }
   ]);
 };

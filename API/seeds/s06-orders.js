@@ -4,109 +4,109 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('Orders').del();
+  await knex('orders').del();
   
   // Inserts seed entries
-  await knex('Orders').insert([
+  await knex('orders').insert([
     { 
-      OrderID: 1, 
-      CustomerID: 1, 
-      ShiftID: 1, 
-      TotalAmount: 13.75, 
-      Discount: 0.00, 
-      FinalAmount: 13.75, 
-      PaymentMethod: 'Card', 
-      Status: 'Completed' 
+      order_id: 1, 
+      customer_id: 1, 
+      shift_id: 1, 
+      total_amount: 13.75, 
+      discount: 0.00, 
+      final_amount: 13.75, 
+      payment_method: 'Card', 
+      status: 'Completed' 
     },
     { 
-      OrderID: 2, 
-      CustomerID: null, 
-      ShiftID: 1, 
-      TotalAmount: 8.25, 
-      Discount: 0.00, 
-      FinalAmount: 8.25, 
-      PaymentMethod: 'Cash', 
-      Status: 'Completed' 
+      order_id: 2, 
+      customer_id: null, 
+      shift_id: 1, 
+      total_amount: 8.25, 
+      discount: 0.00, 
+      final_amount: 8.25, 
+      payment_method: 'Cash', 
+      status: 'Completed' 
     },
     { 
-      OrderID: 3, 
-      CustomerID: 2, 
-      ShiftID: 1, 
-      TotalAmount: 19.50, 
-      Discount: 1.95, 
-      FinalAmount: 17.55, 
-      PaymentMethod: 'Card', 
-      Status: 'Completed' 
+      order_id: 3, 
+      customer_id: 2, 
+      shift_id: 1, 
+      total_amount: 19.50, 
+      discount: 1.95, 
+      final_amount: 17.55, 
+      payment_method: 'Card', 
+      status: 'Completed' 
     },
     { 
-      OrderID: 4, 
-      CustomerID: null, 
-      ShiftID: 2, 
-      TotalAmount: 4.75, 
-      Discount: 0.00, 
-      FinalAmount: 4.75, 
-      PaymentMethod: 'Cash', 
-      Status: 'Completed' 
+      order_id: 4, 
+      customer_id: null, 
+      shift_id: 2, 
+      total_amount: 4.75, 
+      discount: 0.00, 
+      final_amount: 4.75, 
+      payment_method: 'Cash', 
+      status: 'Completed' 
     },
     { 
-      OrderID: 5, 
-      CustomerID: 3, 
-      ShiftID: 2, 
-      TotalAmount: 12.25, 
-      Discount: 0.00, 
-      FinalAmount: 12.25, 
-      PaymentMethod: 'E-wallet', 
-      Status: 'Completed' 
+      order_id: 5, 
+      customer_id: 3, 
+      shift_id: 2, 
+      total_amount: 12.25, 
+      discount: 0.00, 
+      final_amount: 12.25, 
+      payment_method: 'E-wallet', 
+      status: 'Completed' 
     },
     { 
-      OrderID: 6, 
-      CustomerID: null, 
-      ShiftID: 3, 
-      TotalAmount: 16.50, 
-      Discount: 0.00, 
-      FinalAmount: 16.50, 
-      PaymentMethod: 'Card', 
-      Status: 'Completed' 
+      order_id: 6, 
+      customer_id: null, 
+      shift_id: 3, 
+      total_amount: 16.50, 
+      discount: 0.00, 
+      final_amount: 16.50, 
+      payment_method: 'Card', 
+      status: 'Completed' 
     },
     { 
-      OrderID: 7, 
-      CustomerID: 4, 
-      ShiftID: 3, 
-      TotalAmount: 23.75, 
-      Discount: 2.38, 
-      FinalAmount: 21.37, 
-      PaymentMethod: 'Card', 
-      Status: 'Completed' 
+      order_id: 7, 
+      customer_id: 4, 
+      shift_id: 3, 
+      total_amount: 23.75, 
+      discount: 2.38, 
+      final_amount: 21.37, 
+      payment_method: 'Card', 
+      status: 'Completed' 
     },
     { 
-      OrderID: 8, 
-      CustomerID: null, 
-      ShiftID: 4, 
-      TotalAmount: 9.25, 
-      Discount: 0.00, 
-      FinalAmount: 9.25, 
-      PaymentMethod: 'Cash', 
-      Status: 'Completed' 
+      order_id: 8, 
+      customer_id: null, 
+      shift_id: 4, 
+      total_amount: 9.25, 
+      discount: 0.00, 
+      final_amount: 9.25, 
+      payment_method: 'Cash', 
+      status: 'Completed' 
     },
     { 
-      OrderID: 9, 
-      CustomerID: 5, 
-      ShiftID: 5, 
-      TotalAmount: 14.00, 
-      Discount: 0.00, 
-      FinalAmount: 14.00, 
-      PaymentMethod: 'Card', 
-      Status: 'Completed' 
+      order_id: 9, 
+      customer_id: 5, 
+      shift_id: 5, 
+      total_amount: 14.00, 
+      discount: 0.00, 
+      final_amount: 14.00, 
+      payment_method: 'Card', 
+      status: 'Completed' 
     },
     { 
-      OrderID: 10, 
-      CustomerID: null, 
-      ShiftID: 6, 
-      TotalAmount: 11.50, 
-      Discount: 0.00, 
-      FinalAmount: 11.50, 
-      PaymentMethod: 'Cash', 
-      Status: 'Completed' 
+      order_id: 10, 
+      customer_id: null, 
+      shift_id: 6, 
+      total_amount: 11.50, 
+      discount: 0.00, 
+      final_amount: 11.50, 
+      payment_method: 'Cash', 
+      status: 'Completed' 
     }
   ]);
 };

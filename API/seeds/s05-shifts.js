@@ -4,63 +4,63 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('Shifts').del();
+  await knex('shifts').del();
   
   // Inserts seed entries
-  await knex('Shifts').insert([
+  await knex('shifts').insert([
     { 
-      ShiftID: 1, 
-      StartTime: new Date('2025-03-25 07:00:00'), 
-      EndTime: new Date('2025-03-25 15:00:00'), 
-      OpeningCash: 200.00, 
-      TotalSales: 1250.75, 
-      TotalOrders: 42, 
-      Status: 'Closed' 
+      shift_id: 1, 
+      start_time: new Date('2025-03-25 07:00:00'), 
+      end_time: new Date('2025-03-25 15:00:00'), 
+      opening_cash: 200.00, 
+      total_sales: 1250.75, 
+      total_orders: 42, 
+      status: 'Closed' 
     },
     { 
-      ShiftID: 2, 
-      StartTime: new Date('2025-03-25 15:00:00'), 
-      EndTime: new Date('2025-03-25 23:00:00'), 
-      OpeningCash: 250.00, 
-      TotalSales: 1045.50, 
-      TotalOrders: 35, 
-      Status: 'Closed' 
+      shift_id: 2, 
+      start_time: new Date('2025-03-25 15:00:00'), 
+      end_time: new Date('2025-03-25 23:00:00'), 
+      opening_cash: 250.00, 
+      total_sales: 1045.50, 
+      total_orders: 35, 
+      status: 'Closed' 
     },
     { 
-      ShiftID: 3, 
-      StartTime: new Date('2025-03-26 07:00:00'), 
-      EndTime: new Date('2025-03-26 15:00:00'), 
-      OpeningCash: 200.00, 
-      TotalSales: 1378.25, 
-      TotalOrders: 45, 
-      Status: 'Closed' 
+      shift_id: 3, 
+      start_time: new Date('2025-03-26 07:00:00'), 
+      end_time: new Date('2025-03-26 15:00:00'), 
+      opening_cash: 200.00, 
+      total_sales: 1378.25, 
+      total_orders: 45, 
+      status: 'Closed' 
     },
     { 
-      ShiftID: 4, 
-      StartTime: new Date('2025-03-26 15:00:00'), 
-      EndTime: new Date('2025-03-26 23:00:00'), 
-      OpeningCash: 250.00, 
-      TotalSales: 1122.75, 
-      TotalOrders: 38, 
-      Status: 'Closed' 
+      shift_id: 4, 
+      start_time: new Date('2025-03-26 15:00:00'), 
+      end_time: new Date('2025-03-26 23:00:00'), 
+      opening_cash: 250.00, 
+      total_sales: 1122.75, 
+      total_orders: 38, 
+      status: 'Closed' 
     },
     { 
-      ShiftID: 5, 
-      StartTime: new Date('2025-03-27 07:00:00'), 
-      EndTime: new Date('2025-03-27 15:00:00'), 
-      OpeningCash: 200.00, 
-      TotalSales: 1195.50, 
-      TotalOrders: 40, 
-      Status: 'Closed' 
+      shift_id: 5, 
+      start_time: new Date('2025-03-27 07:00:00'), 
+      end_time: new Date('2025-03-27 15:00:00'), 
+      opening_cash: 200.00, 
+      total_sales: 1195.50, 
+      total_orders: 40, 
+      status: 'Closed' 
     },
     { 
-      ShiftID: 6, 
-      StartTime: new Date('2025-03-27 15:00:00'), 
-      EndTime: null, 
-      OpeningCash: 250.00, 
-      TotalSales: 520.25, 
-      TotalOrders: 18, 
-      Status: 'Open' 
+      shift_id: 6, 
+      start_time: new Date('2025-03-27 15:00:00'), 
+      end_time: null, 
+      opening_cash: 250.00, 
+      total_sales: 520.25, 
+      total_orders: 18, 
+      status: 'Open' 
     }
   ]);
 };

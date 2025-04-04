@@ -4,69 +4,69 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('Transactions').del();
+  await knex('transactions').del();
   
   // Inserts seed entries
-  await knex('Transactions').insert([
+  await knex('transactions').insert([
     { 
-      TransactionID: 1, 
-      OrderID: 1, 
-      AmountPaid: 13.75, 
-      PaymentMethod: 'Card' 
+      transaction_id: 1, 
+      order_id: 1, 
+      amount_paid: 13.75, 
+      payment_method: 'Card' 
     },
     { 
-      TransactionID: 2, 
-      OrderID: 2, 
-      AmountPaid: 10.00, 
-      PaymentMethod: 'Cash' 
+      transaction_id: 2, 
+      order_id: 2, 
+      amount_paid: 10.00, 
+      payment_method: 'Cash' 
     },
     { 
-      TransactionID: 3, 
-      OrderID: 3, 
-      AmountPaid: 17.55, 
-      PaymentMethod: 'Card' 
+      transaction_id: 3, 
+      order_id: 3, 
+      amount_paid: 17.55, 
+      payment_method: 'Card' 
     },
     { 
-      TransactionID: 4, 
-      OrderID: 4, 
-      AmountPaid: 5.00, 
-      PaymentMethod: 'Cash' 
+      transaction_id: 4, 
+      order_id: 4, 
+      amount_paid: 5.00, 
+      payment_method: 'Cash' 
     },
     { 
-      TransactionID: 5, 
-      OrderID: 5, 
-      AmountPaid: 12.25, 
-      PaymentMethod: 'E-wallet' 
+      transaction_id: 5, 
+      order_id: 5, 
+      amount_paid: 12.25, 
+      payment_method: 'E-wallet' 
     },
     { 
-      TransactionID: 6, 
-      OrderID: 6, 
-      AmountPaid: 16.50, 
-      PaymentMethod: 'Card' 
+      transaction_id: 6, 
+      order_id: 6, 
+      amount_paid: 16.50, 
+      payment_method: 'Card' 
     },
     { 
-      TransactionID: 7, 
-      OrderID: 7, 
-      AmountPaid: 21.37, 
-      PaymentMethod: 'Card' 
+      transaction_id: 7, 
+      order_id: 7, 
+      amount_paid: 21.37, 
+      payment_method: 'Card' 
     },
     { 
-      TransactionID: 8, 
-      OrderID: 8, 
-      AmountPaid: 10.00, 
-      PaymentMethod: 'Cash' 
+      transaction_id: 8, 
+      order_id: 8, 
+      amount_paid: 10.00, 
+      payment_method: 'Cash' 
     },
     { 
-      TransactionID: 9, 
-      OrderID: 9, 
-      AmountPaid: 14.00, 
-      PaymentMethod: 'Card' 
+      transaction_id: 9, 
+      order_id: 9, 
+      amount_paid: 14.00, 
+      payment_method: 'Card' 
     },
     { 
-      TransactionID: 10, 
-      OrderID: 10, 
-      AmountPaid: 12.00, 
-      PaymentMethod: 'Cash' 
+      transaction_id: 10, 
+      order_id: 10, 
+      amount_paid: 12.00, 
+      payment_method: 'Cash' 
     }
   ]);
 };

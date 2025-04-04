@@ -4,59 +4,59 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('ShiftOrders').del();
+  await knex('shift_orders').del();
   
   // Inserts seed entries
-  await knex('ShiftOrders').insert([
+  await knex('shift_orders').insert([
     { 
-      ShiftOrderID: 1, 
-      ShiftID: 1, 
-      OrderID: 1 
+      shift_order_id: 1, 
+      shift_id: 1, 
+      order_id: 1 
     },
     { 
-      ShiftOrderID: 2, 
-      ShiftID: 1, 
-      OrderID: 2 
+      shift_order_id: 2, 
+      shift_id: 1, 
+      order_id: 2 
     },
     { 
-      ShiftOrderID: 3, 
-      ShiftID: 1, 
-      OrderID: 3 
+      shift_order_id: 3, 
+      shift_id: 1, 
+      order_id: 3 
     },
     { 
-      ShiftOrderID: 4, 
-      ShiftID: 2, 
-      OrderID: 4 
+      shift_order_id: 4, 
+      shift_id: 2, 
+      order_id: 4 
     },
     { 
-      ShiftOrderID: 5, 
-      ShiftID: 2, 
-      OrderID: 5 
+      shift_order_id: 5, 
+      shift_id: 2, 
+      order_id: 5 
     },
     { 
-      ShiftOrderID: 6, 
-      ShiftID: 3, 
-      OrderID: 6 
+      shift_order_id: 6, 
+      shift_id: 3, 
+      order_id: 6 
     },
     { 
-      ShiftOrderID: 7, 
-      ShiftID: 3, 
-      OrderID: 7 
+      shift_order_id: 7, 
+      shift_id: 3, 
+      order_id: 7 
     },
     { 
-      ShiftOrderID: 8, 
-      ShiftID: 4, 
-      OrderID: 8 
+      shift_order_id: 8, 
+      shift_id: 4, 
+      order_id: 8 
     },
     { 
-      ShiftOrderID: 9, 
-      ShiftID: 5, 
-      OrderID: 9 
+      shift_order_id: 9, 
+      shift_id: 5, 
+      order_id: 9 
     },
     { 
-      ShiftOrderID: 10, 
-      ShiftID: 6, 
-      OrderID: 10 
+      shift_order_id: 10, 
+      shift_id: 6, 
+      order_id: 10 
     }
   ]);
 };

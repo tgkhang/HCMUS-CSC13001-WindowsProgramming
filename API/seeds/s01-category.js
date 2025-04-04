@@ -4,44 +4,14 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('Categories').del();
-  
-  // Inserts seed entries
-  await knex('Categories').insert([
-    { 
-      CategoryID: 1, 
-      Name: 'Coffee', 
-      Description: 'Various coffee beverages' 
-    },
-    { 
-      CategoryID: 2, 
-      Name: 'Tea', 
-      Description: 'Various tea options' 
-    },
-    { 
-      CategoryID: 3, 
-      Name: 'Pastries', 
-      Description: 'Fresh baked pastries and treats' 
-    },
-    { 
-      CategoryID: 4, 
-      Name: 'Sandwiches', 
-      Description: 'Freshly made sandwiches' 
-    },
-    { 
-      CategoryID: 5, 
-      Name: 'Milk & Alternatives', 
-      Description: 'Dairy milk and non-dairy alternatives' 
-    },
-    { 
-      CategoryID: 6, 
-      Name: 'Syrups & Flavorings', 
-      Description: 'Sweeteners and flavor enhancers' 
-    },
-    { 
-      CategoryID: 7, 
-      Name: 'Seasonal Beverages', 
-      Description: 'Limited time special drinks' 
-    }
+  await knex('category').del()
+  await knex('category').insert([
+    {name: 'Beverages', description: 'Drinks and refreshments'},
+    {name: 'Appetizers', description: 'Starters and small plates'},
+    {name: 'Main Courses', description: 'Primary entrées and dishes'},
+    {name: 'Desserts', description: 'Sweet treats and desserts'},
+    {name: 'Sides', description: 'Side dishes and accompaniments'},
+    {name: 'Specials', description: 'Chef specials and seasonal items'},
+    {name: 'Breakfast', description: 'Morning meal options'},
   ]);
 };

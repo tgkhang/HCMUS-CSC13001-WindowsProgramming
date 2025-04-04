@@ -1,196 +1,74 @@
+// s07-order_detail.js
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('OrdersDetails').del();
-  
-  // Inserts seed entries
-  await knex('OrdersDetails').insert([
-    { 
-      OrderDetailID: 1, 
-      OrderID: 1, 
-      MenuItemID: 3, 
-      Quantity: 2, 
-      UnitPrice: 4.50, 
-      Subtotal: 9.00 
+  await knex('order_detail').del()
+  await knex('order_detail').insert([
+    {
+      order_id: 1,
+      menu_item_id: 1,
+      quantity: 2,
+      unit_price: 3.5,
+      subtotal: 7.0
     },
-    { 
-      OrderDetailID: 2, 
-      OrderID: 1, 
-      MenuItemID: 5, 
-      Quantity: 1, 
-      UnitPrice: 3.75, 
-      Subtotal: 3.75 
+    {
+      order_id: 1,
+      menu_item_id: 4,
+      quantity: 1,
+      unit_price: 15.0,
+      subtotal: 15.0
     },
-    { 
-      OrderDetailID: 3, 
-      OrderID: 1, 
-      MenuItemID: 4, 
-      Quantity: 1, 
-      UnitPrice: 3.25, 
-      Subtotal: 3.25 
+    {
+      order_id: 1,
+      menu_item_id: 5,
+      quantity: 1,
+      unit_price: 6.0,
+      subtotal: 6.0
     },
-    { 
-      OrderDetailID: 4, 
-      OrderID: 2, 
-      MenuItemID: 1, 
-      Quantity: 1, 
-      UnitPrice: 3.50, 
-      Subtotal: 3.50 
+    {
+      order_id: 1,
+      menu_item_id: 6,
+      quantity: 2,
+      unit_price: 4.0,
+      subtotal: 8.0
     },
-    { 
-      OrderDetailID: 5, 
-      OrderID: 2, 
-      MenuItemID: 5, 
-      Quantity: 1, 
-      UnitPrice: 3.75, 
-      Subtotal: 3.75 
+    {
+      order_id: 2,
+      menu_item_id: 2,
+      quantity: 1,
+      unit_price: 4.5,
+      subtotal: 4.5
     },
-    { 
-      OrderDetailID: 6, 
-      OrderID: 3, 
-      MenuItemID: 6, 
-      Quantity: 2, 
-      UnitPrice: 7.50, 
-      Subtotal: 15.00 
+    {
+      order_id: 2,
+      menu_item_id: 3,
+      quantity: 2,
+      unit_price: 7.0,
+      subtotal: 14.0
     },
-    { 
-      OrderDetailID: 7, 
-      OrderID: 3, 
-      MenuItemID: 10, 
-      Quantity: 1, 
-      UnitPrice: 4.25, 
-      Subtotal: 4.25 
+    {
+      order_id: 2,
+      menu_item_id: 7,
+      quantity: 1,
+      unit_price: 22.0,
+      subtotal: 22.0
     },
-    { 
-      OrderDetailID: 8, 
-      OrderID: 4, 
-      MenuItemID: 2, 
-      Quantity: 1, 
-      UnitPrice: 4.75, 
-      Subtotal: 4.75 
+    {
+      order_id: 3,
+      menu_item_id: 8,
+      quantity: 2,
+      unit_price: 12.0,
+      subtotal: 24.0
     },
-    { 
-      OrderDetailID: 9, 
-      OrderID: 5, 
-      MenuItemID: 8, 
-      Quantity: 1, 
-      UnitPrice: 5.00, 
-      Subtotal: 5.00 
-    },
-    { 
-      OrderDetailID: 10, 
-      OrderID: 5, 
-      MenuItemID: 9, 
-      Quantity: 1, 
-      UnitPrice: 5.75, 
-      Subtotal: 5.75 
-    },
-    { 
-      OrderDetailID: 11, 
-      OrderID: 5, 
-      MenuItemID: 5, 
-      Quantity: 1, 
-      UnitPrice: 3.75, 
-      Subtotal: 3.75 
-    },
-    { 
-      OrderDetailID: 12, 
-      OrderID: 6, 
-      MenuItemID: 7, 
-      Quantity: 2, 
-      UnitPrice: 5.25, 
-      Subtotal: 10.50 
-    },
-    { 
-      OrderDetailID: 13, 
-      OrderID: 6, 
-      MenuItemID: 6, 
-      Quantity: 1, 
-      UnitPrice: 7.50, 
-      Subtotal: 7.50 
-    },
-    { 
-      OrderDetailID: 14, 
-      OrderID: 7, 
-      MenuItemID: 3, 
-      Quantity: 2, 
-      UnitPrice: 4.50, 
-      Subtotal: 9.00 
-    },
-    { 
-      OrderDetailID: 15, 
-      OrderID: 7, 
-      MenuItemID: 6, 
-      Quantity: 1, 
-      UnitPrice: 7.50, 
-      Subtotal: 7.50 
-    },
-    { 
-      OrderDetailID: 16, 
-      OrderID: 7, 
-      MenuItemID: 9, 
-      Quantity: 1, 
-      UnitPrice: 5.75, 
-      Subtotal: 5.75 
-    },
-    { 
-      OrderDetailID: 17, 
-      OrderID: 8, 
-      MenuItemID: 10, 
-      Quantity: 1, 
-      UnitPrice: 4.25, 
-      Subtotal: 4.25 
-    },
-    { 
-      OrderDetailID: 18, 
-      OrderID: 8, 
-      MenuItemID: 5, 
-      Quantity: 1, 
-      UnitPrice: 3.75, 
-      Subtotal: 3.75 
-    },
-    { 
-      OrderDetailID: 19, 
-      OrderID: 9, 
-      MenuItemID: 3, 
-      Quantity: 1, 
-      UnitPrice: 4.50, 
-      Subtotal: 4.50 
-    },
-    { 
-      OrderDetailID: 20, 
-      OrderID: 9, 
-      MenuItemID: 8, 
-      Quantity: 1, 
-      UnitPrice: 5.00, 
-      Subtotal: 5.00 
-    },
-    { 
-      OrderDetailID: 21, 
-      OrderID: 9, 
-      MenuItemID: 4, 
-      Quantity: 1, 
-      UnitPrice: 3.25, 
-      Subtotal: 3.25 
-    },
-    { 
-      OrderDetailID: 22, 
-      OrderID: 10, 
-      MenuItemID: 7, 
-      Quantity: 1, 
-      UnitPrice: 5.25, 
-      Subtotal: 5.25 
-    },
-    { 
-      OrderDetailID: 23, 
-      OrderID: 10, 
-      MenuItemID: 5, 
-      Quantity: 2, 
-      UnitPrice: 3.75, 
-      Subtotal: 7.50 
+    {
+      order_id: 3,
+      menu_item_id: 1,
+      quantity: 1,
+      unit_price: 3.5,
+      subtotal: 3.5
     }
   ]);
 };

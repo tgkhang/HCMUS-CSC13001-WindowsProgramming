@@ -9,22 +9,22 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class Customer
     {
-        [JsonProperty("CustomerID")]
+        [JsonProperty("customer_id")]
         public int CustomerID { get; set; }
 
-        [JsonProperty("Name")]
+        [JsonProperty("name")]
         public string Name { get; set; } = "";
 
-        [JsonProperty("Phone")]
+        [JsonProperty("phone")]
         public string Phone { get; set; } = "";
 
-        [JsonProperty("Email")]
+        [JsonProperty("email")]
         public string? Email { get; set; }
 
-        [JsonProperty("Address")]
+        [JsonProperty("address")]
         public string? Address { get; set; }
 
-        [JsonProperty("LoyaltyPoints")]
+        [JsonProperty("loyalty_points")]
         public int LoyaltyPoints { get; set; }
     }
 }

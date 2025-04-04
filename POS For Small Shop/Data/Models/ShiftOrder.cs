@@ -13,13 +13,13 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class ShiftOrder
     {
-        [JsonProperty("ShiftOrderID")]
+        [JsonProperty("shift_order_id")]
         public int ShiftOrderID { get; set; }
 
-        [JsonProperty("ShiftID")]
+        [JsonProperty("shift_id")]
         public int ShiftID { get; set; }
 
-        [JsonProperty("OrderID")]
+        [JsonProperty("order_id")]
         public int OrderID { get; set; }
     }
 

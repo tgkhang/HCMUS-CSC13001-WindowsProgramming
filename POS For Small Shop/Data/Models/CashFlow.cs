@@ -12,19 +12,19 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class CashFlow
     {
-        [JsonProperty("CashFlowID")]
+        [JsonProperty("cash_flow_id")]
         public int CashFlowID { get; set; }
 
-        [JsonProperty("ShiftID")]
+        [JsonProperty("shift_id")]
         public int ShiftID { get; set; }
 
-        [JsonProperty("TransactionType")]
+        [JsonProperty("transaction_type")]
         public string TransactionType { get; set; } = "";
 
-        [JsonProperty("Amount")]
+        [JsonProperty("amount")]
         public float Amount { get; set; }
 
-        [JsonProperty("Timestamp")]
+        [JsonProperty("timestamp")]
         public DateTime Timestamp { get; set; }
     }
 }

@@ -242,20 +242,20 @@
                             <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,10,0">
                                 <Button 
                                     Content="-" 
-                                    Width="30" 
-                                    Height="30"
+                                    Width="35" 
+                                    Height="35"
                                     Click="DecreaseQuantity_Click"
                                     Tag="{x:Bind MenuItemID}"/>
                                 <TextBlock 
-                                    Text="{x:Bind Quantity}" 
+                                    Text="{x:Bind Quantity,Mode=TwoWay}" 
                                     VerticalAlignment="Center" 
                                     HorizontalAlignment="Center"
                                     Width="30"
                                     TextAlignment="Center"/>
                                 <Button 
                                     Content="+" 
-                                    Width="30" 
-                                    Height="30"
+                                    Width="35" 
+                                    Height="35"
                                     Click="IncreaseQuantity_Click"
                                     Tag="{x:Bind MenuItemID}"/>
                             </StackPanel>
@@ -271,8 +271,8 @@
                             <Button 
                                 Grid.Column="3"
                                 Content="✕"
-                                Width="30"
-                                Height="30"
+                                Width="35"
+                                Height="35"
                                 Click="RemoveItem_Click"
                                 Tag="{x:Bind MenuItemID}"/>
                         </Grid>

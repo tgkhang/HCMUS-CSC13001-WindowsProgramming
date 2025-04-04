@@ -3,104 +3,66 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.Data.Models;
-using POS_For_Small_Shop.Services;
-using System.Collections.ObjectModel;
+using POS_For_Small_Shop.ViewModels.MenuManagement;
 
 namespace POS_For_Small_Shop.Views.MenuManagement
 {
     public sealed partial class MenuItemListPage : Page
     {
-        private IDao _dao;
-        private List<MenuItem> _allMenuItems;
-        private MenuItem _currentMenuItem;
-        private bool _isEditMode = false;
-        private string _searchText = "";
-
-        public ObservableCollection<MenuItem> FilteredMenuItems { get; private set; } = new ObservableCollection<MenuItem>();
+        public MenuItemListViewModel ViewModel { get; } = new MenuItemListViewModel();
 
         public MenuItemListPage()
         {
             this.InitializeComponent();
-            _dao = Service.GetKeyedSingleton<IDao>();
-            LoadMenuItems();
-            ItemListView.ItemsSource = FilteredMenuItems;
-        }
+            this.DataContext = ViewModel;
 
-        private void LoadMenuItems()
-        {
-            try
-            {
-                _allMenuItems = _dao.MenuItems.GetAll();
-                ApplyFilters();
-                UpdateEmptyState();
-            }
-            catch (NotImplementedException)
-            {
-                _allMenuItems = new List<MenuItem>();
-                ApplyFilters();
-                UpdateEmptyState();
-            }
-        }
-
-        private void ApplyFilters()
-        {
-            var filteredItems = _allMenuItems;
-            if (!string.IsNullOrWhiteSpace(_searchText))
-            {
-                filteredItems = filteredItems.Where(item =>
-                    item.Name.Contains(_searchText, StringComparison.OrdinalIgnoreCase)
-                ).ToList();
-            }
-
-            FilteredMenuItems.Clear();
-            foreach (var item in filteredItems)
-            {
-                FilteredMenuItems.Add(item);
-            }
-        }
-
-        private void UpdateEmptyState()
-        {
-            EmptyStateText.Visibility = FilteredMenuItems.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            // Initialize the ViewModel and connect the ListView
+            ViewModel.Initialize();
+            ItemListView.ItemsSource = ViewModel.FilteredMenuItems;
         }
 
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                _searchText = sender.Text;
-                ApplyFilters();
+                ViewModel.SearchText = sender.Text;
+                ViewModel.ApplyFilters();
                 UpdateEmptyState();
             }
         }
 
         private void ItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Handle selection change if necessary (not currently used)
+            // Handle selection change if necessary
         }
 
         private void AddItemButton_Click(object sender, RoutedEventArgs e)
         {
-            _isEditMode = false;
-            _currentMenuItem = new MenuItem();
+            ViewModel.IsEditMode = false;
+            ViewModel.CurrentMenuItem = new MenuItem();
             FormHeaderText.Text = "Add Menu Item";
             ItemDetailsPanel.Visibility = Visibility.Visible;
+
+            // Clear form fields
+            NameTextBox.Text = string.Empty;
+            PriceTextBox.Text = string.Empty;
+            ImagePathTextBox.Text = string.Empty;
         }
 
         private void EditItemButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is int menuItemId)
             {
-                _currentMenuItem = _allMenuItems.FirstOrDefault(item => item.MenuItemID == menuItemId);
-                if (_currentMenuItem != null)
+                MenuItem menuItem = ViewModel.AllMenuItems.FirstOrDefault(item => item.MenuItemID == menuItemId);
+                if (menuItem != null)
                 {
-                    NameTextBox.Text = _currentMenuItem.Name;
-                    PriceTextBox.Text = _currentMenuItem.SellingPrice.ToString();
-                    ImagePathTextBox.Text = _currentMenuItem.ImagePath ?? "";
+                    ViewModel.CurrentMenuItem = menuItem;
+                    NameTextBox.Text = menuItem.Name;
+                    PriceTextBox.Text = menuItem.SellingPrice.ToString();
+                    ImagePathTextBox.Text = menuItem.ImagePath ?? "";
                     FormHeaderText.Text = "Edit Menu Item";
-                    _isEditMode = true;
+                    ViewModel.IsEditMode = true;
                     ItemDetailsPanel.Visibility = Visibility.Visible;
                 }
             }
@@ -114,28 +76,21 @@ namespace POS_For_Small_Shop.Views.MenuManagement
                 return;
             }
 
-            _currentMenuItem.Name = NameTextBox.Text;
-            _currentMenuItem.SellingPrice = float.Parse(PriceTextBox.Text);
-            _currentMenuItem.ImagePath = ImagePathTextBox.Text;
+            if (!float.TryParse(PriceTextBox.Text, out float price))
+            {
+                ShowError("Please enter a valid price.");
+                return;
+            }
 
-            bool success;
-            if (_isEditMode)
-            {
-                success = _dao.MenuItems.Update(_currentMenuItem.MenuItemID, _currentMenuItem);
-            }
-            else
-            {
-                success = _dao.MenuItems.Insert(_currentMenuItem);
-                if (success)
-                {
-                    _currentMenuItem.MenuItemID = _allMenuItems.Count > 0 ? _allMenuItems.Max(item => item.MenuItemID) + 1 : 1;
-                }
-                _allMenuItems.Add(_currentMenuItem);
-            }
+            ViewModel.CurrentMenuItem.Name = NameTextBox.Text;
+            ViewModel.CurrentMenuItem.SellingPrice = price;
+            ViewModel.CurrentMenuItem.ImagePath = ImagePathTextBox.Text;
+
+            bool success = ViewModel.SaveMenuItem();
 
             if (success)
             {
-                ApplyFilters();
+                ViewModel.ApplyFilters();
                 UpdateEmptyState();
                 ItemDetailsPanel.Visibility = Visibility.Collapsed;
             }
@@ -162,7 +117,7 @@ namespace POS_For_Small_Shop.Views.MenuManagement
         {
             if (sender is Button button && button.Tag is int menuItemId)
             {
-                var itemToDelete = _allMenuItems.FirstOrDefault(item => item.MenuItemID == menuItemId);
+                var itemToDelete = ViewModel.AllMenuItems.FirstOrDefault(item => item.MenuItemID == menuItemId);
                 if (itemToDelete != null)
                 {
                     ContentDialog dialog = new ContentDialog
@@ -179,13 +134,20 @@ namespace POS_For_Small_Shop.Views.MenuManagement
 
                     if (result == ContentDialogResult.Primary)
                     {
-                        _dao.MenuItems.Delete(menuItemId);
-                        _allMenuItems.Remove(itemToDelete);
-                        ApplyFilters();
-                        UpdateEmptyState();
+                        bool success = ViewModel.DeleteMenuItem(menuItemId);
+                        if (success)
+                        {
+                            ViewModel.ApplyFilters();
+                            UpdateEmptyState();
+                        }
                     }
                 }
             }
+        }
+
+        private void UpdateEmptyState()
+        {
+            EmptyStateText.Visibility = ViewModel.FilteredMenuItems.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

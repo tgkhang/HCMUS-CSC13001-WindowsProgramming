@@ -18,6 +18,11 @@ knex seed:make s01-category
 knex seed:run
 
 
+MIGRATION AND SEEDING AGAIN
+knex migrate:rollback --all
+knex migrate:latest
+knex seed:run
+
 RUN API
 wsl ./postgrest postgrest.conf
 postgraphile -c 'postgres://postgres:1234@localhost:5432/postgres' --watch --enhance-graphiql --dynamic-json

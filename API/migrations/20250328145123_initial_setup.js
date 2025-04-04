@@ -16,7 +16,8 @@ exports.up = function (knex) {
           .integer("CategoryID")
           .unsigned()
           .references("CategoryID")
-          .inTable("Categories");
+          .inTable("Categories")
+          .onDelete("CASCADE"); // Ensure that if a category is deleted, the ingredients are also deleted
         table.float("Stock").notNullable();
         table.text("Unit").notNullable();
         table.float("PurchasePrice").notNullable();
@@ -32,7 +33,8 @@ exports.up = function (knex) {
           .integer("CategoryID")
           .unsigned()
           .references("CategoryID")
-          .inTable("Categories");
+          .inTable("Categories")
+          .onDelete("CASCADE"); // Ensure that if a category is deleted, the menu items are also deleted
         table.float("SellingPrice").notNullable();
         table.text("ImagePath").notNullable();
       })
@@ -66,12 +68,13 @@ exports.up = function (knex) {
           .unsigned()
           .references("CustomerID")
           .inTable("Customer")
-          .nullable();
+          .onDelete("SET NULL"); // Allow deleting customers by setting CustomerID to NULL
         table
           .integer("ShiftID")
           .unsigned()
           .references("ShiftID")
-          .inTable("Shifts");
+          .inTable("Shifts")
+          .onDelete("CASCADE"); // Ensure that if a shift is deleted, its orders are also deleted
         table.float("TotalAmount").notNullable();
         table.float("Discount").defaultTo(0).notNullable();
         table.float("FinalAmount").notNullable();
@@ -86,12 +89,14 @@ exports.up = function (knex) {
           .integer("OrderID")
           .unsigned()
           .references("OrderID")
-          .inTable("Orders");
+          .inTable("Orders")
+          .onDelete("CASCADE"); // Ensure that if an order is deleted, its details are also deleted
         table
           .integer("MenuItemID")
           .unsigned()
           .references("MenuItemID")
-          .inTable("MenuItems");
+          .inTable("MenuItems")
+          .onDelete("CASCADE"); // Ensure that if a menu item is deleted, related order details are also deleted
         table.integer("Quantity").notNullable();
         table.float("UnitPrice").notNullable();
         table.float("Subtotal").notNullable();
@@ -104,7 +109,8 @@ exports.up = function (knex) {
           .integer("OrderID")
           .unsigned()
           .references("OrderID")
-          .inTable("Orders");
+          .inTable("Orders")
+          .onDelete("CASCADE"); // Ensure that if an order is deleted, its transactions are also deleted
         table.float("AmountPaid").notNullable();
         table.text("PaymentMethod").notNullable();
       })
@@ -134,12 +140,14 @@ exports.up = function (knex) {
           .integer("ShiftID")
           .unsigned()
           .references("ShiftID")
-          .inTable("Shifts");
+          .inTable("Shifts")
+          .onDelete("CASCADE"); // Ensure that if a shift is deleted, its shift orders are also deleted
         table
           .integer("OrderID")
           .unsigned()
           .references("OrderID")
-          .inTable("Orders");
+          .inTable("Orders")
+          .onDelete("CASCADE"); // Ensure that if an order is deleted, its shift orders are also deleted
       })
 
       // CashFlow
@@ -149,7 +157,8 @@ exports.up = function (knex) {
           .integer("ShiftID")
           .unsigned()
           .references("ShiftID")
-          .inTable("Shifts");
+          .inTable("Shifts")
+          .onDelete("CASCADE"); // Ensure that if a shift is deleted, its cash flow records are also deleted
         table.text("TransactionType").notNullable();
         table.float("Amount").notNullable();
         table.datetime("Timestamp").notNullable();

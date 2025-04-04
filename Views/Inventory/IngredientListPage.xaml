@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:POS_For_Small_Shop.Converters"
     xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

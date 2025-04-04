@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,67 +14,109 @@ namespace POS_For_Small_Shop.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class InventoryViewModel
     {
-        public ObservableCollection<Ingredient> Ingredients { get; set; }
-        public Ingredient? SelectedIngredient { get; set; }
+        private IDao _dao;
+        private string _searchText = "";
+        public List<Ingredient> AllIngredients { get; private set; } = new List<Ingredient>();
 
-        private readonly IDao _dao;
+        public ObservableCollection<Ingredient> FilteredIngredients { get; private set; } = new ObservableCollection<Ingredient>();
+        public Ingredient CurrentIngredient { get; set; }
+        public bool IsEditMode { get; set; } = false;
 
-        public RelayCommand LoadIngredientsCommand { get; }
-
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+            }
+        }
         public InventoryViewModel()
         {
             _dao = Service.GetKeyedSingleton<IDao>();
-
-            LoadIngredients();
-
-            LoadIngredientsCommand = new RelayCommand(LoadIngredients);
-        }
-        public void LoadIngredients()
-        {
-            var items = _dao.Ingredients.GetAll().ToList();
-            Ingredients = new ObservableCollection<Ingredient>(items);
         }
 
-        public void AddIngredient(Ingredient ingredient)
+        public void Initialize()
         {
-            if (ingredient != null)
+            LoadIngredient();
+        }
+
+        public void LoadIngredient()
+        {
+            try
             {
-                var result = _dao.Ingredients.Insert(ingredient);
-                if (result)
-                {
-                    Ingredients.Add(ingredient);
-                }
+                AllIngredients = _dao.Ingredients.GetAll();
+                ApplyFilters();
+            }
+            catch (NotImplementedException)
+            {
+                AllIngredients = new List<Ingredient>();
+                ApplyFilters();
             }
         }
 
-        public void SaveIngredient(Ingredient ingredient)
+        public void ApplyFilters()
         {
-            if (ingredient != null)
+            var filteredItems = AllIngredients;
+            if (!string.IsNullOrWhiteSpace(_searchText))
             {
-                var result = _dao.Ingredients.Update(ingredient.IngredientID, ingredient);
-                if (result)
-                {
-                    var index = Ingredients.IndexOf(Ingredients.First(i => i.IngredientID == ingredient.IngredientID));
-                    if (index >= 0)
-                    {
-                        Ingredients[index] = ingredient;
-                    }
-                }
+                filteredItems = filteredItems.Where(item =>
+                    item.IngredientName.Contains(_searchText, StringComparison.OrdinalIgnoreCase)
+                ).ToList();
             }
+
+            FilteredIngredients.Clear();
+            foreach (var item in filteredItems)
+            {
+                FilteredIngredients.Add(item);
+            }
+
+            OnPropertyChanged(nameof(FilteredIngredients));
         }
 
-        // Xóa nguyên liệu
-        public void DeleteIngredient(Ingredient ingredient)
+        public bool SaveIngredient()
         {
-            if (ingredient != null)
+            bool success;
+
+            if (IsEditMode)
             {
-                var result = _dao.Ingredients.Delete(ingredient.IngredientID);
-                if (result)
+                success = _dao.Ingredients.Update(CurrentIngredient.IngredientID, CurrentIngredient);
+            }
+            else
+            {
+                success = _dao.Ingredients.Insert(CurrentIngredient);
+                if (success)
                 {
-                    Ingredients.Remove(ingredient);
+                    CurrentIngredient.IngredientID = AllIngredients.Count > 0 ?
+                        AllIngredients.Max(item => item.IngredientID) + 1 : 1;
+                    AllIngredients.Add(CurrentIngredient);
                 }
             }
+
+            return success;
         }
 
+        public bool DeleteIngredient(int ingredientId)
+        {
+            bool success = _dao.MenuItems.Delete(ingredientId);
+
+            if (success)
+            {
+                var itemToRemove = AllIngredients.FirstOrDefault(item => item.IngredientID == ingredientId);
+                if (itemToRemove != null)
+                {
+                    AllIngredients.Remove(itemToRemove);
+                }
+            }
+
+            return success;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

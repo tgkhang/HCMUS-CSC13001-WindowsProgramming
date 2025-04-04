@@ -21,22 +21,6 @@ namespace POS_For_Small_Shop.Views.Inventory
             this.DataContext = ViewModel;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            if (e.Parameter is Ingredient selectedIngredient)
-            {
-                ViewModel.SelectedIngredient = selectedIngredient;
-            }
-            else
-            {
-                if (Frame.CanGoBack)
-                {
-                    Frame.GoBack();
-                }
-            }
-        }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {

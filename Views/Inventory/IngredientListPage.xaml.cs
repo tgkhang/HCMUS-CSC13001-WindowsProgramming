@@ -9,104 +9,81 @@ using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml.Navigation;
+using POS_For_Small_Shop.ViewModels;
+using POS_For_Small_Shop.ViewModels.MenuManagement;
 
 namespace POS_For_Small_Shop.Views.Inventory
 {
     public sealed partial class IngredientListPage : Page
     {
-        private IDao _dao;
-        private List<Ingredient> _allIngredients;
-        private Ingredient _currentIngredient;
-        private bool _isEditMode = false;
-        private string _searchText = "";
-
-        public ObservableCollection<Ingredient> FilteredIngredients { get; private set; } = new ObservableCollection<Ingredient>();
+        public InventoryViewModel ViewModel { get; } = new InventoryViewModel();
 
         public IngredientListPage()
         {
             this.InitializeComponent();
-            _dao = Service.GetKeyedSingleton<IDao>();
-            LoadIngredients();
-            IngredientListView.ItemsSource = FilteredIngredients;
+            this.DataContext = ViewModel;
+
+            ViewModel.Initialize();
+            IngredientListView.ItemsSource = ViewModel.FilteredIngredients;
         }
 
-        private void LoadIngredients()
-        {
-            try
-            {
-                _allIngredients = _dao.Ingredients.GetAll();
-                ApplyFilters();
-                UpdateEmptyState();
-            }
-            catch (NotImplementedException)
-            {
-                _allIngredients = new List<Ingredient>();
-                ApplyFilters();
-                UpdateEmptyState();
-            }
-        }
-
-        private void ApplyFilters()
-        {
-            var filteredItems = _allIngredients;
-            if (!string.IsNullOrWhiteSpace(_searchText))
-            {
-                filteredItems = filteredItems.Where(item =>
-                    item.IngredientName.Contains(_searchText, StringComparison.OrdinalIgnoreCase)
-                ).ToList();
-            }
-
-            FilteredIngredients.Clear();
-            foreach (var item in filteredItems)
-            {
-                FilteredIngredients.Add(item);
-            }
-        }
-
-        private void UpdateEmptyState()
-        {
-            EmptyStateText.Visibility = FilteredIngredients.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        }
 
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                _searchText = sender.Text;
-                ApplyFilters();
+                ViewModel.SearchText = sender.Text;
+                ViewModel.ApplyFilters();
                 UpdateEmptyState();
             }
         }
 
-        private void AddIngredientButton_Click(object sender, RoutedEventArgs e)
+        private void UpdateEmptyState()
         {
-            _isEditMode = false;
-            _currentIngredient = new Ingredient();
-            FormHeaderText.Text = "Add Ingredient";
-            IngredientDetailsPanel.Visibility = Visibility.Visible;
+            EmptyStateText.Visibility = ViewModel.FilteredIngredients.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void IngredientListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Handle selection change if necessary (not currently used)
         }
+
+        private void AddIngredientButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.IsEditMode = false;
+            ViewModel.CurrentIngredient = new Ingredient();
+            FormHeaderText.Text = "Add Ingredient";
+            IngredientDetailsPanel.Visibility = Visibility.Visible;
+
+            // Clear form fields
+            IngredientIDTextBox.Text = string.Empty;
+            IngredientNameTextBox.Text = string.Empty;
+            CategoryIDTextBox.Text = string.Empty;
+            StockTextBox.Text = string.Empty;
+            UnitTextBox.Text = string.Empty;
+            SupplierTextBox.Text = string.Empty;
+            PurchasePriceTextBox.Text = string.Empty;
+            ExpiryDatePicker.Date = DateTimeOffset.Now;
+        }
+
         private void EditIngredientButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is int ingredientId)
             {
-                _currentIngredient = _allIngredients.FirstOrDefault(item => item.IngredientID == ingredientId);
-                if (_currentIngredient != null)
+                Ingredient ingredients = ViewModel.AllIngredients.FirstOrDefault(item => item.IngredientID == ingredientId);
+                if (ingredients != null)
                 {
-                    IngredientIDTextBox.Text = _currentIngredient.IngredientID.ToString();
-                    IngredientNameTextBox.Text = _currentIngredient.IngredientName;
-                    CategoryIDTextBox.Text = _currentIngredient.CategoryID.ToString();
-                    StockTextBox.Text = _currentIngredient.Stock.ToString();
-                    UnitTextBox.Text = _currentIngredient.Unit;
-                    SupplierTextBox.Text = _currentIngredient.Supplier;
-                    PurchasePriceTextBox.Text = _currentIngredient.PurchasePrice.ToString();
-                    ExpiryDatePicker.Date = _currentIngredient.ExpiryDate ?? DateTimeOffset.Now;
+                    ViewModel.CurrentIngredient = ingredients;
+                    IngredientIDTextBox.Text = ingredients.IngredientID.ToString();
+                    IngredientNameTextBox.Text = ingredients.IngredientName;
+                    CategoryIDTextBox.Text = ingredients.CategoryID.ToString();
+                    StockTextBox.Text = ingredients.Stock.ToString();
+                    UnitTextBox.Text = ingredients.Unit;
+                    SupplierTextBox.Text = ingredients.Supplier;
+                    PurchasePriceTextBox.Text = ingredients.PurchasePrice.ToString();
+                    ExpiryDatePicker.Date = ingredients.ExpiryDate ?? DateTimeOffset.Now;
                     FormHeaderText.Text = "Edit Ingredient";
-                    _isEditMode = true;
+                    ViewModel.IsEditMode = true;
                     IngredientDetailsPanel.Visibility = Visibility.Visible;
                 }
             }
@@ -120,33 +97,26 @@ namespace POS_For_Small_Shop.Views.Inventory
                 return;
             }
 
-            _currentIngredient.IngredientID = int.Parse(IngredientIDTextBox.Text);
-            _currentIngredient.IngredientName = IngredientNameTextBox.Text;
-            _currentIngredient.Stock = int.Parse(StockTextBox.Text);
-            _currentIngredient.Unit = UnitTextBox.Text;
-            _currentIngredient.Supplier = SupplierTextBox.Text;
-            _currentIngredient.CategoryID = int.Parse(CategoryIDTextBox.Text);
-            _currentIngredient.PurchasePrice = float.Parse(PurchasePriceTextBox.Text);
-            _currentIngredient.ExpiryDate = ExpiryDatePicker.Date.DateTime;
+            if (!float.TryParse(PurchasePriceTextBox.Text, out float price))
+            {
+                ShowError("Please enter a valid price.");
+                return;
+            }
 
-            bool success;
-            if (_isEditMode)
-            {
-                success = _dao.Ingredients.Update(_currentIngredient.IngredientID, _currentIngredient);
-            }
-            else
-            {
-                success = _dao.Ingredients.Insert(_currentIngredient);
-                if (success)
-                {
-                    _currentIngredient.IngredientID = _allIngredients.Count > 0 ? _allIngredients.Max(item => item.IngredientID) + 1 : 1;
-                }
-                _allIngredients.Add(_currentIngredient);
-            }
+            ViewModel.CurrentIngredient.IngredientID = int.Parse(IngredientIDTextBox.Text);
+            ViewModel.CurrentIngredient.IngredientName = IngredientNameTextBox.Text;
+            ViewModel.CurrentIngredient.Stock = int.Parse(StockTextBox.Text);
+            ViewModel.CurrentIngredient.Unit = UnitTextBox.Text;
+            ViewModel.CurrentIngredient.Supplier = SupplierTextBox.Text;
+            ViewModel.CurrentIngredient.CategoryID = int.Parse(CategoryIDTextBox.Text);
+            ViewModel.CurrentIngredient.PurchasePrice = float.Parse(PurchasePriceTextBox.Text);
+            ViewModel.CurrentIngredient.ExpiryDate = ExpiryDatePicker.Date.DateTime;
+
+            bool success = ViewModel.SaveIngredient();
 
             if (success)
             {
-                ApplyFilters();
+                ViewModel.ApplyFilters();
                 UpdateEmptyState();
                 IngredientDetailsPanel.Visibility = Visibility.Collapsed;
             }
@@ -173,7 +143,7 @@ namespace POS_For_Small_Shop.Views.Inventory
         {
             if (sender is Button button && button.Tag is int ingredientId)
             {
-                var itemToDelete = _allIngredients.FirstOrDefault(item => item.IngredientID == ingredientId);
+                var itemToDelete = ViewModel.AllIngredients.FirstOrDefault(item => item.IngredientID == ingredientId);
                 if (itemToDelete != null)
                 {
                     ContentDialog dialog = new ContentDialog
@@ -190,10 +160,12 @@ namespace POS_For_Small_Shop.Views.Inventory
 
                     if (result == ContentDialogResult.Primary)
                     {
-                        _dao.Ingredients.Delete(ingredientId);
-                        _allIngredients.Remove(itemToDelete);
-                        ApplyFilters();
-                        UpdateEmptyState();
+                        bool success = ViewModel.DeleteIngredient(ingredientId);
+                        if (success)
+                        {
+                            ViewModel.ApplyFilters();
+                            UpdateEmptyState();
+                        }
                     }
                 }
             }

@@ -26,3 +26,4 @@ knex seed:run
 RUN API
 wsl ./postgrest postgrest.conf
 postgraphile -c 'postgres://postgres:1234@localhost:5432/postgres' --watch --enhance-graphiql --dynamic-json
+postgraphile -c 'postgres://postgres:1234@localhost:5432/database1' --enhance-graphiql --dynamic-json

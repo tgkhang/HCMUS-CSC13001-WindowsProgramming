@@ -3,36 +3,21 @@
  * @returns { Promise<void> }
  */
 exports.up = async function(knex) {
-    // First check if role exists to avoid errors
-    const roleExists = await knex.raw(`
-        SELECT 1 FROM pg_roles WHERE rolname = 'anon'
-    `);
-    
-    if (roleExists.rows.length === 0) {
-        await knex.raw(`
-            CREATE ROLE anon NOLOGIN;
-        `);
-    }
-
-    // Grant usage on schema
     await knex.raw(`
-        GRANT USAGE ON SCHEMA public TO anon;
-    `);
-    
-    // Grant select permissions on all tables in your schema
-    await knex.raw(`
-        GRANT SELECT ON categories TO anon;
-        GRANT SELECT ON ingredients TO anon;
-        GRANT SELECT ON menu_items TO anon;
-        GRANT SELECT ON customers TO anon;
-        GRANT SELECT ON shifts TO anon;
-        GRANT SELECT ON orders TO anon;
-        GRANT SELECT ON order_details TO anon;
-        GRANT SELECT ON transactions TO anon;
-        GRANT SELECT ON promotions TO anon;
-        GRANT SELECT ON notifications TO anon;
-        GRANT SELECT ON shift_orders TO anon;
-        GRANT SELECT ON cash_flow TO anon;
+        create role anon nologin;
+        grant usage on schema public to anon;
+        grant select on public.category to anon;
+        grant select on public.ingredient to anon;
+        grant select on public.menu_item to anon;
+        grant select on public.customer to anon;
+        grant select on public.shift to anon;
+        grant select on public."order" to anon;
+        grant select on public.order_detail to anon;
+        grant select on public.transaction to anon;
+        grant select on public.promotion to anon;
+        grant select on public.notification to anon;
+        grant select on public.shift_order to anon;
+        grant select on public.cash_flow to anon;
     `);
 };
 
@@ -41,22 +26,7 @@ exports.up = async function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = async function(knex) {
-    // Revoke permissions
     await knex.raw(`
-        REVOKE SELECT ON categories, ingredients, menu_items, customers, 
-        shifts, orders, order_details, transactions, promotions, 
-        notifications, shift_orders, cash_flow FROM anon;
-        REVOKE USAGE ON SCHEMA public FROM anon;
+        drop role anon;
     `);
-    
-    // Check if role exists before dropping
-    const roleExists = await knex.raw(`
-        SELECT 1 FROM pg_roles WHERE rolname = 'anon'
-    `);
-    
-    if (roleExists.rows.length > 0) {
-        await knex.raw(`
-            DROP ROLE anon;
-        `);
-    }
 };

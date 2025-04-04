@@ -1,54 +1,39 @@
+// s10-notification.js
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('notifications').del();
+  await knex('notification').del()
   
-  // Inserts seed entries
-  await knex('notifications').insert([
-    { 
-      notification_id: 1, 
-      message: 'Low stock alert: Espresso Beans below 30kg', 
-      created_at: new Date('2025-03-24 09:15:00'), 
-      is_read: true 
+  const today = new Date();
+  
+  await knex('notification').insert([
+    {
+      message: 'Low stock alert: Coffee Beans (2kg remaining)',
+      created_at: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 2, 10, 15, 0),
+      is_read: true
     },
-    { 
-      notification_id: 2, 
-      message: 'Shift #1 closed successfully', 
-      created_at: new Date('2025-03-25 15:05:00'), 
-      is_read: true 
+    {
+      message: 'New promotion "Summer Special" is now active',
+      created_at: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 5, 9, 0, 0),
+      is_read: true
     },
-    { 
-      notification_id: 3, 
-      message: 'New promotion added: Spring Special', 
-      created_at: new Date('2025-03-01 08:30:00'), 
-      is_read: true 
+    {
+      message: 'Daily sales target reached!',
+      created_at: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1, 18, 30, 0),
+      is_read: false
     },
-    { 
-      notification_id: 4, 
-      message: 'Approaching expiry: Whole Milk (04/15/2025)', 
-      created_at: new Date('2025-03-25 10:00:00'), 
-      is_read: false 
+    {
+      message: 'System maintenance scheduled for tomorrow at 23:00',
+      created_at: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 14, 45, 0),
+      is_read: false
     },
-    { 
-      notification_id: 5, 
-      message: 'Daily sales report available', 
-      created_at: new Date('2025-03-26 23:30:00'), 
-      is_read: false 
-    },
-    { 
-      notification_id: 6, 
-      message: 'System update scheduled for March 30, 2025', 
-      created_at: new Date('2025-03-27 11:45:00'), 
-      is_read: false 
-    },
-    { 
-      notification_id: 7, 
-      message: 'New customer registered: David Lee', 
-      created_at: new Date('2025-03-26 14:20:00'), 
-      is_read: true 
+    {
+      message: 'New menu items added to Beverages category',
+      created_at: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3, 11, 20, 0),
+      is_read: true
     }
   ]);
 };

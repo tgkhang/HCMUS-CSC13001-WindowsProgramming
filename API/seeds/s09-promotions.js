@@ -1,52 +1,42 @@
+// s09-promotion.js
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('promotions').del();
+  await knex('promotion').del()
   
-  // Inserts seed entries
-  await knex('promotions').insert([
-    { 
-      promo_id: 1, 
-      promo_name: 'Spring Special', 
-      discount_type: 'Percentage', 
-      discount_value: 10.00, 
-      start_date: new Date('2025-03-01'), 
-      end_date: new Date('2025-04-15') 
+  const today = new Date();
+  
+  await knex('promotion').insert([
+    {
+      promo_name: 'Summer Special', 
+      discount_type: 'percentage', 
+      discount_value: 15.0, 
+      start_date: new Date(today.getFullYear(), 5, 1), // June 1st
+      end_date: new Date(today.getFullYear(), 7, 31)  // August 31st
     },
-    { 
-      promo_id: 2, 
-      promo_name: 'Loyalty Reward', 
-      discount_type: 'Fixed', 
-      discount_value: 5.00, 
-      start_date: new Date('2025-01-01'), 
-      end_date: new Date('2025-12-31') 
-    },
-    { 
-      promo_id: 3, 
+    {
       promo_name: 'Happy Hour', 
-      discount_type: 'Percentage', 
-      discount_value: 15.00, 
-      start_date: new Date('2025-03-01'), 
-      end_date: new Date('2025-06-30') 
+      discount_type: 'percentage', 
+      discount_value: 20.0, 
+      start_date: new Date(today.getFullYear(), today.getMonth(), 1), 
+      end_date: new Date(today.getFullYear(), today.getMonth() + 6, 0)
     },
-    { 
-      promo_id: 4, 
-      promo_name: 'Student Discount', 
-      discount_type: 'Percentage', 
-      discount_value: 8.00, 
-      start_date: new Date('2025-01-01'), 
-      end_date: new Date('2025-12-31') 
+    {
+      promo_name: 'Lunch Special', 
+      discount_type: 'fixed', 
+      discount_value: 5.0, 
+      start_date: new Date(today.getFullYear(), today.getMonth(), 1), 
+      end_date: new Date(today.getFullYear(), today.getMonth() + 3, 0)
     },
-    { 
-      promo_id: 5, 
-      promo_name: 'Buy One Get One Free', 
-      discount_type: 'Special', 
-      discount_value: 100.00, 
-      start_date: new Date('2025-04-01'), 
-      end_date: new Date('2025-04-30') 
+    {
+      promo_name: 'Holiday Promo', 
+      discount_type: 'percentage', 
+      discount_value: 25.0, 
+      start_date: new Date(today.getFullYear(), 11, 1),  // December 1st
+      end_date: new Date(today.getFullYear(), 11, 31)   // December 31st
     }
   ]);
 };

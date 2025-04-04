@@ -1,66 +1,63 @@
+// s05-shift.js
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('shifts').del();
+  await knex('shift').del()
   
-  // Inserts seed entries
-  await knex('shifts').insert([
-    { 
-      shift_id: 1, 
-      start_time: new Date('2025-03-25 07:00:00'), 
-      end_time: new Date('2025-03-25 15:00:00'), 
-      opening_cash: 200.00, 
+  // Create a few shifts for the past week
+  const today = new Date();
+  
+  await knex('shift').insert([
+    {
+      start_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7, 8, 0, 0), 
+      end_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7, 16, 0, 0), 
+      opening_cash: 500.0, 
       total_sales: 1250.75, 
       total_orders: 42, 
-      status: 'Closed' 
+      status: 'closed'
     },
-    { 
-      shift_id: 2, 
-      start_time: new Date('2025-03-25 15:00:00'), 
-      end_time: new Date('2025-03-25 23:00:00'), 
-      opening_cash: 250.00, 
-      total_sales: 1045.50, 
-      total_orders: 35, 
-      status: 'Closed' 
-    },
-    { 
-      shift_id: 3, 
-      start_time: new Date('2025-03-26 07:00:00'), 
-      end_time: new Date('2025-03-26 15:00:00'), 
-      opening_cash: 200.00, 
-      total_sales: 1378.25, 
+    {
+      start_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6, 8, 0, 0), 
+      end_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6, 16, 0, 0), 
+      opening_cash: 500.0, 
+      total_sales: 1375.50, 
       total_orders: 45, 
-      status: 'Closed' 
+      status: 'closed'
     },
-    { 
-      shift_id: 4, 
-      start_time: new Date('2025-03-26 15:00:00'), 
-      end_time: new Date('2025-03-26 23:00:00'), 
-      opening_cash: 250.00, 
-      total_sales: 1122.75, 
+    {
+      start_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 5, 8, 0, 0), 
+      end_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 5, 16, 0, 0), 
+      opening_cash: 500.0, 
+      total_sales: 1180.25, 
       total_orders: 38, 
-      status: 'Closed' 
+      status: 'closed'
     },
-    { 
-      shift_id: 5, 
-      start_time: new Date('2025-03-27 07:00:00'), 
-      end_time: new Date('2025-03-27 15:00:00'), 
-      opening_cash: 200.00, 
-      total_sales: 1195.50, 
-      total_orders: 40, 
-      status: 'Closed' 
+    {
+      start_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 4, 8, 0, 0), 
+      end_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 4, 16, 0, 0), 
+      opening_cash: 500.0, 
+      total_sales: 1420.00, 
+      total_orders: 47, 
+      status: 'closed'
     },
-    { 
-      shift_id: 6, 
-      start_time: new Date('2025-03-27 15:00:00'), 
+    {
+      start_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3, 8, 0, 0), 
+      end_time: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3, 16, 0, 0), 
+      opening_cash: 500.0, 
+      total_sales: 1330.50, 
+      total_orders: 44, 
+      status: 'closed'
+    },
+    {
+      start_time: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8, 0, 0), 
       end_time: null, 
-      opening_cash: 250.00, 
-      total_sales: 520.25, 
-      total_orders: 18, 
-      status: 'Open' 
+      opening_cash: 500.0, 
+      total_sales: 0, 
+      total_orders: 0, 
+      status: 'active'
     }
   ]);
 };

@@ -1,82 +1,62 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> } 
- */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('menu_items').del();
+  await knex('menu_item').del()
   
-  // Inserts seed entries
-  await knex('menu_items').insert([
-    { 
-      menu_item_id: 1, 
+  // First get the category IDs
+  const categories = await knex('category').select('category_id', 'name');
+  const categoryMap = {};
+  categories.forEach(category => {
+    categoryMap[category.name] = category.category_id;
+  });
+  
+  await knex('menu_item').insert([
+    {
       name: 'Espresso', 
-      category_id: 1, 
-      selling_price: 3.50, 
-      image_path: '/images/espresso.jpg' 
+      category_id: categoryMap['Beverages'], 
+      selling_price: 3.5, 
+      image_path: '/images/espresso.jpg'
     },
-    { 
-      menu_item_id: 2, 
-      name: 'Cappuccino', 
-      category_id: 1, 
-      selling_price: 4.75, 
-      image_path: '/images/cappuccino.jpg' 
-    },
-    { 
-      menu_item_id: 3, 
+    {
       name: 'Latte', 
-      category_id: 1, 
-      selling_price: 4.50, 
-      image_path: '/images/latte.jpg' 
+      category_id: categoryMap['Beverages'], 
+      selling_price: 4.5, 
+      image_path: '/images/latte.jpg'
     },
-    { 
-      menu_item_id: 4, 
-      name: 'Earl Grey Tea', 
-      category_id: 2, 
-      selling_price: 3.25, 
-      image_path: '/images/earlgrey.jpg' 
+    {
+      name: 'Bruschetta', 
+      category_id: categoryMap['Appetizers'], 
+      selling_price: 7.0, 
+      image_path: '/images/bruschetta.jpg'
     },
-    { 
-      menu_item_id: 5, 
-      name: 'Croissant', 
-      category_id: 3, 
-      selling_price: 3.75, 
-      image_path: '/images/croissant.jpg' 
+    {
+      name: 'Grilled Chicken', 
+      category_id: categoryMap['Main Courses'], 
+      selling_price: 15.0, 
+      image_path: '/images/grilled_chicken.jpg'
     },
-    { 
-      menu_item_id: 6, 
-      name: 'Turkey & Cheese Sandwich', 
-      category_id: 4, 
-      selling_price: 7.50, 
-      image_path: '/images/turkeysandwich.jpg' 
+    {
+      name: 'Chocolate Cake', 
+      category_id: categoryMap['Desserts'], 
+      selling_price: 6.0, 
+      image_path: '/images/chocolate_cake.jpg'
     },
-    { 
-      menu_item_id: 7, 
-      name: 'Mocha', 
-      category_id: 1, 
-      selling_price: 5.25, 
-      image_path: '/images/mocha.jpg' 
+    {
+      name: 'French Fries', 
+      category_id: categoryMap['Sides'], 
+      selling_price: 4.0, 
+      image_path: '/images/french_fries.jpg'
     },
-    { 
-      menu_item_id: 8, 
-      name: 'Vanilla Latte', 
-      category_id: 1, 
-      selling_price: 5.00, 
-      image_path: '/images/vanillalatte.jpg' 
+    {
+      name: 'Salmon Steak', 
+      category_id: categoryMap['Specials'], 
+      selling_price: 22.0, 
+      image_path: '/images/salmon_steak.jpg'
     },
-    { 
-      menu_item_id: 9, 
-      name: 'Pumpkin Spice Latte', 
-      category_id: 7, 
-      selling_price: 5.75, 
-      image_path: '/images/pumpkinlatte.jpg' 
-    },
-    { 
-      menu_item_id: 10, 
-      name: 'Iced Coffee', 
-      category_id: 1, 
-      selling_price: 4.25, 
-      image_path: '/images/icedcoffee.jpg' 
+    {
+      name: 'Breakfast Platter', 
+      category_id: categoryMap['Breakfast'], 
+      selling_price: 12.0, 
+      image_path: '/images/breakfast_platter.jpg'
     }
   ]);
 };

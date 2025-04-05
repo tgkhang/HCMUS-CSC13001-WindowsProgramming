@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.Inventory.EditIngredientPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views.Inventory"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels"
+    xmlns:converters="using:POS_For_Small_Shop.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:DateFormatter x:Key="DateFormatter" />
+    </Page.Resources>
+
+    <Grid Padding="10">
+
+        <ComboBox ItemsSource="{Binding Ingredients}" 
+              SelectedItem="{Binding SelectedIngredient, Mode=TwoWay}" 
+              DisplayMemberPath="IngredientName"
+              Margin="0,0,0,10"/>
+
+        <StackPanel Spacing="10">
+            <TextBox Header="Ingredient Name" 
+                 Text="{Binding SelectedIngredient.IngredientName, Mode=TwoWay}" />
+            <TextBox Header="Stock" 
+                 Text="{Binding SelectedIngredient.Stock, Mode=TwoWay, FallbackValue=0, TargetNullValue=0}" />
+            <TextBox Header="Unit" 
+                 Text="{Binding SelectedIngredient.Unit, Mode=TwoWay}" />
+            <TextBox Header="Purchase Price" 
+                 Text="{Binding SelectedIngredient.PurchasePrice, Mode=TwoWay, FallbackValue=0, TargetNullValue=0}" />
+            <TextBox Header="Supplier" 
+                 Text="{Binding SelectedIngredient.Supplier, Mode=TwoWay}" />
+            <TextBox Header="Expiry Date" 
+                 Text="{Binding SelectedIngredient.ExpiryDate, Mode=TwoWay, Converter={StaticResource DateFormatter}}" />
+        </StackPanel>
+
+        <Button Content="Save" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Bottom" 
+            Margin="0,10,0,0"
+            Click="SaveIngredient_Click" />
+    </Grid>
+</Page>

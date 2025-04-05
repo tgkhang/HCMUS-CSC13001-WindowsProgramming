@@ -1,112 +1,92 @@
+
+// s02-ingredient.js
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('Ingredients').del();
+  await knex('ingredient').del()
   
-  // Inserts seed entries
-  await knex('Ingredients').insert([
-    { 
-      IngredientID: 1, 
-      IngredientName: 'Espresso Beans', 
-      CategoryID: 1, 
-      Stock: 25.0, 
-      Unit: 'kg', 
-      PurchasePrice: 15.50, 
-      Supplier: 'Premium Coffee Co.', 
-      ExpiryDate: new Date('2025-06-30')
+  // First get the category IDs
+  const categories = await knex('category').select('category_id', 'name');
+  const categoryMap = {};
+  categories.forEach(category => {
+    categoryMap[category.name] = category.category_id;
+  });
+  
+  await knex('ingredient').insert([
+    {
+      ingredient_name: 'Coffee Beans', 
+      category_id: categoryMap['Beverages'], 
+      stock: 10.0, 
+      unit: 'kg', 
+      purchase_price: 15.0, 
+      supplier: 'Global Coffee Suppliers', 
+      expiry_date: new Date(2025, 6, 15)
     },
-    { 
-      IngredientID: 2, 
-      IngredientName: 'Whole Milk', 
-      CategoryID: 5, 
-      Stock: 50.0, 
-      Unit: 'liter', 
-      PurchasePrice: 1.20, 
-      Supplier: 'Local Dairy', 
-      ExpiryDate: new Date('2025-04-15')
+    {
+      ingredient_name: 'Milk', 
+      category_id: categoryMap['Beverages'], 
+      stock: 20.0, 
+      unit: 'L', 
+      purchase_price: 1.5, 
+      supplier: 'Local Dairy', 
+      expiry_date: new Date(2023, 11, 10)
     },
-    { 
-      IngredientID: 3, 
-      IngredientName: 'Almond Milk', 
-      CategoryID: 5, 
-      Stock: 30.0, 
-      Unit: 'liter', 
-      PurchasePrice: 2.50, 
-      Supplier: 'Plant Beverage Inc.', 
-      ExpiryDate: new Date('2025-05-20')
+    {
+      ingredient_name: 'Tomatoes', 
+      category_id: categoryMap['Appetizers'], 
+      stock: 5.0, 
+      unit: 'kg', 
+      purchase_price: 3.0, 
+      supplier: 'Fresh Farms', 
+      expiry_date: new Date(2023, 11, 5)
     },
-    { 
-      IngredientID: 4, 
-      IngredientName: 'Vanilla Syrup', 
-      CategoryID: 6, 
-      Stock: 10.0, 
-      Unit: 'liter', 
-      PurchasePrice: 8.75, 
-      Supplier: 'Flavor Systems', 
-      ExpiryDate: new Date('2025-08-15')
+    {
+      ingredient_name: 'Chicken Breast', 
+      category_id: categoryMap['Main Courses'], 
+      stock: 8.0, 
+      unit: 'kg', 
+      purchase_price: 9.0, 
+      supplier: 'Quality Meats', 
+      expiry_date: new Date(2023, 11, 3)
     },
-    { 
-      IngredientID: 5, 
-      IngredientName: 'Earl Grey Tea', 
-      CategoryID: 2, 
-      Stock: 5.0, 
-      Unit: 'kg', 
-      PurchasePrice: 25.00, 
-      Supplier: 'Luxury Teas', 
-      ExpiryDate: new Date('2025-07-10')
+    {
+      ingredient_name: 'Sugar', 
+      category_id: categoryMap['Desserts'], 
+      stock: 15.0, 
+      unit: 'kg', 
+      purchase_price: 2.0, 
+      supplier: 'Sweet Supplies', 
+      expiry_date: new Date(2024, 5, 20)
     },
-    { 
-      IngredientID: 6, 
-      IngredientName: 'Croissant Pastry', 
-      CategoryID: 3, 
-      Stock: 40.0, 
-      Unit: 'piece', 
-      PurchasePrice: 1.25, 
-      Supplier: 'Bakers Delight', 
-      ExpiryDate: new Date('2025-04-05')
+    {
+      ingredient_name: 'Potatoes', 
+      category_id: categoryMap['Sides'], 
+      stock: 25.0, 
+      unit: 'kg', 
+      purchase_price: 1.0, 
+      supplier: 'Farm Fresh', 
+      expiry_date: new Date(2023, 12, 15)
     },
-    { 
-      IngredientID: 7, 
-      IngredientName: 'Chocolate Chips', 
-      CategoryID: 6, 
-      Stock: 8.0, 
-      Unit: 'kg', 
-      PurchasePrice: 12.00, 
-      Supplier: 'Sweet Supplies', 
-      ExpiryDate: new Date('2025-09-20')
+    {
+      ingredient_name: 'Salmon', 
+      category_id: categoryMap['Specials'], 
+      stock: 4.0, 
+      unit: 'kg', 
+      purchase_price: 20.0, 
+      supplier: 'Ocean Catch', 
+      expiry_date: new Date(2023, 11, 2)
     },
-    { 
-      IngredientID: 8, 
-      IngredientName: 'Sliced Turkey', 
-      CategoryID: 4, 
-      Stock: 15.0, 
-      Unit: 'kg', 
-      PurchasePrice: 18.50, 
-      Supplier: 'Fresh Farms', 
-      ExpiryDate: new Date('2025-04-10')
-    },
-    { 
-      IngredientID: 9, 
-      IngredientName: 'Cinnamon Powder', 
-      CategoryID: 6, 
-      Stock: 3.0, 
-      Unit: 'kg', 
-      PurchasePrice: 15.00, 
-      Supplier: 'Spice Traders', 
-      ExpiryDate: new Date('2025-10-30')
-    },
-    { 
-      IngredientID: 10, 
-      IngredientName: 'Oat Milk', 
-      CategoryID: 5, 
-      Stock: 25.0, 
-      Unit: 'liter', 
-      PurchasePrice: 2.80, 
-      Supplier: 'Plant Beverage Inc.', 
-      ExpiryDate: new Date('2025-05-15')
+    {
+      ingredient_name: 'Eggs', 
+      category_id: categoryMap['Breakfast'], 
+      stock: 60.0, 
+      unit: 'pcs', 
+      purchase_price: 0.2, 
+      supplier: 'Happy Hens', 
+      expiry_date: new Date(2023, 11, 20)
     }
   ]);
 };

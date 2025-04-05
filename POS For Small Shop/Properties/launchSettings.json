@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "POS For Small Shop (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "POS For Small Shop (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

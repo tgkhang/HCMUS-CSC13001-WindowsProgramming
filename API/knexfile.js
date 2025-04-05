@@ -14,10 +14,6 @@ module.exports = {
       user: process.env.DB_USER || 'postgres',
       password: process.env.DB_PASSWORD || '1234'
     },
-    pool: {
-      min: 2,
-      max: 10
-    },
     migrations: {
       tableName: 'knex_migrations',
       directory: './migrations'

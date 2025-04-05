@@ -11,30 +11,34 @@ using Windows.Media.Protection.PlayReady;
 
 namespace POS_For_Small_Shop.Services.Repository
 {
-    public class PostgresCustomerRepository : IRepository<Customer>
+    public class PostgresCustomerRepository : BaseGraphQLRepository, IRepository<Customer>
     {
-        private static readonly HttpClient client = new HttpClient();
-        private static readonly string postgraphileUrl = "http://localhost:5000/graphql"; // Your PostGraphile server URL
+        //private static readonly HttpClient client = new HttpClient();
+        //private static readonly string postgraphileUrl = "http://localhost:5000/graphql"; // Your PostGraphile server URL
 
         public List<Customer> GetAll()
         {
-            return Task.Run(() => GetAllAsync()).GetAwaiter().GetResult();
+            //return Task.Run(() => GetAllAsync()).GetAwaiter().GetResult();
+            return RunSync(() => GetAllAsync());
         }
         public bool Delete(int id)
         {
-            return Task.Run(() => DeleteByIdAsync(id)).GetAwaiter().GetResult();
+            //return Task.Run(() => DeleteByIdAsync(id)).GetAwaiter().GetResult();
+            return RunSync(() => DeleteByIdAsync(id));
         }
         public Customer GetById(int id)
         {
-            return Task.Run(() => GetByIdAsync(id)).GetAwaiter().GetResult();
+            //return Task.Run(() => GetByIdAsync(id)).GetAwaiter().GetResult();
+            return RunSync(() => GetByIdAsync(id));
         }
         public bool Insert(Customer item)
         {
-            return Task.Run(() => InsertAsync(item)).GetAwaiter().GetResult();
+            //return Task.Run(() => InsertAsync(item)).GetAwaiter().GetResult();
+            return RunSync(() => InsertAsync(item));
         }
         public bool Update(int id, Customer item)
         {
-            return Task.Run(() => UpdateAsync(id, item)).GetAwaiter().GetResult();
+            return RunSync(() => UpdateAsync(id, item));
         }
         private async Task<List<Customer>> GetAllAsync()
         {
@@ -52,24 +56,25 @@ namespace POS_For_Small_Shop.Services.Repository
             }
             ";
 
-            var graphQLRequest = new { query = query };
-            var content = new StringContent(
-                JsonConvert.SerializeObject(graphQLRequest),
-                Encoding.UTF8,
-                "application/json");
+            //var graphQLRequest = new { query = query };
+            //var content = new StringContent(
+            //    JsonConvert.SerializeObject(graphQLRequest),
+            //    Encoding.UTF8,
+            //    "application/json");
 
-            var response = await client.PostAsync(postgraphileUrl, content);
-            response.EnsureSuccessStatusCode();
+            //var response = await client.PostAsync(postgraphileUrl, content);
+            //response.EnsureSuccessStatusCode();
 
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var result = JObject.Parse(jsonResponse);
+            //var jsonResponse = await response.Content.ReadAsStringAsync();
+            //var result = JObject.Parse(jsonResponse);
+
+            var result = await ExecuteGraphQLAsync(query);
 
             var customers = new List<Customer>();//return list
 
-            if (result["data"] != null && result["data"]["allCustomers"] != null && result["data"]["allCustomers"]["nodes"] != null)
+            if (result["data"]?["allCustomers"]?["nodes"] is JArray nodes)
             {
-                var nodes = result["data"]["allCustomers"]["nodes"];
-
+            
                 foreach (var node in nodes)
                 {
                     var customer = new Customer
@@ -82,54 +87,27 @@ namespace POS_For_Small_Shop.Services.Repository
                         LoyaltyPoints = node["loyaltyPoints"].Value<int>()
                     };
                     customers.Add(customer);
-                    Console.WriteLine(customer.Name);
                 }
-
-                
                 return customers;
             }
-            else
-            {
-                throw new Exception("Invalid response format");
-            }
+            throw new Exception("Invalid response format");
         }
        
         private async Task<bool> DeleteByIdAsync(int id)
         {
-            string query = @"{
-                  deleteCustomerByCustomerId(input: {customerId: $id }) {
+            string query = @"mutation {
+                  deleteCustomerByCustomerId(input: {customerId: " + id + @" }) {
                     clientMutationId
                     deletedCustomerId
                   }
-                }
-            ";
-            query = query.Replace("$id", id.ToString());
+                }";
 
-            var graphQLRequest = new { query = query };
-            var content = new StringContent(
-                JsonConvert.SerializeObject(graphQLRequest),
-                Encoding.UTF8,
-                "application/json");
-
-            var response = await client.PostAsync(postgraphileUrl, content);
-            response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var result = JObject.Parse(jsonResponse);
-
-            // Check if there are any errors in the response
-            if (result["errors"] != null)
-            {
-                // Error occurred - deletion failed
-                return false;
-            }
-
-            var deletedCustomerId = result["data"]?["deleteCustomerByCustomerId"]?["deletedCustomerId"];
-            return deletedCustomerId != null;
+            var result = await ExecuteGraphQLAsync(query);
+            return IsOperationSuccessful(result, "deleteCustomerByCustomerId");
         }
 
         private async Task<Customer> GetByIdAsync(int id)
         {
-            
             string query = @"{
                   customerByCustomerId(customerId: " + id + @") {
                     customerId
@@ -142,27 +120,14 @@ namespace POS_For_Small_Shop.Services.Repository
                 }
             ";
 
-            var graphQLRequest = new { query = query };
-            var content = new StringContent(
-                JsonConvert.SerializeObject(graphQLRequest),
-                Encoding.UTF8,
-                "application/json");
-
-            var response = await client.PostAsync(postgraphileUrl, content);
-            response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var result = JObject.Parse(jsonResponse);
-
-            // Check if the customer data exists in the response
+            var result = await ExecuteGraphQLAsync(query);
             var customerData = result["data"]?["customerByCustomerId"];
 
             if (customerData == null)
             {
-                // Customer not found
                 return null;
             }
 
-            // Parse the customer data
             return new Customer
             {
                 CustomerID = customerData["customerId"].Value<int>(),
@@ -192,26 +157,8 @@ namespace POS_For_Small_Shop.Services.Repository
                 }
             ";
 
-            var graphQLRequest = new { query = query };
-            var content = new StringContent(
-                JsonConvert.SerializeObject(graphQLRequest),
-                Encoding.UTF8,
-                "application/json");
-
-            var response = await client.PostAsync(postgraphileUrl, content);
-            response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var result = JObject.Parse(jsonResponse);
-
-            // Check if there are any errors in the response
-            if (result["errors"] != null)
-            {
-                return false;
-            }
-
-            // Check if the customer was created successfully
-            var createCustomerResult = result["data"]?["createCustomer"];
-            return createCustomerResult != null;
+            var result = await ExecuteGraphQLAsync(query);
+            return IsOperationSuccessful(result, "createCustomer");
         }
 
         private async Task<bool> UpdateAsync(int id, Customer customer)
@@ -234,27 +181,8 @@ namespace POS_For_Small_Shop.Services.Repository
                   }
                 }
             ";
-
-            var graphQLRequest = new { query = query };
-            var content = new StringContent(
-                JsonConvert.SerializeObject(graphQLRequest),
-                Encoding.UTF8,
-                "application/json");
-
-            var response = await client.PostAsync(postgraphileUrl, content);
-            response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var result = JObject.Parse(jsonResponse);
-
-            // Check if there are any errors in the response
-            if (result["errors"] != null)
-            {
-                return false;
-            }
-
-            // Check if the update was successful
-            var updateResult = result["data"]?["updateCustomerByCustomerId"];
-            return updateResult != null;
+            var result = await ExecuteGraphQLAsync(query);
+            return IsOperationSuccessful(result, "updateCustomerByCustomerId");
         }
     }
 }

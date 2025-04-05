@@ -157,6 +157,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
             bool success = ViewModel.SaveCustomer();
             if (success)
             {
+                ViewModel.LoadCustomers(); // Reload all customers from the data source
                 ViewModel.ApplyFilters();
                 UpdateEmptyState();
                 CustomerDetailsPanel.Visibility = Visibility.Collapsed;

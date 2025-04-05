@@ -18,6 +18,7 @@
         <converters:CurrencyFormatter x:Key="CurrencyFormatter"/>
         <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
         <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter"/>
+        <converters:CategoryIdToNameConverter x:Key="CategoryIdToNameConverter"/>
     </Page.Resources>
 
     <Grid Padding="20">
@@ -85,7 +86,11 @@
                             <!-- Menu Item Info -->
                             <StackPanel Grid.Column="0" Spacing="10">
                                 <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold"/>
-                                <TextBlock Text="{x:Bind SellingPrice, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="{x:Bind SellingPrice, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
+                                    <TextBlock Text="|" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.5"/>
+                                    <TextBlock Text="{x:Bind CategoryID, Converter={StaticResource CategoryIdToNameConverter}}" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.8"/>
+                                </StackPanel>
                             </StackPanel>
 
                             <!-- Actions -->

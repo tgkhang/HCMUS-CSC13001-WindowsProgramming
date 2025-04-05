@@ -12,17 +12,16 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class Notification
     {
-        [JsonProperty("NotificationID")]
+        [JsonProperty("notification_id")]
         public int NotificationID { get; set; }
 
-        [JsonProperty("Message")]
+        [JsonProperty("message")]
         public string Message { get; set; } = "";
 
-        [JsonProperty("CreatedAt")]
+        [JsonProperty("created_at")]
         public DateTime CreatedAt { get; set; }
 
-        [JsonProperty("IsRead")]
+        [JsonProperty("is_read")]
         public bool IsRead { get; set; }
     }
-
 }

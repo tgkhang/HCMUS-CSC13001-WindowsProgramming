@@ -84,7 +84,6 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Data\Models\" />
-    <Folder Include="Services\Repository\" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Inventory\ReadIngredientPage.xaml">

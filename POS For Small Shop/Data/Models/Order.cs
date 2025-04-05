@@ -12,28 +12,28 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class Order
     {
-        [JsonProperty("OrderID")]
+        [JsonProperty("order_id")]
         public int OrderID { get; set; }
 
-        [JsonProperty("CustomerID")]
+        [JsonProperty("customer_id")]
         public int? CustomerID { get; set; }
 
-        [JsonProperty("ShiftID")]
+        [JsonProperty("shift_id")]
         public int ShiftID { get; set; }
 
-        [JsonProperty("TotalAmount")]
+        [JsonProperty("total_amount")]
         public float TotalAmount { get; set; }
 
-        [JsonProperty("Discount")]
+        [JsonProperty("discount")]
         public float Discount { get; set; }
 
-        [JsonProperty("FinalAmount")]
+        [JsonProperty("final_amount")]
         public float FinalAmount { get; set; }
 
-        [JsonProperty("PaymentMethod")]
+        [JsonProperty("payment_method")]
         public string PaymentMethod { get; set; } = "Cash";
 
-        [JsonProperty("Status")]
+        [JsonProperty("status")]
         public string Status { get; set; } = "Pending";
     }
 

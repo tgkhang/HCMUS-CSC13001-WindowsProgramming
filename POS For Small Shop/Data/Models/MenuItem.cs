@@ -9,19 +9,19 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class MenuItem
     {
-        [JsonProperty("MenuItemID")]
+        [JsonProperty("menu_item_id")]
         public int MenuItemID { get; set; }
 
-        [JsonProperty("Name")]
+        [JsonProperty("name")]
         public string Name { get; set; } = "";
 
-        [JsonProperty("CategoryID")]
+        [JsonProperty("category_id")]
         public int CategoryID { get; set; }
 
-        [JsonProperty("SellingPrice")]
+        [JsonProperty("selling_price")]
         public float SellingPrice { get; set; }
 
-        [JsonProperty("ImagePath")]
+        [JsonProperty("image_path")]
         public string ImagePath { get; set; } = "";
     }
 }

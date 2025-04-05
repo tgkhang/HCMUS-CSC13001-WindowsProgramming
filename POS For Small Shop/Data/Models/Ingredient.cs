@@ -10,28 +10,28 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class Ingredient
     {
-        [JsonProperty("IngredientID")]
+        [JsonProperty("ingredient_id")]
         public int IngredientID { get; set; }
 
-        [JsonProperty("IngredientName")]
+        [JsonProperty("ingredient_name")]
         public string IngredientName { get; set; } = "";
 
-        [JsonProperty("CategoryID")]
+        [JsonProperty("category_id")]
         public int CategoryID { get; set; }
 
-        [JsonProperty("Stock")]
+        [JsonProperty("stock")]
         public float Stock { get; set; }
 
-        [JsonProperty("Unit")]
+        [JsonProperty("unit")]
         public string Unit { get; set; } = "kg";
 
-        [JsonProperty("PurchasePrice")]
+        [JsonProperty("purchasePrice")]
         public float PurchasePrice { get; set; }
 
-        [JsonProperty("Supplier")]
+        [JsonProperty("supplier")]
         public string Supplier { get; set; } = "";
 
-        [JsonProperty("ExpiryDate")]
+        [JsonProperty("expiry_date")]
         public DateTime? ExpiryDate { get; set; }
     }
 

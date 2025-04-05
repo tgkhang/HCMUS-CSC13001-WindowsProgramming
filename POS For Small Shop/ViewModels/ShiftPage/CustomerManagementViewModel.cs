@@ -65,30 +65,54 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             var filteredItems = AllCustomers;
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                filteredItems = filteredItems.Where(item => item.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
+                filteredItems = filteredItems.Where(item =>
+                    item.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    item.Phone.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    item.Email.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+                ).ToList();
             }
-            FilteredCustomers = new ObservableCollection<Customer>(filteredItems);
+
+            FilteredCustomers.Clear();
+            foreach (var item in filteredItems)
+            {
+                FilteredCustomers.Add(item);
+            }
         }
         public bool SaveCustomer()
         {
-            bool sucess;
+            bool success;
 
             if (IsEditMode)
             {
-                sucess = _dao.Customers.Update(CurrentCustomer.CustomerID, CurrentCustomer);
+                success = _dao.Customers.Update(CurrentCustomer.CustomerID, CurrentCustomer);
 
+                // Update the in-memory item 
+                if (success)
+                {
+                    // Find and update the item in AllCustomers if it exists
+                    var existingCustomer = AllCustomers.FirstOrDefault(c => c.CustomerID == CurrentCustomer.CustomerID);
+                    if (existingCustomer != null)
+                    {
+                        // Update all properties
+                        existingCustomer.Name = CurrentCustomer.Name;
+                        existingCustomer.Phone = CurrentCustomer.Phone;
+                        existingCustomer.Email = CurrentCustomer.Email;
+                        existingCustomer.Address = CurrentCustomer.Address;
+                        existingCustomer.LoyaltyPoints = CurrentCustomer.LoyaltyPoints;
+                    }
+                }
             }
             else
             {
-                sucess = _dao.Customers.Insert(CurrentCustomer);
-                if (sucess)
+                success = _dao.Customers.Insert(CurrentCustomer);
+                if (success)
                 {
                     CurrentCustomer.CustomerID = AllCustomers.Count > 0 ? AllCustomers.Max(c => c.CustomerID) + 1 : 1;
                     AllCustomers.Add(CurrentCustomer);
                 }
             }
 
-            return sucess;
+            return success;
         }
         public bool DeleteCustomer(int customerId)
         {

@@ -28,6 +28,9 @@
          Password="{Binding Password, Mode=TwoWay}"
          />
 
+        <CheckBox
+        Content="Remember me"
+        IsChecked="{Binding RememberMe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <StackPanel HorizontalAlignment="Center">
             <Button

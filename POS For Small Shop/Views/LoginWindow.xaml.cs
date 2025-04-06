@@ -35,22 +35,24 @@ namespace POS_For_Small_Shop.Views
             ViewModel = new AuthViewModel(this);
             container.DataContext = ViewModel;
 
-            //var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
-            //var username = localStorage.Values["Username"] as string;
-            //var encryptedInBase64 = localStorage.Values["Password"] as string;
-            //var entropyInBase64 = localStorage.Values["Entropy"] as string;
 
-            //if (!string.IsNullOrEmpty(username))
-            //{
-            //    var encryptedInBytes = Convert.FromBase64String(encryptedInBase64);
-            //    var entropyInBytes = Convert.FromBase64String(entropyInBase64);
-            //    var passwordInBytes = ProtectedData.Unprotect(encryptedInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
-            //    var password = Encoding.UTF8.GetString(passwordInBytes);
+            //DELETE IT
+            var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
+            var username = localStorage.Values["Username"] as string;
+            var encryptedInBase64 = localStorage.Values["Password"] as string;
+            var entropyInBase64 = localStorage.Values["Entropy"] as string;
 
-            //    ViewModel.Username = username;
-            //    ViewModel.Password = password;
-            //    ViewModel.RememberMe = true;
-            //}
+            if (!string.IsNullOrEmpty(username))
+            {
+                var encryptedInBytes = Convert.FromBase64String(encryptedInBase64);
+                var entropyInBytes = Convert.FromBase64String(entropyInBase64);
+                var passwordInBytes = ProtectedData.Unprotect(encryptedInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
+                var password = Encoding.UTF8.GetString(passwordInBytes);
+
+                ViewModel.Username = username;
+                ViewModel.Password = password;
+                ViewModel.RememberMe = true;
+            }
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)
@@ -62,38 +64,40 @@ namespace POS_For_Small_Shop.Views
             if (ViewModel.CanLogin())
             {
                 bool success = ViewModel.Login();
-                //var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-                //if (ViewModel.RememberMe == true)
-                //{
-                //    var passwordInBytes = Encoding.UTF8.GetBytes(ViewModel.Password);
-                //    var entropyInBytes = new byte[20];
-                //    using (var rng = RandomNumberGenerator.Create())
-                //    {
-                //        rng.GetBytes(entropyInBytes);
-                //    }
-                //    var encryptedInBytes = ProtectedData.Protect(passwordInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
-                //    var encryptedInBase64 = Convert.ToBase64String(encryptedInBytes);
-                //    var entropyInBase64 = Convert.ToBase64String(entropyInBytes);
+                //DELETE IT
+                var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-                //    localStorage.Values["Username"] = ViewModel.Username;
-                //    localStorage.Values["Password"] = encryptedInBase64;
-                //    localStorage.Values["Entropy"] = entropyInBase64;
+                if (ViewModel.RememberMe == true)
+                {
+                    var passwordInBytes = Encoding.UTF8.GetBytes(ViewModel.Password);
+                    var entropyInBytes = new byte[20];
+                    using (var rng = RandomNumberGenerator.Create())
+                    {
+                        rng.GetBytes(entropyInBytes);
+                    }
+                    var encryptedInBytes = ProtectedData.Protect(passwordInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
+                    var encryptedInBase64 = Convert.ToBase64String(encryptedInBytes);
+                    var entropyInBase64 = Convert.ToBase64String(entropyInBytes);
 
-                //    Debug.WriteLine($"Encrypted password in base 64 is: {encryptedInBase64}");
-                //}
-                //else
-                //{
-                //    //var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
-                //    //localStorage.Values["Username"] = null;
-                //    //localStorage.Values["Password"] = null;
-                //    //localStorage.Values["Entropy"] = null;
+                    localStorage.Values["Username"] = ViewModel.Username;
+                    localStorage.Values["Password"] = encryptedInBase64;
+                    localStorage.Values["Entropy"] = entropyInBase64;
 
-                //    localStorage.Values.Remove("Username");
-                //    localStorage.Values.Remove("Password");
-                //    localStorage.Values.Remove("Entropy");
-                //    Debug.WriteLine("Login info cleared from local storage.");
-                //}
+                    Debug.WriteLine($"Encrypted password in base 64 is: {encryptedInBase64}");
+                }
+                else
+                {
+                    //var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
+                    //localStorage.Values["Username"] = null;
+                    //localStorage.Values["Password"] = null;
+                    //localStorage.Values["Entropy"] = null;
+
+                    localStorage.Values.Remove("Username");
+                    localStorage.Values.Remove("Password");
+                    localStorage.Values.Remove("Entropy");
+                    Debug.WriteLine("Login info cleared from local storage.");
+                }
 
                 if (success)
                 {

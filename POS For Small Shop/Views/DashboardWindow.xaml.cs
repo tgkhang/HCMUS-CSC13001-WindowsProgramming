@@ -27,6 +27,7 @@ namespace POS_For_Small_Shop.Views
         public DashboardWindow()
         {
             this.InitializeComponent();
+  //          App.MainWindow = this;
             MainFrame.Navigate(typeof(HomePage));
         }
     }

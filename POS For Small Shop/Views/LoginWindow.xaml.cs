@@ -101,8 +101,9 @@ namespace POS_For_Small_Shop.Views
 
                 if (success)
                 {
-                    var screen = new DashboardWindow();
-                    screen.Activate();
+                    var dashboardWindow = new DashboardWindow();
+                    App.MainWindow = dashboardWindow;
+                    dashboardWindow.Activate();
                     this.Close();
                 }
             }

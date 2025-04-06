@@ -79,12 +79,20 @@
                     <DataTemplate x:DataType="models:MenuItem">
                         <Grid Padding="12">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
+
+                            <Image Grid.Column="0" 
+                                   Width="50" 
+                                   Height="50" 
+                                   Margin="0,0,12,0"
+                                   Source="/Assets/StoreLogo.png" />
+
                             <!-- Menu Item Info -->
-                            <StackPanel Grid.Column="0" Spacing="10">
+                            <StackPanel Grid.Column="1" Spacing="10">
                                 <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold"/>
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <TextBlock Text="{x:Bind SellingPrice, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
@@ -94,7 +102,7 @@
                             </StackPanel>
 
                             <!-- Actions -->
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
                                 <Button Content="Edit" Click="EditItemButton_Click" Tag="{x:Bind MenuItemID}"/>
                                 <Button Content="Delete" Click="DeleteItemButton_Click" Tag="{x:Bind MenuItemID}"/>
                             </StackPanel>
@@ -131,7 +139,6 @@
                 <StackPanel Grid.Row="1" Spacing="15">
                     <TextBox x:Name="NameTextBox" Header="Name" PlaceholderText="Enter item name"/>
                     <TextBox x:Name="PriceTextBox" Header="Price" PlaceholderText="Enter item price"/>
-                    <TextBox x:Name="ImagePathTextBox" Header="Image Path" PlaceholderText="Enter image URL"/>
                     <!-- Update the ComboBox in the form -->
                     <ComboBox x:Name="CategoryComboBox" 
                           Header="Category" 
@@ -143,6 +150,18 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    
+                    <!-- Hidden TextBox to store image path -->
+                    <TextBox x:Name="ImagePathTextBox" Header="Image Path" 
+                             PlaceholderText="URL image"
+                             IsReadOnly="True"
+                             Visibility="Collapsed"/>
+
+                    <Button x:Name="PickAPhotoButton" Content="Choose a picture"
+                        Click="PickAPhotoButton_Click" Margin="0,0,0,10"/>
+
+                    <!-- Image reveiew here -->
+
                 </StackPanel>
 
                 <!-- Form actions -->

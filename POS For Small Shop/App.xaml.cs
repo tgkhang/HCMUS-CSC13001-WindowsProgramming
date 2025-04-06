@@ -46,9 +46,11 @@ namespace POS_For_Small_Shop
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new LoginWindow();
+            MainWindow = m_window;
             m_window.Activate();
         }
 
         private Window? m_window;
+        public static Window? MainWindow { get; internal set; }
     }
 }

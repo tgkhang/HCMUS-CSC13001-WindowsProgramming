@@ -14,6 +14,7 @@ using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.ViewModels.MenuManagement;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Pickers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -205,6 +206,45 @@ namespace POS_For_Small_Shop.Views.MenuManagement
         private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private async void PickAPhotoButton_Click(object sender, RoutedEventArgs e)
+        {
+            //disable the button to avoid double-clicking
+            var senderButton = sender as Button;
+            senderButton.IsEnabled = false;
+
+            // Clear previous returned file name, if it exists, between iterations of this scenario
+            ImagePathTextBox.Text = "";
+
+            // Create a file picker
+            var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+
+            // Retrieve the window handle (HWND) of the current WinUI 3 window.
+            var window = App.MainWindow;
+
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+
+
+            // Initialize the file picker with the window handle (HWND).
+            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
+
+            // Set options for your file picker
+            openPicker.ViewMode = PickerViewMode.Thumbnail;
+            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".jpg");
+            openPicker.FileTypeFilter.Add(".jpeg");
+            openPicker.FileTypeFilter.Add(".png");
+
+            // Open the picker for the user to pick a file
+            var file = await openPicker.PickSingleFileAsync();
+            if (file != null)
+            {
+                ImagePathTextBox.Text = "Picked photo: " + file.Name;
+            }
+
+            //re-enable the button
+            senderButton.IsEnabled = true;
         }
     }
 }

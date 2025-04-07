@@ -82,7 +82,6 @@
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converters\" />
     <Folder Include="Data\Models\" />
   </ItemGroup>
   <ItemGroup>

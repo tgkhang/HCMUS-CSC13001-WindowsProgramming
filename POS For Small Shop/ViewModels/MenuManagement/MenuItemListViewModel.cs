@@ -17,6 +17,7 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
         private string _searchText = "";
 
         public List<MenuItem> AllMenuItems { get; private set; } = new List<MenuItem>();
+        public List<Category> AllCategories { get; private set; } = new List<Category>();
         public ObservableCollection<MenuItem> FilteredMenuItems { get; private set; } = new ObservableCollection<MenuItem>();
         public MenuItem CurrentMenuItem { get; set; }
         public bool IsEditMode { get; set; } = false;
@@ -46,6 +47,7 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
             try
             {
                 AllMenuItems = _dao.MenuItems.GetAll();
+                AllCategories = _dao.Categories.GetAll();
                 ApplyFilters();
             }
             catch (NotImplementedException)
@@ -53,6 +55,19 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
                 AllMenuItems = new List<MenuItem>();
                 ApplyFilters();
             }
+        }
+
+        // Get category name by ID helper method
+        public string GetCategoryNameById(int categoryId)
+        {
+            var category = AllCategories.FirstOrDefault(c => c.CategoryID == categoryId);
+            return category?.Name ?? "Unknown";
+        }
+
+        // Get category by ID helper method
+        public Category GetCategoryById(int categoryId)
+        {
+            return AllCategories.FirstOrDefault(c => c.CategoryID == categoryId);
         }
 
         public void ApplyFilters()
@@ -81,6 +96,16 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
             if (IsEditMode)
             {
                 success = _dao.MenuItems.Update(CurrentMenuItem.MenuItemID, CurrentMenuItem);
+                if (success)
+                {
+                    var itemToUpdate = AllMenuItems.FirstOrDefault(item => item.MenuItemID == CurrentMenuItem.MenuItemID);
+                    if (itemToUpdate != null)
+                    {
+                        itemToUpdate.Name = CurrentMenuItem.Name;
+                        itemToUpdate.SellingPrice = CurrentMenuItem.SellingPrice;
+                        itemToUpdate.ImagePath = CurrentMenuItem.ImagePath;
+                    }
+                }
             }
             else
             {

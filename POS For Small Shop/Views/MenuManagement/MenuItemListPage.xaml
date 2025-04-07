@@ -18,6 +18,7 @@
         <converters:CurrencyFormatter x:Key="CurrencyFormatter"/>
         <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
         <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter"/>
+        <converters:CategoryIdToNameConverter x:Key="CategoryIdToNameConverter"/>
     </Page.Resources>
 
     <Grid Padding="20">
@@ -85,7 +86,11 @@
                             <!-- Menu Item Info -->
                             <StackPanel Grid.Column="0" Spacing="10">
                                 <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold"/>
-                                <TextBlock Text="{x:Bind SellingPrice, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="{x:Bind SellingPrice, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
+                                    <TextBlock Text="|" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.5"/>
+                                    <TextBlock Text="{x:Bind CategoryID, Converter={StaticResource CategoryIdToNameConverter}}" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.8"/>
+                                </StackPanel>
                             </StackPanel>
 
                             <!-- Actions -->
@@ -127,6 +132,17 @@
                     <TextBox x:Name="NameTextBox" Header="Name" PlaceholderText="Enter item name"/>
                     <TextBox x:Name="PriceTextBox" Header="Price" PlaceholderText="Enter item price"/>
                     <TextBox x:Name="ImagePathTextBox" Header="Image Path" PlaceholderText="Enter image URL"/>
+                    <!-- Update the ComboBox in the form -->
+                    <ComboBox x:Name="CategoryComboBox" 
+                          Header="Category" 
+                          PlaceholderText="Select a category"
+                          SelectionChanged="CategoryComboBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:Category">
+                                <TextBlock Text="{x:Bind Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
 
                 <!-- Form actions -->

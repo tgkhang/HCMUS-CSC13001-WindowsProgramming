@@ -34,5 +34,10 @@ namespace POS_For_Small_Shop.Views
 
             MainFrame.Navigate(typeof(HomePage));
         }
+
+        public void NavigateToPage(Type pageType)
+        {
+            MainFrame.Navigate(pageType);
+        }
     }
 }

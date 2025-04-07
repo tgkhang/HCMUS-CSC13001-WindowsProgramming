@@ -14,8 +14,6 @@ namespace POS_For_Small_Shop.Data.Models
     {
         Percentage,
         FixedAmount,
-        BuyOneGetOne,
-        BuyTwoGetOne
     }
 
     [AddINotifyPropertyChangedInterface]

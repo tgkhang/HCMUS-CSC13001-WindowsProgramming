@@ -9,6 +9,7 @@ using PropertyChanged;
 using POS_For_Small_Shop.Utils;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace POS_For_Small_Shop.ViewModels
 {
@@ -24,12 +25,25 @@ namespace POS_For_Small_Shop.ViewModels
         public Promotion SelectedPromotion { get; set; }
         public Promotion NewPromotion { get; set; }
 
+        private string _searchQuery = string.Empty;
+        public string SearchQuery
+        {
+            get => _searchQuery;
+            set
+            {
+                if (_searchQuery != value)
+                {
+                    _searchQuery = value;
+                    SearchPromotionByName(_searchQuery);
+                }
+            }
+        }
+
         public ICommand AddPromotionCommand { get; }
         public ICommand UpdatePromotionCommand { get; }
         public ICommand DeletePromotionCommand { get; }
         public ICommand SetSelectedItemsCommand { get; }
         public ICommand GetByPromotionNameCommand { get; }
-        public ICommand SearchPromotionByNameCommand { get; }
 
 
         public PromotionManagementViewModel()

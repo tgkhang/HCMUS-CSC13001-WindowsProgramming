@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -182,5 +183,29 @@ namespace POS_For_Small_Shop.Views
         {
             CLoseDeleteFormPopup();
         }
+
+        public void Back_To_HomePage(object sender, RoutedEventArgs e)
+        {
+            // Navigate back to the home page
+            DashboardWindow.Instance.NavigateToPage(typeof(HomePage));
+        }
+
+        public void HoverBorder_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (sender is Grid grid)
+            {
+                grid.Background = new SolidColorBrush(Colors.LightGray);
+            }
+        }
+
+        public void HoverBorder_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (sender is Grid grid)
+            {
+                grid.Background = new SolidColorBrush(Colors.White);
+            }
+        }
+
+
     }
 }

@@ -94,6 +94,34 @@ namespace POS_For_Small_Shop.Views
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             // Handle logout
+            try
+            {
+                // Default window position (0,0)
+                int windowX = 0;
+                int windowY = 0;
+
+                // Create and get AppWindow for login window
+                var loginScreen = new LoginWindow();
+                var loginAppWindow = loginScreen.AppWindow;
+                if (loginAppWindow == null) return; // Exit if AppWindow is null
+                loginScreen.Activate(); // Focus the login window
+
+                if (DashboardWindow.Instance != null)
+                {
+                    var currentAppWindow = DashboardWindow.Instance.AppWindow; // Get current window
+                    if (currentAppWindow != null)
+                    {
+                        windowX = currentAppWindow.Position.X; // Get X position
+                        windowY = currentAppWindow.Position.Y; // Get Y position
+                    }
+                    DashboardWindow.Instance.Close(); // Close dashboard
+                    loginAppWindow.Move(new Windows.Graphics.PointInt32(windowX, windowY)); // Move login window
+                }
+            }
+            catch
+            {
+                //Do nothing
+            }
         }
     }
 }

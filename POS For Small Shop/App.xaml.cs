@@ -36,7 +36,7 @@ namespace POS_For_Small_Shop
         {
             this.InitializeComponent();
             //Service.AddKeyedSingleton<IDao, MockDao>(); // TextDao, PostgresDao, SqlServerDao, RestDao
-            Service.AddKeyedSingleton<IDao, PostgresDao>();
+            Service.AddKeyedSingleton<IDao, MockDao>();
         }
 
         /// <summary>

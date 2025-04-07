@@ -63,6 +63,9 @@ namespace POS_For_Small_Shop.Views.MenuManagement
             NameTextBox.Text = string.Empty;
             PriceTextBox.Text = string.Empty;
             ImagePathTextBox.Text = string.Empty;
+
+            PopulateCategoryComboBox();
+            CategoryComboBox.SelectedIndex = -1;
         }
 
         private void EditItemButton_Click(object sender, RoutedEventArgs e)
@@ -78,6 +81,20 @@ namespace POS_For_Small_Shop.Views.MenuManagement
                     ImagePathTextBox.Text = menuItem.ImagePath ?? "";
                     FormHeaderText.Text = "Edit Menu Item";
                     ViewModel.IsEditMode = true;
+                    
+
+                    PopulateCategoryComboBox();
+
+                    for (int i = 0; i < CategoryComboBox.Items.Count; i++)
+                    {
+                        if (CategoryComboBox.Items[i] is Category category &&
+                            category.CategoryID == menuItem.CategoryID)
+                        {
+                            CategoryComboBox.SelectedIndex = i;
+                            break;
+                        }
+                    }
+
                     ItemDetailsPanel.Visibility = Visibility.Visible;
                 }
             }
@@ -96,10 +113,19 @@ namespace POS_For_Small_Shop.Views.MenuManagement
                 ShowError("Please enter a valid price.");
                 return;
             }
+            if (CategoryComboBox.SelectedItem == null)
+            {
+                ShowError("Please select a category.");
+                return;
+            }
 
             ViewModel.CurrentMenuItem.Name = NameTextBox.Text;
             ViewModel.CurrentMenuItem.SellingPrice = price;
             ViewModel.CurrentMenuItem.ImagePath = ImagePathTextBox.Text;
+            if (CategoryComboBox.SelectedItem is Category selectedCategory)
+            {
+                ViewModel.CurrentMenuItem.CategoryID = selectedCategory.CategoryID;
+            }
 
             bool success = ViewModel.SaveMenuItem();
 
@@ -163,6 +189,22 @@ namespace POS_For_Small_Shop.Views.MenuManagement
         private void UpdateEmptyState()
         {
             EmptyStateText.Visibility = ViewModel.FilteredMenuItems.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+        private void PopulateCategoryComboBox()
+        {
+            // Clear existing items
+            CategoryComboBox.Items.Clear();
+
+            // Add categories from the ViewModel
+            foreach (var category in ViewModel.AllCategories)
+            {
+                CategoryComboBox.Items.Add(category);
+            }
+        }
+
+        private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

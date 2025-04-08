@@ -89,15 +89,16 @@
                                    Width="50" 
                                    Height="50" 
                                    Margin="0,0,12,0"
-                                   Source="/Assets/StoreLogo.png" />
+                                   Source="{x:Bind ImagePath, Mode=TwoWay, FallbackValue='/Assets/StoreLogo.png'}" 
+                                   Stretch="UniformToFill"/>
 
                             <!-- Menu Item Info -->
                             <StackPanel Grid.Column="1" Spacing="10">
                                 <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold"/>
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="{x:Bind SellingPrice, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
+                                    <TextBlock Text="{x:Bind SellingPrice, Mode=TwoWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
                                     <TextBlock Text="|" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.5"/>
-                                    <TextBlock Text="{x:Bind CategoryID, Converter={StaticResource CategoryIdToNameConverter}}" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.8"/>
+                                    <TextBlock Text="{x:Bind CategoryID, Mode=TwoWay, Converter={StaticResource CategoryIdToNameConverter}}" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.8"/>
                                 </StackPanel>
                             </StackPanel>
 
@@ -151,17 +152,21 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     
-                    <!-- Hidden TextBox to store image path -->
                     <TextBox x:Name="ImagePathTextBox" Header="Image Path" 
                              PlaceholderText="URL image"
                              IsReadOnly="True"
-                             Visibility="Collapsed"/>
+                             />
 
                     <Button x:Name="PickAPhotoButton" Content="Choose a picture"
                         Click="PickAPhotoButton_Click" Margin="0,0,0,10"/>
 
                     <!-- Image reveiew here -->
-
+                    <Image x:Name="PreviewImage"
+                       Height="100"
+                       Width="100"
+                       Stretch="UniformToFill"
+                       Margin="0,10,0,0"
+                       Visibility="Collapsed"/>
                 </StackPanel>
 
                 <!-- Form actions -->

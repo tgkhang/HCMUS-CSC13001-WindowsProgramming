@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -120,45 +121,77 @@ namespace POS_For_Small_Shop.Services.Repository
 
         private async Task<bool> InsertAsync(MenuItem menuItem)
         {
-            string query = @"
-                mutation {
-                  createMenuItem(
-                    input: {menuItem: 
-                      {
-                        name: """ + menuItem.Name + @""",
-                        sellingPrice: " + menuItem.SellingPrice + @", 
-                        imagePath: """ + menuItem.ImagePath + @""", 
-                        categoryId: " + menuItem.CategoryID + @",
-                      }
-                    }
-                  ) {
-                    clientMutationId
-                  }
-                }
-            ";
+            try
+            {
+                // Create safe image path by escaping backslashes
+                string safeImagePath = menuItem.ImagePath?.Replace(@"\", @"\\") ?? string.Empty;
 
-            var result = await ExecuteGraphQLAsync(query);
-            return IsOperationSuccessful(result, "createMenuItem");
+                // Use string interpolation consistently as in your UpdateAsync method
+                string query = $@"
+                    mutation {{
+                      createMenuItem(
+                        input: {{
+                          menuItem: {{
+                            name: ""{menuItem.Name?.Replace("\"", "\\\"") ?? ""}"",
+                            sellingPrice: {menuItem.SellingPrice}, 
+                            imagePath: ""{safeImagePath}"", 
+                            categoryId: {menuItem.CategoryID}
+                          }}
+                        }}
+                      ) {{
+                        menuItem {{
+                          menuItemId
+                        }}
+                        clientMutationId
+                      }}
+                    }}
+                ";
+
+                // For debugging
+                Debug.WriteLine("Final GraphQL query: " + query);
+
+                var result = await ExecuteGraphQLAsync(query);
+                //Debug.WriteLine("GraphQL result: " + result.ToString());
+                //Debug.Write(IsOperationSuccessful(result, "createMenuItem"));
+                return IsOperationSuccessful(result, "createMenuItem");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception in InsertAsync: {ex.Message}");
+                Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+
+                // If there's an inner exception, log that too
+                if (ex.InnerException != null)
+                {
+                    Debug.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                    Debug.WriteLine($"Inner stack trace: {ex.InnerException.StackTrace}");
+                }
+                return false;
+            }
         }
 
         private async Task<bool> UpdateAsync(int id, MenuItem menuItem)
         {
-            string query = @"
-            mutation {
+            string safeImagePath = menuItem.ImagePath.Replace(@"\", @"\\");
+            string query = $@"
+            mutation {{
               updateMenuItemByMenuItemId(
-                input: {menuItemPatch: 
-                  {
-                    name: """ + menuItem.Name + @""",
-                    sellingPrice: " + menuItem.SellingPrice + @", 
-                    imagePath: """ + menuItem.ImagePath + @""", 
-                    categoryId: " + menuItem.CategoryID + @",
-                  }, 
-                  menuItemId: " + id + @"}
-              ) {
+                input: {{
+                  menuItemPatch: {{
+                    name: ""{menuItem.Name}"",
+                    sellingPrice: {menuItem.SellingPrice}, 
+                    imagePath: ""{safeImagePath}"", 
+                    categoryId: {menuItem.CategoryID}
+                  }}, 
+                  menuItemId: {id}
+                }}
+              ) {{
                 clientMutationId
-              }
-            }
-            ";
+              }}
+            }}";
+
+            Debug.WriteLine("Final GraphQL query: " + query);
+
             var result = await ExecuteGraphQLAsync(query);
             return IsOperationSuccessful(result, "updateMenuItemByMenuItemId");
         }

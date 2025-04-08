@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -9,6 +10,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.ViewModels.MenuManagement;
@@ -129,9 +131,10 @@ namespace POS_For_Small_Shop.Views.MenuManagement
             }
 
             bool success = ViewModel.SaveMenuItem();
-
+          
             if (success)
             {
+                ViewModel.LoadMenuItems();
                 ViewModel.ApplyFilters();
                 UpdateEmptyState();
                 ItemDetailsPanel.Visibility = Visibility.Collapsed;
@@ -240,7 +243,35 @@ namespace POS_For_Small_Shop.Views.MenuManagement
             var file = await openPicker.PickSingleFileAsync();
             if (file != null)
             {
-                ImagePathTextBox.Text = "Picked photo: " + file.Name;
+                // Get the local folder for storing images
+                var localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+                Debug.WriteLine($"Local folder path: {localFolder.Path}");
+
+                // Create a subfolder for menu item images if it doesn't exist
+                var imagesFolder = await localFolder.CreateFolderAsync("MenuItemImages",
+                    Windows.Storage.CreationCollisionOption.OpenIfExists);
+
+                // Create a unique filename with timestamp
+                string uniqueFileName = $"{DateTime.Now:yyyyMMddHHmmss}_{file.Name}";
+
+                // Copy the file to our app's local storage
+                var copiedFile = await file.CopyAsync(imagesFolder, uniqueFileName,
+                    Windows.Storage.NameCollisionOption.GenerateUniqueName);
+                Debug.WriteLine($"File copied to: {copiedFile.Path}");
+
+                ImagePathTextBox.Text = copiedFile.Path;
+
+                // Store the path in ms-appdata format
+                string imagePath = $"ms-appdata:///local/MenuItemImages/{copiedFile.Name}";
+                Debug.WriteLine($"Image path: {imagePath}");
+
+                PreviewImage.Source = new BitmapImage(new Uri(imagePath));
+                PreviewImage.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Debug.WriteLine("File picking cancelled by user");
+                ImagePathTextBox.Text = "Operation cancelled.";
             }
 
             //re-enable the button

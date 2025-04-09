@@ -150,6 +150,9 @@ namespace POS_For_Small_Shop.Services.Repository
             return IsOperationSuccessful(result, "updateCategoryByCategoryId");
         }
 
-       
+        public int CreateGetId(Category item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -12,14 +12,14 @@ namespace POS_For_Small_Shop.Services
     {
         public IRepository<Category> Categories { get; set; } = new PostgresCategoryRepository();
         public IRepository<Promotion> Promotions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<Shift> Shifts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRepository<Shift> Shifts { get; set; } = new PostgresShiftRepository();
         public IRepository<Ingredient> Ingredients { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<Order> Orders { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<OrderDetail> OrderDetails { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRepository<Order> Orders { get; set; } = new PostgresOrderRepository();
+        public IRepository<OrderDetail> OrderDetails { get; set; } = new PostgresOrderDetailRepository();
         public IRepository<Transaction> Transactions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<CashFlow> CashFlows { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRepository<CashFlow> CashFlows { get; set; } = new PostgresCashFlowRepository();
         public IRepository<Notification> Notifications { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<ShiftOrder> ShiftOrders { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRepository<ShiftOrder> ShiftOrders { get; set; } = new PostgresShiftOrderRepository();
         public IRepository<Customer> Customers { get; set; } = new PostgresCustomerRepository();
         public IRepository<MenuItem> MenuItems { get; set; } = new PostgresMenuItemRepository();
     }

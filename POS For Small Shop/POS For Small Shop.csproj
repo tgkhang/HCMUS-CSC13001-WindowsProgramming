@@ -52,7 +52,9 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\StoreLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
 
@@ -80,9 +82,6 @@
 		<PrivateAssets>all</PrivateAssets>
 	</PackageReference>
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.3" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Inventory\ReadIngredientPage.xaml">

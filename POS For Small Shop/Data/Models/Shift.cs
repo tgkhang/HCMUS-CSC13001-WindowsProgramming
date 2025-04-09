@@ -24,6 +24,9 @@ namespace POS_For_Small_Shop.Data.Models
         [JsonProperty("opening_cash")]
         public float OpeningCash { get; set; }
 
+        [JsonProperty("closing_cash")]
+        public float ClosingCash { get; set; }
+
         [JsonProperty("total_sales")]
         public float TotalSales { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -21,6 +22,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
         private float _expectedCash;
         private float _actualCash;
         private float _cashDifference;
+        private IShiftService _shiftService;
 
         public CloseShiftPage()
         {
@@ -28,6 +30,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
 
             // Get the DAO from the service
             _dao = Service.GetKeyedSingleton<IDao>();
+            _shiftService = Service.GetKeyedSingleton<IShiftService>();
 
             // Get the current shift
             LoadCurrentShift();
@@ -35,38 +38,30 @@ namespace POS_For_Small_Shop.Views.ShiftPage
 
         private void LoadCurrentShift()
         {
-            //// In a real implementation, you would get the current open shift from the database
+            _currentShift = _shiftService.CurrentShift;
 
-            //// For now, we'll create a mock shift
-            //_currentShift = new Shift
-            //{
-            //    ShiftID = 1001,
-            //    StartTime = DateTime.Now.AddHours(-8), // Started 8 hours ago
-            //    OpeningCash = 500000, // 500,000 VND
-            //    TotalSales = 0,
-            //    TotalOrders = 0,
-            //    Status = "Open"
-            //};
+            if (_currentShift == null)
+            {
+                // Handle the case where there is no current shift
+                return;
+            }
 
-            //// Calculate expected cash
-            //_expectedCash = _currentShift.OpeningCash + _currentShift.TotalSales;
-            //_actualCash = _expectedCash; // Default to expected
-            //_cashDifference = 0;
-
-            //// Update the UI
-            //UpdateUI();
+            _expectedCash = _currentShift.OpeningCash + _currentShift.TotalSales;
+            _actualCash = _expectedCash; 
+            _cashDifference = 0;
+            UpdateUI();
         }
 
         private void UpdateUI()
         {
-            //var vietnameseCulture = new System.Globalization.CultureInfo("vi-VN");
+            var vietnameseCulture = new System.Globalization.CultureInfo("vi-VN");
 
-            //OpeningCashText.Text = string.Format(vietnameseCulture, "{0:#,##0} đ", _currentShift.OpeningCash);
-            //ExpectedCashText.Text = string.Format(vietnameseCulture, "{0:#,##0} đ", _expectedCash);
-            //ActualCashBox.Value = _actualCash;
-            //CashDifferenceText.Text = string.Format(vietnameseCulture, "{0:#,##0} đ", _cashDifference);
-            //TotalSalesText.Text = string.Format(vietnameseCulture, "{0:#,##0} đ", _currentShift.TotalSales);
-            //TotalOrdersText.Text = _currentShift.TotalOrders.ToString();
+            OpeningCashText.Text = string.Format(vietnameseCulture, "{0:#,##0} đ", _currentShift.OpeningCash);
+            ExpectedCashText.Text = string.Format(vietnameseCulture, "{0:#,##0} đ", _expectedCash);
+            ActualCashBox.Value = _actualCash;
+            CashDifferenceText.Text = string.Format(vietnameseCulture, "{0:#,##0} đ", _cashDifference);
+            TotalSalesText.Text = string.Format(vietnameseCulture, "{0:#,##0} đ", _currentShift.TotalSales);
+            TotalOrdersText.Text = _currentShift.TotalOrders.ToString();
         }
 
         private void ActualCashBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
@@ -97,24 +92,45 @@ namespace POS_For_Small_Shop.Views.ShiftPage
         {
             //// In a real implementation, you would close the shift in the database
 
-            //// Update the shift
-            //_currentShift.EndTime = DateTime.Now;
-            //_currentShift.ClosingCash = _actualCash;
-            //_currentShift.Status = "Closed";
+            _currentShift.EndTime = DateTime.Now;
+            _currentShift.ClosingCash = _actualCash;
+            _currentShift.Status = "Closed";
 
-            //// Show confirmation dialog
-            //ContentDialog dialog = new ContentDialog
-            //{
-            //    Title = "Shift Closed",
-            //    Content = "The shift has been closed successfully.",
-            //    CloseButtonText = "OK",
-            //    XamlRoot = this.XamlRoot
-            //};
 
-            //await dialog.ShowAsync();
+            bool success = _dao.Shifts.Update(_currentShift.ShiftID,_currentShift);
 
-            //// Navigate back to the home page
-            //Frame.Navigate(typeof(HomePage));
+            if (!success)
+            {
+                // Show error message
+                ContentDialog errorDialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = "Failed to close the shift. Please try again.",
+                    CloseButtonText = "OK",
+                    XamlRoot = this.XamlRoot
+                };
+                await errorDialog.ShowAsync();
+                return;
+            }
+
+            // Show confirmation dialog
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "Shift Closed",
+                Content = "The shift has been closed successfully.",
+                CloseButtonText = "OK",
+                XamlRoot = this.XamlRoot
+            };
+
+            await dialog.ShowAsync();
+
+
+            var window = App.MainWindow;
+            if (window != null && window.Content is Frame mainFrame)
+            {
+                mainFrame.Navigate(typeof(HomePage));
+                return;
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

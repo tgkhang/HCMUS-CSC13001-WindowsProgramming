@@ -196,5 +196,9 @@ namespace POS_For_Small_Shop.Services.Repository
             return IsOperationSuccessful(result, "updateMenuItemByMenuItemId");
         }
 
+        public int CreateGetId(MenuItem item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

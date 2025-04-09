@@ -15,5 +15,6 @@ namespace POS_For_Small_Shop.Services
         bool Delete(int id);
 
         //more features
+        int CreateGetId(T item);
     }
 }

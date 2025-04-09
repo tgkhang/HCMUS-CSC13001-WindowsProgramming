@@ -163,6 +163,8 @@
                         </Grid>
                     </NavigationViewItem.Content>
                 </NavigationViewItem>
+                
+            <!-- 
 
                 <NavigationViewItem Tag="HomePage" Style="{StaticResource TouchFriendlyNavItemStyle}">
                     <NavigationViewItem.Content>
@@ -176,6 +178,7 @@
                         </Grid>
                     </NavigationViewItem.Content>
                 </NavigationViewItem>
+            -->
             </NavigationView.FooterMenuItems>
 
             <!-- Content Frame -->

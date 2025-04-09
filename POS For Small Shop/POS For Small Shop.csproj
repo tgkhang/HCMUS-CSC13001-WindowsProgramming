@@ -84,9 +84,6 @@
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Models\" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Views\Inventory\ReadIngredientPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

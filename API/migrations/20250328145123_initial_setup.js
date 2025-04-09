@@ -78,6 +78,7 @@ exports.up = async function(knex) {
       start_time timestamp NOT NULL,
       end_time timestamp,
       opening_cash float NOT NULL,
+      closing_cash float NOT NULL DEFAULT 0,
       total_sales float NOT NULL DEFAULT 0,
       total_orders int NOT NULL DEFAULT 0,
       status text NOT NULL
@@ -87,6 +88,7 @@ exports.up = async function(knex) {
     COMMENT ON COLUMN shift.start_time IS 'Start time of shift';
     COMMENT ON COLUMN shift.end_time IS 'End time of shift';
     COMMENT ON COLUMN shift.opening_cash IS 'Cash at start of shift';
+    COMMENT ON COLUMN shift.closing_cash IS 'Cash at end of shift';
     COMMENT ON COLUMN shift.total_sales IS 'Total sales during shift';
     COMMENT ON COLUMN shift.total_orders IS 'Number of orders during shift';
     COMMENT ON COLUMN shift.status IS 'Shift status (active, closed)';

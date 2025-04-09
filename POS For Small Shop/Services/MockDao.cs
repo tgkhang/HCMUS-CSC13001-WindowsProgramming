@@ -245,7 +245,10 @@ namespace POS_For_Small_Shop.Services
             return true;
         }
 
-
+        public int CreateGetId(Promotion item)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MockIngredientRepository : IRepository<Ingredient>
@@ -298,6 +301,11 @@ namespace POS_For_Small_Shop.Services
 
             _ingredients.Remove(existing);
             return true;
+        }
+
+        public int CreateGetId(Ingredient item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -85,12 +85,16 @@
                             </Grid.ColumnDefinitions>
 
 
+                            <!-- 
                             <Image Grid.Column="0" 
                                    Width="50" 
                                    Height="50" 
                                    Margin="0,0,12,0"
-                                   Source="{x:Bind ImagePath, Mode=TwoWay, FallbackValue='/Assets/StoreLogo.png'}" 
+                                   Source="{x:Bind ImagePath, Mode=TwoWay}" 
                                    Stretch="UniformToFill"/>
+
+                            -->
+                            
 
                             <!-- Menu Item Info -->
                             <StackPanel Grid.Column="1" Spacing="10">

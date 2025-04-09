@@ -10,28 +10,32 @@ exports.seed = async function(knex) {
 
   const today = new Date();
 
-  // Step 1: Insert into promotion table and get promo_ids
+  // Step 1: Insert into promotion table with menu_item_ids and get promo_ids
   const promotionIds = await knex('promotion')
     .insert([
       {
         promo_name: 'Summer Special',
         start_date: new Date(today.getFullYear(), 5, 1), // June 1st
-        end_date: new Date(today.getFullYear(), 7, 31)   // August 31st
+        end_date: new Date(today.getFullYear(), 7, 31),   // August 31st
+        menu_item_ids: [1, 2, 3]                          // Example menu items
       },
       {
         promo_name: 'Happy Hour',
         start_date: new Date(today.getFullYear(), today.getMonth(), 1),
-        end_date: new Date(today.getFullYear(), today.getMonth() + 6, 0)
+        end_date: new Date(today.getFullYear(), today.getMonth() + 6, 0),
+        menu_item_ids: [4, 5]                             // Example menu items
       },
       {
         promo_name: 'Lunch Special',
         start_date: new Date(today.getFullYear(), today.getMonth(), 1),
-        end_date: new Date(today.getFullYear(), today.getMonth() + 3, 0)
+        end_date: new Date(today.getFullYear(), today.getMonth() + 3, 0),
+        menu_item_ids: [2, 6, 7]                          // Example menu items
       },
       {
         promo_name: 'Holiday Promo',
         start_date: new Date(today.getFullYear(), 11, 1),  // December 1st
-        end_date: new Date(today.getFullYear(), 11, 31)   // December 31st
+        end_date: new Date(today.getFullYear(), 11, 31),   // December 31st
+        menu_item_ids: [1, 3, 8]                           // Example menu items
       }
     ])
     .returning('promo_id');
@@ -54,7 +58,7 @@ exports.seed = async function(knex) {
       promo_id: promotionIds[2].promo_id, // Lunch Special
       discount_type: 'FixedAmount',
       discount_value: 5.0,
-      description: '$5 off lunch items'
+      description: '$5祉 off lunch items'
     },
     {
       promo_id: promotionIds[3].promo_id, // Holiday Promo

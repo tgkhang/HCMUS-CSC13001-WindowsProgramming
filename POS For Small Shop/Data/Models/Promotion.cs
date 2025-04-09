@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PropertyChanged;
+using Newtonsoft.Json;
 
 namespace POS_For_Small_Shop.Data.Models
 {
@@ -15,10 +16,12 @@ namespace POS_For_Small_Shop.Data.Models
     {
 
         [Key]
+        [JsonProperty("promo_id")]
         public int PromoID { get; set; }
 
         [Required]
         [MaxLength(100)]
+        [JsonProperty("promo_name")]
         public string PromoName { get; set; } = String.Empty;
 
         public virtual PromotionDetails Details { get; set; }

@@ -155,13 +155,15 @@ await knex.raw(`
     promo_id int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     promo_name text NOT NULL CHECK (length(promo_name) <= 100),
     start_date date NOT NULL,
-    end_date date NOT NULL
+    end_date date NOT NULL,
+    menu_item_ids int[] NOT NULL DEFAULT '{}'
   );
-  COMMENT ON TABLE promotion IS 'Marketing promotions';
+  COMMENT ON TABLE promotion IS 'Marketing promotions with associated menu items';
   COMMENT ON COLUMN promotion.promo_id IS 'Primary key for promotion';
   COMMENT ON COLUMN promotion.promo_name IS 'Promotion name (max 100 characters)';
   COMMENT ON COLUMN promotion.start_date IS 'Promotion start date';
   COMMENT ON COLUMN promotion.end_date IS 'Promotion end date';
+  COMMENT ON COLUMN promotion.menu_item_ids IS 'Array of menu item IDs associated with this promotion';
 `);
 
 // promotion_details table

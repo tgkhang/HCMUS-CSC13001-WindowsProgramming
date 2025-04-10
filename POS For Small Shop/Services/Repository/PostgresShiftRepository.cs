@@ -156,7 +156,6 @@ namespace POS_For_Small_Shop.Services.Repository
 
         private async Task<int> CreateGetIdAsync(Shift shift)
         {
-            Debug.WriteLine("HRERERERER");
             // Format the start time for GraphQL ISO format
             string startTimeStr = shift.StartTime.ToString("o");
             // Handle nullable end time for the query

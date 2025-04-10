@@ -16,7 +16,7 @@ namespace POS_For_Small_Shop.Services
         public IRepository<Ingredient> Ingredients { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Order> Orders { get; set; } = new PostgresOrderRepository();
         public IRepository<OrderDetail> OrderDetails { get; set; } = new PostgresOrderDetailRepository();
-        public IRepository<Transaction> Transactions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRepository<Transaction> Transactions { get; set; } = new PostgresTransactionRepository();
         public IRepository<CashFlow> CashFlows { get; set; } = new PostgresCashFlowRepository();
         public IRepository<Notification> Notifications { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<ShiftOrder> ShiftOrders { get; set; } = new PostgresShiftOrderRepository();

@@ -42,6 +42,7 @@
     <None Remove="Views\PromotionPopupForm\ViewPromotionDetailsForm.xaml" />
     <None Remove="Views\ShiftPage\CloseShiftPage.xaml" />
     <None Remove="Views\ShiftPage\NewOrderPage.xaml" />
+    <None Remove="Views\ShiftPage\PaymentPage.xaml" />
     <None Remove="Views\ShiftPage\ShiftCustomerPage.xaml" />
     <None Remove="Views\ShiftPage\ShiftOrderHistoryPage.xaml" />
   </ItemGroup>
@@ -82,6 +83,11 @@
 		<PrivateAssets>all</PrivateAssets>
 	</PackageReference>
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ShiftPage\PaymentPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Inventory\ReadIngredientPage.xaml">

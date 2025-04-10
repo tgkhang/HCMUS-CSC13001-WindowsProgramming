@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,35 @@ namespace POS_For_Small_Shop.Services.Repository
         public bool Update(int id, Order item)
         {
             return RunSync(() => UpdateAsync(id, item));
+        }
+        public int CreateGetId(Order item)
+        {
+            return RunSync(()=> CreateGetIdAsync(item));
+        }
+        private async Task<int> CreateGetIdAsync(Order order)
+        {
+            string query = @"
+                mutation {
+                  createOrder(
+                    input: {order: {
+                      totalAmount: " + order.TotalAmount + @", 
+                      finalAmount: " + order.FinalAmount + @", 
+                      paymentMethod: """ + order.PaymentMethod + @""", 
+                      status: """ + order.Status + @""", 
+                      customerId: " + order.CustomerID + @", 
+                      discount: " + order.Discount + @", 
+                      shiftId: " + order.ShiftID + @"
+                    }}
+                  ) {
+                    clientMutationId
+                    order {
+                      orderId
+                    }
+                  }
+            }";
+            var result = await ExecuteGraphQLAsync(query);
+            var id = result["data"]?["createOrder"]?["order"]?["orderId"]?.Value<int>();
+            return id ?? 0;
         }
 
         private async Task<List<Order>> GetAllAsync()
@@ -151,6 +181,7 @@ namespace POS_For_Small_Shop.Services.Repository
 
         private async Task<bool> UpdateAsync(int id, Order order)
         {
+            order.CustomerID = order.CustomerID.HasValue ? order.CustomerID.Value : 1;
             string query = @"
                 mutation  {
                   updateOrderByOrderId(
@@ -169,14 +200,8 @@ namespace POS_For_Small_Shop.Services.Repository
                 }
                 }
             ";
-
             var result= await ExecuteGraphQLAsync(query);
             return IsOperationSuccessful(result, "updateOrderByOrderId");
-        }
-
-        public int CreateGetId(Order item)
-        {
-            throw new NotImplementedException();
         }
     }
 }

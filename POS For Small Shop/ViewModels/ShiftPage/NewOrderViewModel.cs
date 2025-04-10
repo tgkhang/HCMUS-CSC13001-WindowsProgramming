@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using POS_For_Small_Shop.Data.Models;
@@ -14,10 +15,11 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
     public class NewOrderViewModel : INotifyPropertyChanged
     {
         private IDao _dao;
+        private IShiftService _shiftService;
         private string _searchText = "";
         private int _selectedCategoryId = 0;
         private float _discountPercentage = 0;
-        private string _orderNumber;
+        private int _orderNumber; //order id
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -35,7 +37,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         public float Discount { get; private set; }
         public float Total { get; private set; }
 
-        public string OrderNumber
+        public int OrderNumber
         {
             get => _orderNumber;
             private set => _orderNumber = value;
@@ -60,6 +62,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         public NewOrderViewModel()
         {
             _dao = Service.GetKeyedSingleton<IDao>();
+            _shiftService = Service.GetKeyedSingleton<IShiftService>();
 
             // Initialize collections
             try
@@ -233,7 +236,21 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         private void GenerateOrderNumber()
         {
             // Generate a new order number based on current date/time
-            OrderNumber = DateTime.Now.ToString("yyMMddHHmm");
+            //OrderNumber = DateTime.Now.ToString("yyMMddHHmm");
+            //OnPropertyChanged(nameof(OrderNumber));
+
+            Order currentOrder = new Order
+            {
+                OrderID = 123,
+                CustomerID = 1,
+                ShiftID = 1,
+                TotalAmount = 0,
+                Discount = 0,
+                FinalAmount = 0,
+                PaymentMethod = "CASH",
+                Status = "Pending"
+            };
+            OrderNumber =_dao.Orders.CreateGetId(currentOrder);
             OnPropertyChanged(nameof(OrderNumber));
         }
 
@@ -263,26 +280,14 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                 try
                 {
                     // Get the current active shift
-                    var activeShift = _dao.Shifts.GetAll().FirstOrDefault(s => s.Status == "Open");
-                    if (activeShift == null)
-                    {
-                        // Create a new shift if no active shift exists
-                        activeShift = new Shift
-                        {
-                            StartTime = DateTime.Now,
-                            OpeningCash = 0,
-                            TotalSales = 0,
-                            TotalOrders = 0,
-                            Status = "Open"
-                        };
-                        _dao.Shifts.Insert(activeShift);
-                    }
+                    Shift currentShift= _shiftService.CurrentShift;
 
                     // Create a new Order object
                     var order = new Order
                     {
+                        OrderID= OrderNumber,
                         CustomerID = SelectedCustomer?.CustomerID,
-                        ShiftID = activeShift.ShiftID,
+                        ShiftID = currentShift.ShiftID,
                         TotalAmount = Subtotal,
                         Discount = Discount,
                         FinalAmount = Total,
@@ -300,20 +305,20 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                     }).ToList();
 
                     // Save order to database
-                    bool success = _dao.Orders.Insert(order);
+                    bool success = _dao.Orders.Update(OrderNumber,order);
                     if (success)
                     {
-                        // Save order details
+                        //Save order details
                         foreach (var item in orderItems)
                         {
-                            item.OrderID = order.OrderID;
+                            item.OrderID = OrderNumber;
                             _dao.OrderDetails.Insert(item);
                         }
 
                         // Update customer loyalty points if applicable
                         if (SelectedCustomer != null)
                         {
-                            SelectedCustomer.LoyaltyPoints += (int)(Total / 10); // 1 point per $10 spent
+                            SelectedCustomer.LoyaltyPoints += (int)(Total / 10000); // 1 point per 10000 spent
                             _dao.Customers.Update(SelectedCustomer.CustomerID, SelectedCustomer);
                         }
 
@@ -324,20 +329,23 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                             AmountPaid = Total,
                             PaymentMethod = order.PaymentMethod
                         };
+                      
                         _dao.Transactions.Insert(transaction);
 
                         // Link order to the shift
                         var shiftOrder = new ShiftOrder
                         {
-                            ShiftID = activeShift.ShiftID,
+                            ShiftID = currentShift.ShiftID,
                             OrderID = order.OrderID
                         };
                         _dao.ShiftOrders.Insert(shiftOrder);
 
                         // Update shift statistics
-                        activeShift.TotalSales += Total;
-                        activeShift.TotalOrders += 1;
-                        _dao.Shifts.Update(activeShift.ShiftID, activeShift);
+                        currentShift.TotalSales += Total;
+                        currentShift.TotalOrders += 1;
+                        _dao.Shifts.Update(currentShift.ShiftID, currentShift);
+
+                        //UPDate previous frame screen
                     }
                 }
                 catch (Exception)

@@ -332,9 +332,8 @@
 
                 <!-- Payment Buttons -->
                 <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,15,0,0" HorizontalAlignment="Center" Spacing="10">
-                    <Button Content="Cash Payment" Width="120" Command="{x:Bind ViewModel.CashPaymentCommand}"/>
-                    <Button Content="Card Payment" Width="120" Command="{x:Bind ViewModel.CardPaymentCommand}"/>
-                    <Button Content="Cancel Order" Width="120" Command="{x:Bind ViewModel.CancelOrderCommand}"/>
+                    <Button Content="Payment" Width="160" Height="50" Command="{x:Bind ViewModel.CashPaymentCommand}"/>
+                    <Button Content="Cancel Order" Width="160" Height="50" Command="{x:Bind ViewModel.CancelOrderCommand}"/>
                 </StackPanel>
             </Grid>
         </Grid>

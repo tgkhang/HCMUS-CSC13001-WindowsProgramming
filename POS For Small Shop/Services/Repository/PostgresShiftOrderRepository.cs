@@ -120,7 +120,7 @@ namespace POS_For_Small_Shop.Services.Repository
                 clientMutationId
               }
             }";
-
+            Debug.WriteLine(query);
             var result = await ExecuteGraphQLAsync(query);
             return IsOperationSuccessful(result, "createShiftOrder");
         }

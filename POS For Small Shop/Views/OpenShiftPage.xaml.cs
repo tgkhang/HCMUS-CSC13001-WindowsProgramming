@@ -34,6 +34,7 @@ namespace POS_For_Small_Shop.Views
             { "CloseShiftPage", typeof(CloseShiftPage) },
             { "HomePage", typeof(HomePage) },
             { "HelpPage", typeof(HelpPage) },
+            { "PaymentPage", typeof(PaymentPage) }
         };
 
         // avoid unnecessary navigation

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -33,7 +34,9 @@ namespace POS_For_Small_Shop.Views.ShiftPage
 
         private Order _currentOrder;
         private string _searchText = "";
+        private IShiftService _shiftService;
 
+        private Shift _currentShift;
 
         public ObservableCollection<Order> FilteredOrders { get; private set; } = new ObservableCollection<Order>();
 
@@ -41,19 +44,45 @@ namespace POS_For_Small_Shop.Views.ShiftPage
         public ShiftOrderHistoryPage()
         {
             this.InitializeComponent();
-
             _dao = Service.GetKeyedSingleton<IDao>();
+            _shiftService = Service.GetKeyedSingleton<IShiftService>();
+
+            GetCurrentShift();
             LoadOrders();
             OrderListView.ItemsSource = FilteredOrders;
 
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
+            // Refresh data when navigating to this page
+            GetCurrentShift();
+            LoadOrders();
+        }
+        private void GetCurrentShift()
+        {
+            try
+            {
+                _currentShift = _shiftService.CurrentShift;
+        
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error getting current shift: {ex.Message}");
+                _currentShift = null;
+            }
+        }
         private void LoadOrders()
         {
             try
             {
                 //get all order
                 _allOrders = _dao.Orders.GetAll();
+
+                _allOrders = _allOrders.Where(order =>
+                        (order.ShiftID != null && order.ShiftID == _currentShift.ShiftID)
+                ).ToList();
                 //aply search or filter
                 ApplyFilters();
                 //Updatee Ui base on custonmer

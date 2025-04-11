@@ -65,6 +65,7 @@
 
                             <!-- Order info -->
                             <StackPanel Grid.Column="0" Spacing="4">
+                                <TextBlock Text="Order Info: " FontWeight="SemiBold"/>
                                 <TextBlock Text="{x:Bind OrderID, Mode=OneWay}" FontWeight="SemiBold"/>
                                 <TextBlock Text="{Binding PaymentMethod, Converter={StaticResource OrderStringFormatter}, ConverterParameter='Payment: {0}'}" FontSize="12" Opacity="0.7"/>
                                 <TextBlock Text="{Binding Status, Converter={StaticResource OrderStringFormatter}, ConverterParameter='Status: {0}'}" FontSize="12" Opacity="0.7"/>
@@ -77,10 +78,15 @@
                                 <TextBlock Text="{Binding FinalAmount, Converter={StaticResource OrderStringFormatter}, ConverterParameter='Final: ₫{0}'}" FontWeight="Bold"/>
                             </StackPanel>
 
-                            <!-- Placeholder for actions -->
-                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <!-- Placeholder for actions 
+                            
+                             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                                 <Button Content="Details" Click="OrderListView_SelectionChanged" Tag="{x:Bind OrderID}"/>
                             </StackPanel>
+                            
+                            
+                            -->
+                           
                         </Grid>
                     </DataTemplate>
 

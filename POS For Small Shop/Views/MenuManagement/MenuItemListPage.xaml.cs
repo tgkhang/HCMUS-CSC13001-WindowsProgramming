@@ -66,6 +66,9 @@ namespace POS_For_Small_Shop.Views.MenuManagement
             NameTextBox.Text = string.Empty;
             PriceTextBox.Text = string.Empty;
             ImagePathTextBox.Text = string.Empty;
+            // Reset image preview
+            PreviewImage.Source = null;
+            PreviewImage.Visibility = Visibility.Collapsed;
 
             PopulateCategoryComboBox();
             CategoryComboBox.SelectedIndex = -1;
@@ -84,7 +87,52 @@ namespace POS_For_Small_Shop.Views.MenuManagement
                     ImagePathTextBox.Text = menuItem.ImagePath ?? "";
                     FormHeaderText.Text = "Edit Menu Item";
                     ViewModel.IsEditMode = true;
-                    
+
+                    // Handle image preview
+                    if (!string.IsNullOrEmpty(menuItem.ImagePath))
+                    {
+                        try
+                        {
+                            // Try to create a BitmapImage from the path
+                            BitmapImage bitmapImage = new BitmapImage();
+
+                            // Check if the path is already in ms-appdata format
+                            if (menuItem.ImagePath.StartsWith("ms-appdata:"))
+                            {
+                                PreviewImage.Source = new BitmapImage(new Uri(menuItem.ImagePath));
+                            }
+                            // Check if it's a local file path with MenuItemImages
+                            else if (menuItem.ImagePath.Contains("\\MenuItemImages\\"))
+                            {
+                                // Extract the filename from the path
+                                string fileName = System.IO.Path.GetFileName(menuItem.ImagePath);
+                                string msAppDataPath = $"ms-appdata:///local/MenuItemImages/{fileName}";
+                                PreviewImage.Source = new BitmapImage(new Uri(msAppDataPath));
+                            }
+                            // Try as a direct URI
+                            else
+                            {
+                                PreviewImage.Source = new BitmapImage(new Uri(menuItem.ImagePath));
+                            }
+
+                            // Show the preview image
+                            PreviewImage.Visibility = Visibility.Visible;
+                        }
+                        catch (Exception ex)
+                        {
+                            // If there's an error loading the image, hide the preview
+                            Debug.WriteLine($"Error loading image preview: {ex.Message}");
+                            PreviewImage.Source = null;
+                            PreviewImage.Visibility = Visibility.Collapsed;
+                        }
+                    }
+                    else
+                    {
+                        // No image path, hide the preview
+                        PreviewImage.Source = null;
+                        PreviewImage.Visibility = Visibility.Collapsed;
+                    }
+
 
                     PopulateCategoryComboBox();
 

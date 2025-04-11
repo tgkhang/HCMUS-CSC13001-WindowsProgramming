@@ -65,15 +65,15 @@
 
             <!-- Items list -->
             <ListView 
-             x:Name="ItemListView"
-             Grid.Column="0"
-             SelectionMode="Single"
-             SelectionChanged="ItemListView_SelectionChanged"
-             BorderThickness="1"
-             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-             Padding="0"
-             Margin="0,0,20,0">
+          x:Name="ItemListView"
+          Grid.Column="0"
+          SelectionMode="Single"
+          SelectionChanged="ItemListView_SelectionChanged"
+          BorderThickness="1"
+          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+          Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+          Padding="0"
+          Margin="0,0,20,0">
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:MenuItem">
@@ -84,25 +84,25 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-
-                            <!-- 
-                            <Image Grid.Column="0" 
-                                   Width="50" 
-                                   Height="50" 
-                                   Margin="0,0,12,0"
-                                   Source="{x:Bind ImagePath, Mode=TwoWay}" 
-                                   Stretch="UniformToFill"/>
-
-                            -->
+                            <!--
+              
+                                  <Image Grid.Column="0" 
+                                Width="50" 
+                                Height="50" 
+                                Margin="0,0,12,0"
+                                Source="{x:Bind ImagePath, Mode=OneWay}" 
+                                Stretch="UniformToFill"/>
                             
+                            -->
+      
 
                             <!-- Menu Item Info -->
                             <StackPanel Grid.Column="1" Spacing="10">
                                 <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold"/>
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="{x:Bind SellingPrice, Mode=TwoWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
+                                    <TextBlock Text="{x:Bind SellingPrice, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
                                     <TextBlock Text="|" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.5"/>
-                                    <TextBlock Text="{x:Bind CategoryID, Mode=TwoWay, Converter={StaticResource CategoryIdToNameConverter}}" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.8"/>
+                                    <TextBlock Text="{x:Bind CategoryID, Mode=OneWay, Converter={StaticResource CategoryIdToNameConverter}}" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.8"/>
                                 </StackPanel>
                             </StackPanel>
 
@@ -116,16 +116,15 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <!-- Item details/edit form -->
-            <Grid 
-             x:Name="ItemDetailsPanel" 
-             Grid.Column="1" 
-             Width="350"
-             Padding="20"
-             BorderThickness="1"
-             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-             Visibility="Collapsed">
+          <!-- Item details/edit form -->
+          <Grid 
+          x:Name="ItemDetailsPanel" 
+          Grid.Column="1" 
+          Width="350"
+          BorderThickness="1"
+          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+          Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+          Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -134,53 +133,60 @@
 
                 <!-- Form header -->
                 <TextBlock 
-                 Grid.Row="0" 
-                 x:Name="FormHeaderText" 
-                 Text="Add Item" 
-                 Style="{StaticResource SubtitleTextBlockStyle}" 
-                 Margin="0,0,0,20"/>
+              Grid.Row="0" 
+              x:Name="FormHeaderText" 
+              Text="Add Item" 
+              Style="{StaticResource SubtitleTextBlockStyle}" 
+              Margin="20,20,20,20"/>
 
-                <!-- Form fields -->
-                <StackPanel Grid.Row="1" Spacing="15">
-                    <TextBox x:Name="NameTextBox" Header="Name" PlaceholderText="Enter item name"/>
-                    <TextBox x:Name="PriceTextBox" Header="Price" PlaceholderText="Enter item price"/>
-                    <!-- Update the ComboBox in the form -->
-                    <ComboBox x:Name="CategoryComboBox" 
-                          Header="Category" 
-                          PlaceholderText="Select a category"
-                          SelectionChanged="CategoryComboBox_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="models:Category">
-                                <TextBlock Text="{x:Bind Name}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    
-                    <TextBox x:Name="ImagePathTextBox" Header="Image Path" 
-                             PlaceholderText="URL image"
-                             IsReadOnly="True"
-                             />
+                <!-- ScrollViewer for form fields -->
+                <ScrollViewer Grid.Row="1" 
+                          VerticalScrollMode="Auto" 
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollMode="Disabled"
+                          Padding="20,0,20,0">
+                    <!-- Form fields -->
+                    <StackPanel Spacing="15">
+                        <TextBox x:Name="NameTextBox" Header="Name" PlaceholderText="Enter item name"/>
+                        <TextBox x:Name="PriceTextBox" Header="Price" PlaceholderText="Enter item price"/>
+                        <!-- Update the ComboBox in the form -->
+                        <ComboBox x:Name="CategoryComboBox" 
+                           Header="Category" 
+                           PlaceholderText="Select a category"
+                           SelectionChanged="CategoryComboBox_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:Category">
+                                    <TextBlock Text="{x:Bind Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
 
-                    <Button x:Name="PickAPhotoButton" Content="Choose a picture"
-                        Click="PickAPhotoButton_Click" Margin="0,0,0,10"/>
+                        <TextBox x:Name="ImagePathTextBox" Header="Image Path" 
+                              PlaceholderText="URL image"
+                              IsReadOnly="True"
+                              />
 
-                    <!-- Image reveiew here -->
-                    <Image x:Name="PreviewImage"
-                       Height="100"
-                       Width="100"
-                       Stretch="UniformToFill"
-                       Margin="0,10,0,0"
-                       Visibility="Collapsed"/>
-                </StackPanel>
+                        <Button x:Name="PickAPhotoButton" Content="Choose a picture"
+                         Click="PickAPhotoButton_Click" Margin="0,0,0,10"/>
+
+                        <!-- Image preview here -->
+                        <Image x:Name="PreviewImage"
+                        MaxHeight="300"
+                        Width="Auto"
+                        Stretch="Uniform"
+                        Margin="0,10,0,20"
+                        Visibility="Collapsed"/>
+                    </StackPanel>
+                </ScrollViewer>
 
                 <!-- Form actions -->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,20,0,0">
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="20,20,20,20">
                     <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click"/>
                     <Button x:Name="SaveButton" Content="Save" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
                 </StackPanel>
             </Grid>
         </Grid>
-
+        
         <!-- Empty state -->
         <TextBlock 
          x:Name="EmptyStateText" 

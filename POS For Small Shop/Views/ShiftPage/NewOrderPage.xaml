@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.ShiftPage.NewOrderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views.ShiftPage"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels.ShiftPage"
+    xmlns:converters="using:POS_For_Small_Shop.Converters"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:CurrencyFormatter x:Key="CurrencyFormatter"/>
+        <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
+        <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter"/>
+
+        <!-- Customer item template for the selection dialog -->
+        <DataTemplate x:Key="CustomerItemTemplate" x:DataType="models:Customer">
+            <Grid Padding="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Customer name -->
+                <TextBlock Grid.Row="0" 
+                         Text="{x:Bind Name}" 
+                         FontWeight="SemiBold"/>
+
+                <!-- Customer details -->
+                <StackPanel Grid.Row="1" 
+                          Orientation="Horizontal" 
+                          Spacing="8">
+                    <TextBlock Text="{x:Bind Phone}" 
+                             Opacity="0.7" 
+                             FontSize="12"/>
+                    <TextBlock Text="|" 
+                             Opacity="0.7" 
+                             FontSize="12"/>
+                    <TextBlock Text="{x:Bind LoyaltyPoints}" 
+                             Opacity="0.7" 
+                             FontSize="12"/>
+                    <TextBlock Text="points" 
+                             Opacity="0.7" 
+                             FontSize="12"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="380"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left side - Products and Categories -->
+        <Grid Grid.Column="0" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Search Bar -->
+            <AutoSuggestBox 
+              Grid.Row="0"
+              PlaceholderText="Search products..." 
+              QueryIcon="Find"
+              Margin="0,0,0,15"
+              TextChanged="SearchBox_TextChanged"/>
+
+            <!-- Categories -->
+            <ScrollViewer Grid.Row="1" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" Margin="0,0,0,15">
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Button Content="All" Click="CategoryButton_Click" Tag="0" Style="{StaticResource AccentButtonStyle}"/>
+                    <Button Content="Coffee" Click="CategoryButton_Click" Tag="1"/>
+                    <Button Content="Tea" Click="CategoryButton_Click" Tag="2"/>
+                    <Button Content="Cold Drinks" Click="CategoryButton_Click" Tag="3"/>
+                    <Button Content="Pastries" Click="CategoryButton_Click" Tag="4"/>
+                    <Button Content="Snacks" Click="CategoryButton_Click" Tag="5"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Products Grid -->
+            <GridView 
+              x:Name="ProductsGridView"
+              Grid.Row="2"
+              SelectionMode="None"
+              ItemsSource="{x:Bind ViewModel.FilteredMenuItems, Mode=OneWay}"
+              IsItemClickEnabled="True"
+              ItemClick="ProductsGridView_ItemClick">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MenuItem">
+                        <Grid Width="150" Height="180" Margin="5" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Product Image -->
+                            <Image 
+                              Grid.Row="0"
+                              Source="{x:Bind ImagePath}" 
+                              Stretch="UniformToFill"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"/>
+
+                            <!-- Product Name -->
+                            <TextBlock 
+                              Grid.Row="1"
+                              Text="{x:Bind Name}" 
+                              Margin="10,5,10,0"
+                              FontWeight="SemiBold"
+                              TextWrapping="Wrap"
+                              TextTrimming="CharacterEllipsis"
+                              MaxLines="2"/>
+
+                            <!-- Product Price -->
+                            <TextBlock 
+                              Grid.Row="2"
+                              Text="{x:Bind SellingPrice, Converter={StaticResource CurrencyFormatter}}" 
+                              Margin="10,0,10,10"
+                              Foreground="{ThemeResource SystemAccentColor}"/>
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Grid>
+
+        <!-- Right side - Order Summary and Checkout -->
+        <Grid Grid.Column="1" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Order Header -->
+            <StackPanel Grid.Row="0" Padding="20">
+                <TextBlock Text="Current Order" FontSize="20" FontWeight="SemiBold"/>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <TextBlock Text="Order #" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Bind ViewModel.OrderNumber, Mode=OneWay}" Margin="5,0,0,0" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    <Button Content="New Order" Margin="15,0,0,0" Command="{x:Bind ViewModel.NewOrderCommand}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Customer Selection Section -->
+            <Border Grid.Row="1" 
+                  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" 
+                  BorderThickness="0,0,0,1" 
+                  Padding="20,0,20,15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" 
+                             Text="Customer" 
+                             FontWeight="SemiBold" 
+                             Margin="0,0,0,8"/>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- No customer selected state -->
+                        <TextBlock Grid.Column="0"
+                                 Text="No customer selected" 
+                                 VerticalAlignment="Center"
+                                 Opacity="0.7"
+                                 Visibility="{x:Bind ViewModel.SelectedCustomer, Mode=OneWay, Converter={StaticResource NullToVisibleConverter}}"/>
+
+                        <!-- Customer selected state -->
+                        <StackPanel Grid.Column="0" 
+                                  Visibility="{x:Bind ViewModel.SelectedCustomer, Mode=OneWay, Converter={StaticResource NotNullToVisibleConverter}}"
+                                  Orientation="Vertical"
+                                  Spacing="4">
+                            <TextBlock Text="{x:Bind ViewModel.SelectedCustomer.Name, Mode=OneWay}" 
+                                     FontWeight="SemiBold"/>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="{x:Bind ViewModel.SelectedCustomer.Phone, Mode=OneWay}" 
+                                         Opacity="0.7" 
+                                         FontSize="12"/>
+                                <TextBlock Text="|" Opacity="0.7" FontSize="12"/>
+                                <TextBlock Text="{x:Bind ViewModel.SelectedCustomer.LoyaltyPoints, Mode=OneWay}" 
+                                         Opacity="0.7" 
+                                         FontSize="12"/>
+                                <TextBlock Text="points" Opacity="0.7" FontSize="12"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Action buttons -->
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                            <Button Content="Select" 
+                                  Click="SelectCustomerButton_Click"
+                                  Visibility="{x:Bind ViewModel.SelectedCustomer, Mode=OneWay, Converter={StaticResource NullToVisibleConverter}}"/>
+                            <Button Content="Change" 
+                                  Click="SelectCustomerButton_Click"
+                                  Visibility="{x:Bind ViewModel.SelectedCustomer, Mode=OneWay, Converter={StaticResource NotNullToVisibleConverter}}"/>
+                            <Button Content="Clear" 
+                                  Click="ClearCustomerButton_Click"
+                                  Visibility="{x:Bind ViewModel.SelectedCustomer, Mode=OneWay, Converter={StaticResource NotNullToVisibleConverter}}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- Order Items -->
+            <ListView 
+              x:Name="OrderItemsListView"
+              Grid.Row="2"
+              ItemsSource="{x:Bind ViewModel.OrderItems, Mode=OneWay}"
+              SelectionMode="None"
+              Margin="10,10,10,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:OrderItemViewModel">
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Product Name -->
+                            <TextBlock 
+                              Grid.Column="0" 
+                              Text="{x:Bind Name}" 
+                              VerticalAlignment="Center"
+                              TextTrimming="CharacterEllipsis"/>
+
+                            <!-- Quantity Controls -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,10,0">
+                                <Button 
+                                  Content="-" 
+                                  Width="35" 
+                                  Height="35"
+                                  Click="DecreaseQuantity_Click"
+                                  Tag="{x:Bind MenuItemID}"/>
+                                <TextBlock 
+                                  Text="{x:Bind Quantity,Mode=TwoWay}" 
+                                  VerticalAlignment="Center" 
+                                  HorizontalAlignment="Center"
+                                  Width="30"
+                                  TextAlignment="Center"/>
+                                <Button 
+                                  Content="+" 
+                                  Width="35" 
+                                  Height="35"
+                                  Click="IncreaseQuantity_Click"
+                                  Tag="{x:Bind MenuItemID}"/>
+                            </StackPanel>
+
+                            <!-- Item Total -->
+                            <TextBlock 
+                              Grid.Column="2" 
+                              Text="{x:Bind Total, Converter={StaticResource CurrencyFormatter}}" 
+                              VerticalAlignment="Center"
+                              Margin="0,0,10,0"/>
+
+                            <!-- Remove Button -->
+                            <Button 
+                              Grid.Column="3"
+                              Content="✕"
+                              Width="35"
+                              Height="35"
+                              Click="RemoveItem_Click"
+                              Tag="{x:Bind MenuItemID}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="10,5"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+
+            <!-- Order Summary and Checkout -->
+            <Grid Grid.Row="3" Padding="20" Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Subtotal -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Subtotal" Margin="0,5"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Subtotal, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Margin="0,5" HorizontalAlignment="Right"/>
+
+                <!-- Tax -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Tax (8%)" Margin="0,5"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Tax, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Margin="0,5" HorizontalAlignment="Right"/>
+
+                <!-- Discount -->
+                <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Discount" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="DiscountComboBox" Margin="10,0,0,0" Width="100" SelectionChanged="DiscountComboBox_SelectionChanged">
+                        <ComboBoxItem Content="None" Tag="0"/>
+                        <ComboBoxItem Content="5%" Tag="5"/>
+                        <ComboBoxItem Content="10%" Tag="10"/>
+                        <ComboBoxItem Content="15%" Tag="15"/>
+                        <ComboBoxItem Content="20%" Tag="20"/>
+                    </ComboBox>
+                </StackPanel>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Discount, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Margin="0,5" HorizontalAlignment="Right"/>
+
+                <!-- Separator -->
+                <Rectangle Grid.Row="3" Grid.ColumnSpan="2" Height="1" Fill="{ThemeResource DividerStrokeColorDefaultBrush}" Margin="0,10"/>
+
+                <!-- Total -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Total" FontWeight="SemiBold" FontSize="16" Margin="0,5"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Total, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" FontWeight="SemiBold" FontSize="16" Margin="0,5" HorizontalAlignment="Right"/>
+
+                <!-- Payment Buttons -->
+                <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,15,0,0" HorizontalAlignment="Center" Spacing="10">
+                    <Button Content="Cash Payment" Width="120" Command="{x:Bind ViewModel.CashPaymentCommand}"/>
+                    <Button Content="Card Payment" Width="120" Command="{x:Bind ViewModel.CardPaymentCommand}"/>
+                    <Button Content="Cancel Order" Width="120" Command="{x:Bind ViewModel.CancelOrderCommand}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

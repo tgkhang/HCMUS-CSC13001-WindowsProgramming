@@ -19,6 +19,12 @@ This project provides a complete PostgreSQL database with tables, relationships,
 
 5. That's it! The database will be created automatically with all tables and sample data.
 
+6. RUN API
+   ```
+   wsl ./postgrest postgrest.conf
+
+   postgraphile -c 'postgres://postgres:1234@localhost:5432/postgres' --watch --enhance-graphiql --dynamic-json
+   ```
 ## Database Connection Details
 
 - **Host**: localhost

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.MenuManagement.MenuItemListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views.MenuManagement"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:POS_For_Small_Shop.Converters"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels.MenuManagement"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Page.Resources>
+        <!-- Custom converters -->
+        <converters:CurrencyFormatter x:Key="CurrencyFormatter"/>
+        <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
+        <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter"/>
+    </Page.Resources>
+
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with search and add button -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Menu Items" 
+                        Style="{StaticResource TitleTextBlockStyle}" 
+                        Margin="0,0,0,10"/>
+                <AutoSuggestBox 
+                 x:Name="SearchBox" 
+                 PlaceholderText="Search Menu Items..." 
+                 Width="400"
+                 HorizontalAlignment="Left"
+                 QueryIcon="Find"
+                 TextChanged="SearchBox_TextChanged"/>
+            </StackPanel>
+
+            <Button 
+             Grid.Column="1" 
+             x:Name="AddItemButton" 
+             Content="Add Item" 
+             Style="{StaticResource AccentButtonStyle}"
+             Click="AddItemButton_Click"
+             VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <!-- Menu Item list and details -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Items list -->
+            <ListView 
+             x:Name="ItemListView"
+             Grid.Column="0"
+             SelectionMode="Single"
+             SelectionChanged="ItemListView_SelectionChanged"
+             BorderThickness="1"
+             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+             Padding="0"
+             Margin="0,0,20,0">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MenuItem">
+                        <Grid Padding="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Menu Item Info -->
+                            <StackPanel Grid.Column="0" Spacing="10">
+                                <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold"/>
+                                <TextBlock Text="{x:Bind SellingPrice, Mode=OneWay, Converter={StaticResource CurrencyFormatter}}" Style="{StaticResource BodyTextBlockStyle}"/>
+                            </StackPanel>
+
+                            <!-- Actions -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                <Button Content="Edit" Click="EditItemButton_Click" Tag="{x:Bind MenuItemID}"/>
+                                <Button Content="Delete" Click="DeleteItemButton_Click" Tag="{x:Bind MenuItemID}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Item details/edit form -->
+            <Grid 
+             x:Name="ItemDetailsPanel" 
+             Grid.Column="1" 
+             Width="350"
+             Padding="20"
+             BorderThickness="1"
+             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+             Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Form header -->
+                <TextBlock 
+                 Grid.Row="0" 
+                 x:Name="FormHeaderText" 
+                 Text="Add Item" 
+                 Style="{StaticResource SubtitleTextBlockStyle}" 
+                 Margin="0,0,0,20"/>
+
+                <!-- Form fields -->
+                <StackPanel Grid.Row="1" Spacing="15">
+                    <TextBox x:Name="NameTextBox" Header="Name" PlaceholderText="Enter item name"/>
+                    <TextBox x:Name="PriceTextBox" Header="Price" PlaceholderText="Enter item price"/>
+                    <TextBox x:Name="ImagePathTextBox" Header="Image Path" PlaceholderText="Enter image URL"/>
+                </StackPanel>
+
+                <!-- Form actions -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,20,0,0">
+                    <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click"/>
+                    <Button x:Name="SaveButton" Content="Save" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!-- Empty state -->
+        <TextBlock 
+         x:Name="EmptyStateText" 
+         Grid.Row="1" 
+         Text="No menu items found. Add a new item to get started." 
+         HorizontalAlignment="Center" 
+         VerticalAlignment="Center" 
+         Opacity="0.7"
+         Visibility="Collapsed"/>
+    </Grid>
+</Page>

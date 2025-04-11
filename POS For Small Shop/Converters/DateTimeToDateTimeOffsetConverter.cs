@@ -28,7 +28,11 @@ namespace POS_For_Small_Shop.Converters
         {
             if (value is DateTimeOffset dateTimeOffset)
             {
-                return dateTimeOffset.DateTime;
+                if (parameter?.ToString() == "EndDate")
+                {
+                    return new DateTime(dateTimeOffset.Year, dateTimeOffset.Month, dateTimeOffset.Day, 23, 59, 59);
+                }
+                return new DateTime(dateTimeOffset.Year, dateTimeOffset.Month, dateTimeOffset.Day, 0, 0, 0);
             }
             return DateTime.MinValue;
         }

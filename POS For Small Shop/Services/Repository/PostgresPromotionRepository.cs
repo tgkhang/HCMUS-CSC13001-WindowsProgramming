@@ -78,12 +78,15 @@ namespace POS_For_Small_Shop.Services.Repository
                 .Select(node =>
                 {
                     var detailsNode = node["promotionDetailsByPromoId"]?["nodes"]?.FirstOrDefault(); // Take first details if any
+                    var rawStart = node["startDate"]?.Value<DateTime>() ?? DateTime.MinValue;
+                    var rawEnd = node["endDate"]?.Value<DateTime>() ?? DateTime.MinValue;
+
                     return new Promotion
                     {
                         PromoID = node["promoId"].Value<int>(),
                         PromoName = node["promoName"].Value<string>(),
-                        StartDate = node["startDate"]?.Value<DateTime>() ?? DateTime.MinValue,
-                        EndDate = node["endDate"].Value<DateTime>(),
+                        StartDate = rawStart.Date,
+                        EndDate = rawEnd.Date.AddHours(23).AddMinutes(59).AddSeconds(59),
                         ItemIDs = node["menuItemIds"].ToObject<List<int>>(),
                         Details = detailsNode != null ? new PromotionDetails
                         {
@@ -130,12 +133,15 @@ namespace POS_For_Small_Shop.Services.Repository
 
             var node = result["data"]?["promotionByPromoId"];
             if (node == null) return null;
+            var rawStart = node["startDate"]?.Value<DateTime>() ?? DateTime.MinValue;
+            var rawEnd = node["endDate"]?.Value<DateTime>() ?? DateTime.MinValue;
+
             return new Promotion
             {
                 PromoID = node["promoId"].Value<int>(),
                 PromoName = node["promoName"].Value<string>(),
-                StartDate = node["startDate"].Value<DateTime>(),
-                EndDate = node["endDate"].Value<DateTime>(),
+                StartDate = rawStart.Date,
+                EndDate = rawEnd.Date.AddHours(23).AddMinutes(59).AddSeconds(59),
                 ItemIDs = node["menuItemIds"].ToObject<List<int>>(),
                 Details = node["promotionDetailByPromoId"] != null ? new PromotionDetails
                 {
@@ -298,7 +304,63 @@ namespace POS_For_Small_Shop.Services.Repository
 
         public async Task<List<Promotion>> GetActivePromotionsAsync()
         {
-            return new List<Promotion>();
+            var query = $@"query ActivePromotions {{
+                  allPromotions {{
+                    nodes {{
+                      endDate
+                      menuItemIds
+                      promoId
+                      promoName
+                      startDate
+                      promotionDetailsByPromoId {{
+                        nodes {{
+                          description
+                          discountType
+                          discountValue
+                          promoDetailsId
+                          promoId
+                        }}
+                      }}
+                    }}
+                  }}
+                }}";
+            
+            var result = await ExecuteGraphQLAsync(query);
+            if (!IsOperationSuccessful(result, "allPromotions"))
+                return new List<Promotion>();
+
+            var now = DateTime.Now;
+            var promotions = result["data"]?["allPromotions"]?["nodes"]
+                .Select(node =>
+                {
+                    var startDate = node["startDate"]?.Value<DateTime>() ?? DateTime.MinValue;
+                    var endDate = node["endDate"]?.Value<DateTime>() ?? DateTime.MaxValue;
+
+                    var detailsNode = node["promotionDetailsByPromoId"]?["nodes"]?.FirstOrDefault();
+                    return new Promotion
+                    {
+                        PromoID = node["promoId"].Value<int>(),
+                        PromoName = node["promoName"].Value<string>(),
+                        StartDate = startDate.Date.AddHours(0),          // force start at 00:00:00
+                        EndDate = endDate.Date.AddHours(23).AddMinutes(59), // force end at 23:59
+                        ItemIDs = node["menuItemIds"].ToObject<List<int>>(),
+                        Details = detailsNode != null ? new PromotionDetails
+                        {
+                            PromoDetailsID = detailsNode["promoDetailsId"]?.Value<int>() ?? 0,
+                            PromoID = detailsNode["promoId"]?.Value<int>() ?? node["promoId"].Value<int>(),
+                            DiscountType = detailsNode["discountType"] != null
+                                ? Enum.Parse<DiscountType>(detailsNode["discountType"].Value<string>())
+                                : DiscountType.Percentage,
+                            DiscountValue = detailsNode["discountValue"]?.Value<float>() ?? 0,
+                            Description = detailsNode["description"]?.Value<string>()
+                        } : new PromotionDetails()
+                    };
+                })
+                .Where(p => p.StartDate <= now && p.EndDate >= now)
+                .ToList();
+
+            return promotions;
         }
+
     }
 }

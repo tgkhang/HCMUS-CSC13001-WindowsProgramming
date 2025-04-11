@@ -346,6 +346,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                         _dao.Shifts.Update(currentShift.ShiftID, currentShift);
 
                         //UPDate previous frame screen
+                        _shiftService.UpdateShift(currentShift);
                     }
                 }
                 catch (Exception)
@@ -365,27 +366,15 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             {
                 try
                 {
-                    // Get the current active shift
-                    var activeShift = _dao.Shifts.GetAll().FirstOrDefault(s => s.Status == "Open");
-                    if (activeShift == null)
-                    {
-                        // Create a new shift if no active shift exists
-                        activeShift = new Shift
-                        {
-                            StartTime = DateTime.Now,
-                            OpeningCash = 0,
-                            TotalSales = 0,
-                            TotalOrders = 0,
-                            Status = "Open"
-                        };
-                        _dao.Shifts.Insert(activeShift);
-                    }
+                    // Get the current active shift from the shift service
+                    Shift currentShift = _shiftService.CurrentShift;
 
                     // Create a new Order object
                     var order = new Order
                     {
+                        OrderID = OrderNumber,
                         CustomerID = SelectedCustomer?.CustomerID,
-                        ShiftID = activeShift.ShiftID,
+                        ShiftID = currentShift.ShiftID,
                         TotalAmount = Subtotal,
                         Discount = Discount,
                         FinalAmount = Total,
@@ -403,22 +392,48 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                     }).ToList();
 
                     // Save order to database
-                    bool success = _dao.Orders.Insert(order);
+                    bool success = _dao.Orders.Update(OrderNumber, order);
                     if (success)
                     {
                         // Save order details
                         foreach (var item in orderItems)
                         {
-                            item.OrderID = order.OrderID;
+                            item.OrderID = OrderNumber;
                             _dao.OrderDetails.Insert(item);
                         }
 
                         // Update customer loyalty points if applicable
                         if (SelectedCustomer != null)
                         {
-                            SelectedCustomer.LoyaltyPoints += (int)(Total / 10); // 1 point per $10 spent
+                            SelectedCustomer.LoyaltyPoints += (int)(Total / 10000); // 1 point per 10000 spent
                             _dao.Customers.Update(SelectedCustomer.CustomerID, SelectedCustomer);
                         }
+
+                        // Create a transaction record
+                        var transaction = new Transaction
+                        {
+                            OrderID = order.OrderID,
+                            AmountPaid = Total,
+                            PaymentMethod = order.PaymentMethod
+                        };
+
+                        _dao.Transactions.Insert(transaction);
+
+                        // Link order to the shift
+                        var shiftOrder = new ShiftOrder
+                        {
+                            ShiftID = currentShift.ShiftID,
+                            OrderID = order.OrderID
+                        };
+                        _dao.ShiftOrders.Insert(shiftOrder);
+
+                        // Update shift statistics
+                        currentShift.TotalSales += Total;
+                        currentShift.TotalOrders += 1;
+                        _dao.Shifts.Update(currentShift.ShiftID, currentShift);
+
+                        // Update previous frame screen
+                        _shiftService.UpdateShift(currentShift);
                     }
                 }
                 catch (Exception)
@@ -431,7 +446,6 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                 CreateNewOrder();
             }
         }
-
         private void CancelOrder()
         {
             // Simply clear the current order

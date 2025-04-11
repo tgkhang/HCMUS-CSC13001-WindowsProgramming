@@ -24,13 +24,17 @@ namespace POS_For_Small_Shop.Data.Models
         [JsonProperty("promo_name")]
         public string PromoName { get; set; } = String.Empty;
 
-        public virtual PromotionDetails Details { get; set; }
-
-        public List<int> ItemIDs { get; set; } = new List<int>();
-
+        [JsonProperty("start_date")]
         public DateTime StartDate { get; set; }
+
+        [JsonProperty("end_date")]
         public DateTime EndDate { get; set; }
 
+        [JsonProperty("menu_item_ids")]
+        public List<int> ItemIDs { get; set; } = new List<int>();
+
+        [JsonProperty("details")]
+        public virtual PromotionDetails Details { get; set; }
 
         public Promotion()
         {

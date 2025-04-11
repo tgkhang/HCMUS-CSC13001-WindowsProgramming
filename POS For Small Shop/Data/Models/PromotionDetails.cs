@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Newtonsoft.Json;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,19 +21,25 @@ namespace POS_For_Small_Shop.Data.Models
     public class PromotionDetails
     {
         [Key]
+        [JsonProperty("promo_details_id")]
         public int PromoDetailsID { get; set; }
 
         [Required]
+        [JsonProperty("promo_id")]
         public int PromoID { get; set; }
 
         [Required]
+        [JsonProperty("discount_type")]
         public DiscountType DiscountType { get; set; } = DiscountType.Percentage;
 
-        [ForeignKey("PromoID")]
-        public virtual Promotion Promotion { get; set; }
-
-
+        [JsonProperty("discount_value")]
         public float DiscountValue { get; set; }
+
+        [JsonProperty("description")]
         public string? Description { get; set; }
+
+        [ForeignKey("PromoID")]
+        [JsonProperty("promotion")]
+        public virtual Promotion Promotion { get; set; }
     }
 }

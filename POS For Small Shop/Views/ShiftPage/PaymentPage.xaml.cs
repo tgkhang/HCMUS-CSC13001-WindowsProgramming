@@ -16,29 +16,16 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace POS_For_Small_Shop.Views
+namespace POS_For_Small_Shop.Views.ShiftPage
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DashboardWindow : Window
+    public sealed partial class PaymentPage : Page
     {
-        public static DashboardWindow Instance { get; private set; }
-        private string _username;
-        public DashboardWindow()
+        public PaymentPage()
         {
             this.InitializeComponent();
-
-            Instance = this;
-            //_username = username;
-
-  //          App.MainWindow = this;
-            MainFrame.Navigate(typeof(HomePage));
-        }
-
-        public void NavigateToPage(Type pageType)
-        {
-            MainFrame.Navigate(pageType);
         }
     }
 }

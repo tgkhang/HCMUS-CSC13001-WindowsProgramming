@@ -184,5 +184,10 @@ namespace POS_For_Small_Shop.Services.Repository
             var result = await ExecuteGraphQLAsync(query);
             return IsOperationSuccessful(result, "updateCustomerByCustomerId");
         }
+
+        public int CreateGetId(Customer item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

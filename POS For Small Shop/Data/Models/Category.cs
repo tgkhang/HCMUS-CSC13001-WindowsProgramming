@@ -11,13 +11,13 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class Category
     {
-        [JsonProperty("CategoryID")]
+        [JsonProperty("category_id")]
         public int CategoryID { get; set; }
 
-        [JsonProperty("Name")]
+        [JsonProperty("name")]
         public string Name { get; set; } = "";
 
-        [JsonProperty("Description")]
+        [JsonProperty("description")]
         public string? Description { get; set; }
     }
 }

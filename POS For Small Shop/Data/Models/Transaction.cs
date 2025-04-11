@@ -8,16 +8,16 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class Transaction
     {
-        [JsonProperty("TransactionID")]
+        [JsonProperty("transaction_id")]
         public int TransactionID { get; set; }
 
-        [JsonProperty("OrderID")]
+        [JsonProperty("order_id")]
         public int OrderID { get; set; }
 
-        [JsonProperty("AmountPaid")]
+        [JsonProperty("amount_paid")]
         public float AmountPaid { get; set; }
 
-        [JsonProperty("PaymentMethod")]
+        [JsonProperty("payment_method")]
         public string PaymentMethod { get; set; } = "";
     }
 }

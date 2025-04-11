@@ -1,17 +1,20 @@
 /**
  * @param { import("knex").Knex } knex
- * @returns { Promise<void> } 
+ * @returns { Promise<void> }
  */
-exports.seed = async function(knex) {
+exports.seed = async function (knex) {
   // Deletes ALL existing entries
-  await knex('category').del()
-  await knex('category').insert([
-    {name: 'Beverages', description: 'Drinks and refreshments'},
-    {name: 'Appetizers', description: 'Starters and small plates'},
-    {name: 'Main Courses', description: 'Primary entrées and dishes'},
-    {name: 'Desserts', description: 'Sweet treats and desserts'},
-    {name: 'Sides', description: 'Side dishes and accompaniments'},
-    {name: 'Specials', description: 'Chef specials and seasonal items'},
-    {name: 'Breakfast', description: 'Morning meal options'},
+  await knex("category").del();
+  await knex("category").insert([
+    { name: "Hot Coffee", description: "Freshly brewed hot coffee options" },
+    { name: "Cold Coffee", description: "Iced and cold brew coffee drinks" },
+    {
+      name: "Specialty Drinks",
+      description: "Signature coffee shop creations",
+    },
+    { name: "Tea", description: "Hot and cold tea selections" },
+    { name: "Pastries", description: "Fresh-baked goods and treats" },
+    { name: "Sandwiches", description: "Light meals and sandwiches" },
+    { name: "Breakfast Items", description: "Morning food options" },
   ]);
 };

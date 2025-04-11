@@ -34,20 +34,22 @@ namespace POS_For_Small_Shop.Views
             { "CloseShiftPage", typeof(CloseShiftPage) },
             { "HomePage", typeof(HomePage) },
             { "HelpPage", typeof(HelpPage) },
+            { "PaymentPage", typeof(PaymentPage) }
         };
 
         // avoid unnecessary navigation
         private string _currentPageTag = string.Empty;
 
         private IDao _dao;
-        private Shift _currentShift;
         private bool _isInitialized = false;
 
+        private IShiftService _shiftService;
         public OpenShiftPage()
         {
             this.InitializeComponent();
 
             _dao = Service.GetKeyedSingleton<IDao>();
+            _shiftService = Service.GetKeyedSingleton<IShiftService>();
             InitializeShift();
         }
 
@@ -77,15 +79,21 @@ namespace POS_For_Small_Shop.Views
         {
             try
             {
-                _currentShift = new Shift
+                Shift currentShift = new Shift
                 {
-                    ShiftID = 1001,
+                    ShiftID = 8386, // Mock ID - > auto real id
                     StartTime = DateTime.Now,
-                    OpeningCash = 500000, 
+                    EndTime= DateTime.Now,
+                    OpeningCash = 500000,  //input 
+                    ClosingCash = 0,
                     TotalSales = 0,
                     TotalOrders = 0,
                     Status = "Open"
                 };
+
+                currentShift.ShiftID = _dao.Shifts.CreateGetId(currentShift);
+
+                _shiftService.SetCurrentShift(currentShift);
 
                 UpdateShiftInfo();
             }
@@ -97,12 +105,13 @@ namespace POS_For_Small_Shop.Views
 
         private void UpdateShiftInfo()
         {
-            if (_currentShift != null)
+            Shift currentShift = _shiftService.CurrentShift; 
+            if (currentShift != null)
             {
-                ShiftNumberText.Text = _currentShift.ShiftID.ToString();
-                ShiftStartTimeText.Text = _currentShift.StartTime.ToString("MMM d, h:mm tt");
-                ShiftTotalSalesText.Text = string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:#,##0} đ", _currentShift.TotalSales);
-                ShiftOrderCountText.Text = _currentShift.TotalOrders.ToString();
+                ShiftNumberText.Text = currentShift.ShiftID.ToString();
+                ShiftStartTimeText.Text = currentShift.StartTime.ToString("MMM d, h:mm tt");
+                ShiftTotalSalesText.Text = string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:#,##0} đ", currentShift.TotalSales);
+                ShiftOrderCountText.Text = currentShift.TotalOrders.ToString();
             }
         }
 
@@ -225,7 +234,7 @@ namespace POS_For_Small_Shop.Views
                 XamlRoot = this.XamlRoot
             };
 
-            await dialog.ShowAsync();
+            //await dialog.ShowAsync();
         }
     }
 

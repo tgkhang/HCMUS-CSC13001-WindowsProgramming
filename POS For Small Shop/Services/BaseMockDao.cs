@@ -54,6 +54,11 @@ namespace POS_For_Small_Shop.Services
             _items.Remove(existing);
             return true;
         }
+
+        public int CreateGetId(T item)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

@@ -13,8 +13,8 @@ namespace POS_For_Small_Shop.Services
         bool Insert(T item);
         bool Update(int id, T item);
         bool Delete(int id);
-        
 
         //more features
+        int CreateGetId(T item);
     }
 }

@@ -17,6 +17,7 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
         private string _searchText = "";
 
         public List<MenuItem> AllMenuItems { get; private set; } = new List<MenuItem>();
+        public List<Category> AllCategories { get; private set; } = new List<Category>();
         public ObservableCollection<MenuItem> FilteredMenuItems { get; private set; } = new ObservableCollection<MenuItem>();
         public MenuItem CurrentMenuItem { get; set; }
         public bool IsEditMode { get; set; } = false;
@@ -38,7 +39,7 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
 
         public void Initialize()
         {
-            LoadMenuItems();
+            LoadMenuItems();//load menuitem and categories
         }
 
         public void LoadMenuItems()
@@ -46,23 +47,37 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
             try
             {
                 AllMenuItems = _dao.MenuItems.GetAll();
+                AllCategories = _dao.Categories.GetAll();
                 ApplyFilters();
             }
             catch (NotImplementedException)
             {
                 AllMenuItems = new List<MenuItem>();
+                AllCategories = new List<Category>();
                 ApplyFilters();
             }
+        }
+
+        // Get category name by ID helper method
+        public string GetCategoryNameById(int categoryId)
+        {
+            var category = AllCategories.FirstOrDefault(c => c.CategoryID == categoryId);
+            return category?.Name ?? "Unknown";
+        }
+
+        // Get category by ID helper method
+        public Category GetCategoryById(int categoryId)
+        {
+            return AllCategories.FirstOrDefault(c => c.CategoryID == categoryId);
         }
 
         public void ApplyFilters()
         {
             var filteredItems = AllMenuItems;
-            if (!string.IsNullOrWhiteSpace(_searchText))
+            if (!string.IsNullOrEmpty(SearchText))
             {
                 filteredItems = filteredItems.Where(item =>
-                    item.Name.Contains(_searchText, StringComparison.OrdinalIgnoreCase)
-                ).ToList();
+                item.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
             FilteredMenuItems.Clear();
@@ -70,8 +85,6 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
             {
                 FilteredMenuItems.Add(item);
             }
-
-            OnPropertyChanged(nameof(FilteredMenuItems));
         }
 
         public bool SaveMenuItem()
@@ -80,15 +93,28 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
 
             if (IsEditMode)
             {
+                //Debug.WriteLine($"Image path: {CurrentMenuItem.ImagePath}");
+                //Debug.WriteLine($"Selling price: {CurrentMenuItem.SellingPrice}");
+                //Debug.WriteLine($"Name: {CurrentMenuItem.Name}");
                 success = _dao.MenuItems.Update(CurrentMenuItem.MenuItemID, CurrentMenuItem);
+                if (success)
+                {
+                    var existingItem = AllMenuItems.FirstOrDefault(item => item.MenuItemID == CurrentMenuItem.MenuItemID);
+                    if (existingItem != null)
+                    {
+                        existingItem.Name = CurrentMenuItem.Name;
+                        existingItem.SellingPrice = CurrentMenuItem.SellingPrice;
+                        existingItem.CategoryID = CurrentMenuItem.CategoryID;
+                        existingItem.ImagePath = CurrentMenuItem.ImagePath;
+                    }
+                }
             }
             else
             {
                 success = _dao.MenuItems.Insert(CurrentMenuItem);
                 if (success)
                 {
-                    CurrentMenuItem.MenuItemID = AllMenuItems.Count > 0 ?
-                        AllMenuItems.Max(item => item.MenuItemID) + 1 : 1;
+                    CurrentMenuItem.MenuItemID = AllMenuItems.Count > 0 ? AllMenuItems.Max(item => item.MenuItemID) + 1 : 1;
                     AllMenuItems.Add(CurrentMenuItem);
                 }
             }
@@ -102,18 +128,18 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
 
             if (success)
             {
-                var itemToRemove = AllMenuItems.FirstOrDefault(item => item.MenuItemID == menuItemId);
-                if (itemToRemove != null)
+                var menuItemToRemove = AllMenuItems.FirstOrDefault(item => item.MenuItemID == menuItemId);
+                if (menuItemToRemove != null)
                 {
-                    AllMenuItems.Remove(itemToRemove);
+                    AllMenuItems.Remove(menuItemToRemove);
+                    ApplyFilters();
                 }
             }
 
             return success;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

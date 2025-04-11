@@ -12,25 +12,28 @@ namespace POS_For_Small_Shop.Data.Models
     [AddINotifyPropertyChangedInterface]
     public class Shift
     {
-        [JsonProperty("ShiftID")]
+        [JsonProperty("shift_id")]
         public int ShiftID { get; set; }
 
-        [JsonProperty("StartTime")]
+        [JsonProperty("start_time")]
         public DateTime StartTime { get; set; }
 
-        [JsonProperty("EndTime")]
+        [JsonProperty("end_time")]
         public DateTime? EndTime { get; set; }
 
-        [JsonProperty("OpeningCash")]
+        [JsonProperty("opening_cash")]
         public float OpeningCash { get; set; }
 
-        [JsonProperty("TotalSales")]
+        [JsonProperty("closing_cash")]
+        public float ClosingCash { get; set; }
+
+        [JsonProperty("total_sales")]
         public float TotalSales { get; set; }
 
-        [JsonProperty("TotalOrders")]
+        [JsonProperty("total_orders")]
         public int TotalOrders { get; set; }
 
-        [JsonProperty("Status")]
+        [JsonProperty("status")]
         public string Status { get; set; } = "Open";
     }
 

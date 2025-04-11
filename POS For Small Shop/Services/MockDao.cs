@@ -245,7 +245,10 @@ namespace POS_For_Small_Shop.Services
             return true;
         }
 
-
+        public int CreateGetId(Promotion item)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MockIngredientRepository : BaseMockRepository<Ingredient>
@@ -259,6 +262,11 @@ namespace POS_For_Small_Shop.Services
             new Ingredient { IngredientID = 4, IngredientName = "Butter", CategoryID = 2, Stock = 3.0f, Unit = "kg", PurchasePrice = 25.0f, Supplier = "Vinamilk", ExpiryDate = DateTime.Now.AddMonths(1) },
             new Ingredient { IngredientID = 5, IngredientName = "Flour", CategoryID = 3, Stock = 12.0f, Unit = "kg", PurchasePrice = 10.0f, Supplier = "BachHoaXanh", ExpiryDate = DateTime.Now.AddMonths(6) }
             };
+        }
+
+        public int CreateGetId(Ingredient item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

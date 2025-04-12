@@ -243,7 +243,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             {
                 OrderID = 123,
                 CustomerID = 1,
-                ShiftID = 1,
+                ShiftID = _shiftService.CurrentShift.ShiftID,
                 TotalAmount = 0,
                 Discount = 0,
                 FinalAmount = 0,
@@ -251,7 +251,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                 Status = "Pending"
             };
             OrderNumber =_dao.Orders.CreateGetId(currentOrder);
-            OnPropertyChanged(nameof(OrderNumber));
+             OnPropertyChanged(nameof(OrderNumber));
         }
 
         private void CreateNewOrder()
@@ -449,6 +449,20 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         private void CancelOrder()
         {
             // Simply clear the current order
+            Shift currentShift = _shiftService.CurrentShift;
+            var order = new Order
+            {
+                OrderID = OrderNumber,
+                CustomerID = SelectedCustomer?.CustomerID,
+                ShiftID = currentShift.ShiftID,
+                TotalAmount = Subtotal,
+                Discount = Discount,
+                FinalAmount = Total,
+                PaymentMethod = "CASH",
+                Status = "Canceled"
+            };
+            bool success = _dao.Orders.Update(order.OrderID, order);
+
             CreateNewOrder();
         }
 

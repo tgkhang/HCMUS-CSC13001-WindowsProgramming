@@ -56,8 +56,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                     return;
                 }
 
-                var allOrders = _dao.Orders.GetAll();
-                //TO DO : LOAD ORDERS FROM THE CURRENT SHIFT ONLY
+                var allOrders = _dao.Orders.getOrdersByShiftID(_currentShift.ShiftID);
 
                 AllShiftOrders.Clear();
 

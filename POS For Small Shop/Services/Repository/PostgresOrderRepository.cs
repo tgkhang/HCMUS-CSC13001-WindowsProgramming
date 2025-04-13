@@ -9,7 +9,7 @@ using POS_For_Small_Shop.Data.Models;
 
 namespace POS_For_Small_Shop.Services.Repository
 {
-    public class PostgresOrderRepository : BaseGraphQLRepository, IRepository<Order>
+    public class PostgresOrderRepository : BaseGraphQLRepository, IOrderRepository<Order>
     {
         public bool Delete(int id)
         {
@@ -202,6 +202,52 @@ namespace POS_For_Small_Shop.Services.Repository
             ";
             var result= await ExecuteGraphQLAsync(query);
             return IsOperationSuccessful(result, "updateOrderByOrderId");
+        }
+        public List<Order> getOrdersByShiftID(int shiftId)
+        {
+            return RunSync(() => GetOrdersByShiftIdSync(shiftId));
+        }
+        private async Task<List<Order>> GetOrdersByShiftIdSync(int shiftId)
+        {
+            string query = $@"{{
+              allOrders(condition: {{shiftId: {shiftId}}}) {{
+                nodes {{
+                  orderId
+                  customerId
+                  discount
+                  finalAmount
+                  paymentMethod
+                  shiftId
+                  status
+                  totalAmount
+                }}
+              }}
+            }}
+            ";
+
+            var result = await ExecuteGraphQLAsync(query);
+            var orders = new List<Order>();
+
+            if (result["data"]?["allOrders"]?["nodes"] is JArray nodes)
+            {
+                foreach (var node in nodes)
+                {
+                    var order = new Order
+                    {
+                        OrderID = (int)node["orderId"].Value<int>(),
+                        CustomerID = (int)node["customerId"].Value<int>(),
+                        Discount = (float)node["discount"].Value<float>(),
+                        FinalAmount = (float)node["finalAmount"].Value<float>(),
+                        PaymentMethod = node["paymentMethod"].Value<string>(),
+                        ShiftID = (int)node["shiftId"].Value<int>(),
+                        Status = node["status"].Value<string>(),
+                        TotalAmount = (float)node["totalAmount"].Value<float>()
+                    };
+                    orders.Add(order);
+                }
+                return orders;
+            }
+            throw new Exception("Invalid response format");
         }
     }
 }

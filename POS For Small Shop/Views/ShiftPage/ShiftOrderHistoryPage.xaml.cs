@@ -41,6 +41,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
             ViewModel.LoadOrders();
             OrderListView.ItemsSource = ViewModel.FilteredShiftOrders;
             UpdateEmptyState();
+
         }
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {

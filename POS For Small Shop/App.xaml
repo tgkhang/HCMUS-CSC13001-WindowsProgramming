@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Application
     x:Class="POS_For_Small_Shop.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,10 +9,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
-                <!-- Other merged dictionaries here -->
+                <!--  Other merged dictionaries here  -->
             </ResourceDictionary.MergedDictionaries>
-            <!-- Other app resources here -->
-            <converters:CurrencyFormatter x:Key="CurrencyFormatter"/>
+            <!--  Other app resources here  -->
+            <converters:CurrencyFormatter x:Key="CurrencyFormatter" />
             <converters:DateFormatter x:Key="DateFormatter" />
         </ResourceDictionary>
     </Application.Resources>

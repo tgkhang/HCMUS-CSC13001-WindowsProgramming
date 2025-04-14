@@ -362,5 +362,10 @@ namespace POS_For_Small_Shop.Services.Repository
             return promotions;
         }
 
+
+        public int CreateGetId(Promotion item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

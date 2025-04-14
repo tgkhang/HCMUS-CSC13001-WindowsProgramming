@@ -13,6 +13,7 @@ using System.Windows.Input;
 
 namespace POS_For_Small_Shop.ViewModels
 {
+    [AddINotifyPropertyChangedInterface]
     public class PromotionManagementViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -97,6 +98,7 @@ namespace POS_For_Small_Shop.ViewModels
                 {
                     Promotions[index] = SelectedPromotion; // Triggers UI update
                 }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPromotion)));
             }
         }
 

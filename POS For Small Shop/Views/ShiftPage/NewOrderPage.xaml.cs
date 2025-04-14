@@ -38,8 +38,12 @@ namespace POS_For_Small_Shop.Views.ShiftPage
 
             // Load customers
             LoadCustomers();
+            ViewModel.PaymentRequested += ViewModel_PaymentRequested;
         }
-
+        private void ViewModel_PaymentRequested(object sender, NewOrderViewModel.PaymentType paymentType)
+        {
+            Frame.Navigate(typeof(PaymentPage), ViewModel);
+        }
         private void LoadCustomers()
         {
             try

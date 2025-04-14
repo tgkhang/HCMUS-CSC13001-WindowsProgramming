@@ -31,22 +31,47 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
         public UpdatePromotionForm()
         {
             this.InitializeComponent();
-            this.Loaded += UpdateGridViewLoaded;
-        }
-
-        public void UpdateGridViewLoaded(object sender, RoutedEventArgs e)
-        {
-            UpdateItemGridView.DispatcherQueue.TryEnqueue(() =>
+            UpdateItemGridView.Loaded += (s, e) =>
             {
-                UpdateItemGridView.SelectedItems.Clear();
-                foreach (var item in TempSelectedItems)
-                {
-                    UpdateItemGridView.SelectedItems.Add(item);
-                }
-            });
+                UpdateGridViewLoaded();
+            };
         }
 
+        public void UpdateGridViewLoaded()
+        {
+                UpdateItemGridView.SelectedItems.Clear();
+                var itemsSource = UpdateItemGridView.ItemsSource as IEnumerable<MenuItem>;
+                if (itemsSource == null)
+                {
+                    Debug.WriteLine("ItemsSource is null or empty");
+                    return;
+                }
 
+                foreach (var tempItem in TempSelectedItems)
+                {
+                    // Find matching item in ItemsSource by MenuItemID
+                    var matchingItem = itemsSource.FirstOrDefault(i => i.MenuItemID == tempItem.MenuItemID);
+                    if (matchingItem != null)
+                    {
+                        UpdateItemGridView.SelectedItems.Add(matchingItem);
+                        // Scroll to ensure the item is rendered
+                        UpdateItemGridView.ScrollIntoView(matchingItem);
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"Item {tempItem.Name} not found in ItemsSource");
+                    }
+                }
+
+                // Force visual refresh
+                UpdateItemGridView.InvalidateArrange();
+                UpdateItemGridView.InvalidateMeasure();
+        }
+
+        public void ClearGridView()
+        {
+            UpdateItemGridView.SelectedItems.Clear();
+        }
 
         private void SelectAllButton_Click(object sender, RoutedEventArgs e)
         {

@@ -15,6 +15,7 @@ using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -89,6 +90,7 @@ namespace POS_For_Small_Shop.Views
 
         public void CloseUpdateFormPopup()
         {
+            updatePromotionForm.ClearGridView();
             updatePromotionPopup.IsOpen = false;
         }
 
@@ -142,6 +144,7 @@ namespace POS_For_Small_Shop.Views
                 updatePromotionForm.DataContext = ViewModel;
 
                 updatePromotionPopup.IsOpen = true;
+
                 // Adjust position and show popup
                 AdjustPopupPosition(updatePromotionPopup, updatePromotionFormContainer);
 
@@ -170,6 +173,7 @@ namespace POS_For_Small_Shop.Views
         {
             ViewModel.SelectedItems = updatePromotionForm.TempSelectedItems;
             ViewModel.UpdateSelectedPromotion();
+            updatePromotionForm.ClearGridView();
             CloseUpdateFormPopup();
         }
 

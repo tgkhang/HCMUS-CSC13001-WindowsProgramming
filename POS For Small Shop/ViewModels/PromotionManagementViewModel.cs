@@ -68,7 +68,7 @@ namespace POS_For_Small_Shop.ViewModels
         {
             NewPromotion.ItemIDs = SelectedItems.Select(item => item.MenuItemID).ToList();
             _dao.Promotions.Insert(NewPromotion);
-            Promotions.Add(NewPromotion);
+            Promotions = new ObservableCollection<Promotion>(_dao.Promotions.GetAll());
             NewPromotion = new Promotion();
         }
 

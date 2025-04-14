@@ -15,6 +15,7 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
     {
         private IDao _dao;
         private string _searchText = "";
+        private int _selectedCategoryFilter = 0;
 
         public List<MenuItem> AllMenuItems { get; private set; } = new List<MenuItem>();
         public List<Category> AllCategories { get; private set; } = new List<Category>();
@@ -29,6 +30,15 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
             {
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
+            }
+        }
+        public int SelectedCategoryFilter
+        {
+            get => _selectedCategoryFilter;
+            set
+            {
+                _selectedCategoryFilter = value;
+                OnPropertyChanged(nameof(SelectedCategoryFilter));
             }
         }
 
@@ -74,6 +84,10 @@ namespace POS_For_Small_Shop.ViewModels.MenuManagement
         public void ApplyFilters()
         {
             var filteredItems = AllMenuItems;
+            if (_selectedCategoryFilter > 0)
+            {
+                filteredItems = filteredItems.Where(item => item.CategoryID == _selectedCategoryFilter).ToList();
+            }
             if (!string.IsNullOrEmpty(SearchText))
             {
                 filteredItems = filteredItems.Where(item =>

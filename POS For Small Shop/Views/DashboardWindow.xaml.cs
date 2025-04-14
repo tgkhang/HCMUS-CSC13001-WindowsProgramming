@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -12,6 +13,9 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using WinRT.Interop;
+using Microsoft.UI.Windowing;
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,8 +31,26 @@ namespace POS_For_Small_Shop.Views
         public DashboardWindow()
         {
             this.InitializeComponent();
-  //          App.MainWindow = this;
+
+            this.Activated += DashboardWindow_Activated;
+
+            //          App.MainWindow = this;
             MainFrame.Navigate(typeof(HomePage));
         }
+        private void DashboardWindow_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            // Detach the event after first use
+            this.Activated -= DashboardWindow_Activated;
+
+            IntPtr hwnd = WindowNative.GetWindowHandle(this);
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
+            AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
+
+            if (appWindow.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.Maximize();
+            }
+        }
+
     }
 }

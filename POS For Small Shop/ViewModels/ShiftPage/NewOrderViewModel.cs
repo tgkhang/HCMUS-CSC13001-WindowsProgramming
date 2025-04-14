@@ -8,6 +8,7 @@ using System.Windows.Input;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using PropertyChanged;
+using Windows.ApplicationModel.Payments;
 
 namespace POS_For_Small_Shop.ViewModels.ShiftPage
 {
@@ -277,89 +278,97 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         {
             if (OrderItems.Count > 0)
             {
-                try
-                {
-                    // Get the current active shift
-                    Shift currentShift= _shiftService.CurrentShift;
+                //try
+                //{
+                //    // Get the current active shift
+                //    Shift currentShift= _shiftService.CurrentShift;
 
-                    // Create a new Order object
-                    var order = new Order
-                    {
-                        OrderID= OrderNumber,
-                        CustomerID = SelectedCustomer?.CustomerID,
-                        ShiftID = currentShift.ShiftID,
-                        TotalAmount = Subtotal,
-                        Discount = Discount,
-                        FinalAmount = Total,
-                        PaymentMethod = "Cash",
-                        Status = "Completed"
-                    };
+                //    // Create a new Order object
+                //    var order = new Order
+                //    {
+                //        OrderID= OrderNumber,
+                //        CustomerID = SelectedCustomer?.CustomerID,
+                //        ShiftID = currentShift.ShiftID,
+                //        TotalAmount = Subtotal,
+                //        Discount = Discount,
+                //        FinalAmount = Total,
+                //        PaymentMethod = "Cash",
+                //        Status = "Completed"
+                //    };
 
-                    // Create order items
-                    var orderItems = OrderItems.Select(item => new OrderDetail
-                    {
-                        MenuItemID = item.MenuItemID,
-                        Quantity = item.Quantity,
-                        UnitPrice = item.UnitPrice,
-                        Subtotal = item.Total
-                    }).ToList();
+                //    // Create order items
+                //    var orderItems = OrderItems.Select(item => new OrderDetail
+                //    {
+                //        MenuItemID = item.MenuItemID,
+                //        Quantity = item.Quantity,
+                //        UnitPrice = item.UnitPrice,
+                //        Subtotal = item.Total
+                //    }).ToList();
 
-                    // Save order to database
-                    bool success = _dao.Orders.Update(OrderNumber,order);
-                    if (success)
-                    {
-                        //Save order details
-                        foreach (var item in orderItems)
-                        {
-                            item.OrderID = OrderNumber;
-                            _dao.OrderDetails.Insert(item);
-                        }
+                //    // Save order to database
+                //    bool success = _dao.Orders.Update(OrderNumber,order);
+                //    if (success)
+                //    {
+                //        //Save order details
+                //        foreach (var item in orderItems)
+                //        {
+                //            item.OrderID = OrderNumber;
+                //            _dao.OrderDetails.Insert(item);
+                //        }
 
-                        // Update customer loyalty points if applicable
-                        if (SelectedCustomer != null)
-                        {
-                            SelectedCustomer.LoyaltyPoints += (int)(Total / 10000); // 1 point per 10000 spent
-                            _dao.Customers.Update(SelectedCustomer.CustomerID, SelectedCustomer);
-                        }
+                //        // Update customer loyalty points if applicable
+                //        if (SelectedCustomer != null)
+                //        {
+                //            SelectedCustomer.LoyaltyPoints += (int)(Total / 10000); // 1 point per 10000 spent
+                //            _dao.Customers.Update(SelectedCustomer.CustomerID, SelectedCustomer);
+                //        }
 
-                        // Create a transaction record
-                        var transaction = new Transaction
-                        {
-                            OrderID = order.OrderID,
-                            AmountPaid = Total,
-                            PaymentMethod = order.PaymentMethod
-                        };
-                      
-                        _dao.Transactions.Insert(transaction);
+                //        // Create a transaction record
+                //        var transaction = new Transaction
+                //        {
+                //            OrderID = order.OrderID,
+                //            AmountPaid = Total,
+                //            PaymentMethod = order.PaymentMethod
+                //        };
 
-                        // Link order to the shift
-                        var shiftOrder = new ShiftOrder
-                        {
-                            ShiftID = currentShift.ShiftID,
-                            OrderID = order.OrderID
-                        };
-                        _dao.ShiftOrders.Insert(shiftOrder);
+                //        _dao.Transactions.Insert(transaction);
 
-                        // Update shift statistics
-                        currentShift.TotalSales += Total;
-                        currentShift.TotalOrders += 1;
-                        _dao.Shifts.Update(currentShift.ShiftID, currentShift);
+                //        // Link order to the shift
+                //        var shiftOrder = new ShiftOrder
+                //        {
+                //            ShiftID = currentShift.ShiftID,
+                //            OrderID = order.OrderID
+                //        };
+                //        _dao.ShiftOrders.Insert(shiftOrder);
 
-                        //UPDate previous frame screen
-                        _shiftService.UpdateShift(currentShift);
-                    }
-                }
-                catch (Exception)
-                {
-                    // Log error or handle exception
-                    // In a real app, you might want to show an error message
-                }
+                //        // Update shift statistics
+                //        currentShift.TotalSales += Total;
+                //        currentShift.TotalOrders += 1;
+                //        _dao.Shifts.Update(currentShift.ShiftID, currentShift);
 
-                // Create a new order
-                CreateNewOrder();
+                //        //UPDate previous frame screen
+                //        _shiftService.UpdateShift(currentShift);
+                //    }
+                //}
+                //catch (Exception)
+                //{
+                //    // Log error or handle exception
+                //    // In a real app, you might want to show an error message
+                //}
+
+                //// Create a new order
+                //CreateNewOrder();
+
+                PaymentRequested?.Invoke(this, PaymentType.Cash);
             }
         }
-
+        public event EventHandler<PaymentType> PaymentRequested;
+        public enum PaymentType
+        {
+            Cash,
+            Card,
+            QRCode
+        }
         private void ProcessCardPayment()
         {
             if (OrderItems.Count > 0)

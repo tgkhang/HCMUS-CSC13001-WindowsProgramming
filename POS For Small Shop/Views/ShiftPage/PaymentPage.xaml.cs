@@ -19,6 +19,7 @@ using Windows.Graphics.Printing;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using WinRT.Interop;
+using POS_For_Small_Shop.Services;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,10 +36,12 @@ namespace POS_For_Small_Shop.Views.ShiftPage
         private PrintManager _printManager;
         private PrintDocument _printDocument;
         private IPrintDocumentSource _printDocumentSource;
+        private IQRService _qrService;
 
         public PaymentPage()
         {
             this.InitializeComponent();
+            _qrService= Service.GetKeyedSingleton<IQRService>();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -90,7 +93,6 @@ namespace POS_For_Small_Shop.Views.ShiftPage
                     await savingDialog.ShowAsync();
 
                     // TODO: Implement actual PDF generation
-                    // This would typically use a PDF library which isn't available in this code snippet
                     // For now, we'll just show a success dialog
 
                     ContentDialog successDialog = new ContentDialog
@@ -178,14 +180,56 @@ namespace POS_For_Small_Shop.Views.ShiftPage
                 return;
             }
 
-            // Show QR code panel
-            QRCodePanel.Visibility = Visibility.Visible;
+            try
+            {
+                QRCodeLoadingRing.IsActive = true;
+                QRCodeImage.Source = null; // Clear previous image 
+                QROrderInfoText.Text = string.Empty;
+                QRCodePanel.Visibility = Visibility.Visible;
 
-            // In a real app, you would generate an actual QR code here based on payment information
-            // For this example, we're using a placeholder image
+                string orderInfo = $"Order #{ViewModel.OrderNumber}";
 
-            // Simulate payment processing after a delay (in a real app, you would wait for a callback from a payment service)
-            await Task.Delay(2000);
+                // Generate QR code using QRService
+                var qrCodeImage = await _qrService.GenerateQRCodeImageAsync((decimal)ViewModel.Total, orderInfo);
+
+                if (qrCodeImage != null)
+                {
+                    // Set the QR code image to the Image control
+                    QRCodeImage.Source = qrCodeImage;
+                    //QRAmountText.Text = $"Amount: {ViewModel.Total:C}"; //default currency formatter
+                    QROrderInfoText.Text = $"Order: #{ViewModel.OrderNumber}";
+                }
+                else
+                {
+                    await ShowMessage("QR Code Error", "Failed to generate QR code. Please try again or use a different payment method.");
+                    QRCodePanel.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch (Exception ex)
+            {
+                await ShowMessage("Error", $"An error occurred: {ex.Message}");
+                QRCodePanel.Visibility = Visibility.Collapsed;
+            }
+            finally
+            {
+                QRCodeLoadingRing.IsActive = false;
+            }
+        }
+        private async void PaymentComplete_Click(object sender, RoutedEventArgs e)
+        {
+            bool success = ViewModel.ProcessQRCodePayment();
+
+            if (success)
+            {
+                _isPaid = true;
+                QRCodePanel.Visibility = Visibility.Collapsed;
+                await ShowMessage("Payment Successful", "QR code payment has been processed successfully.");
+                Frame.Navigate(typeof(NewOrderPage));
+            }
+            else
+            {
+                await ShowMessage("Payment Failed", "There was an error processing the QR code payment. Please try again.");
+            }
         }
 
         private async void CancelQRCode_Click(object sender, RoutedEventArgs e)

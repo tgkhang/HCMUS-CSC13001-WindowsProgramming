@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
+using POS_For_Small_Shop.Services.Business;
 using PropertyChanged;
 using Windows.ApplicationModel.Payments;
 
@@ -37,6 +38,9 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         public float Tax { get; private set; }
         public float Discount { get; private set; }
         public float Total { get; private set; }
+        private OrderProcessor _orderProcessor = new OrderProcessor();
+        public ObservableCollection<Promotion> AvailablePromotions { get; private set; } = new();
+        public Promotion SelectedPromotion { get; private set; }
 
         public int OrderNumber
         {
@@ -97,6 +101,9 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
 
             // Apply initial filters
             ApplyFilters();
+
+            // Update available promotions
+            OrderItems.CollectionChanged += (_, __) => UpdateAvailablePromotions();
         }
 
         public void SetSearchText(string text)
@@ -111,9 +118,9 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             ApplyFilters();
         }
 
-        public void SetDiscountPercentage(float percentage)
+        public void SetDiscount(Promotion promotion)
         {
-            _discountPercentage = percentage;
+            SelectedPromotion = promotion;
             UpdateOrderSummary();
         }
 
@@ -215,17 +222,12 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
 
         private void UpdateOrderSummary()
         {
-            // Calculate subtotal
-            Subtotal = OrderItems.Sum(item => item.Total);
+            var summary = _orderProcessor.CalculateTotal(OrderItems.ToList(), SelectedPromotion);
 
-            // Calculate tax (8%)
-            Tax = Subtotal * 0.08f;
-
-            // Calculate discount
-            Discount = Subtotal * (_discountPercentage / 100f);
-
-            // Calculate total
-            Total = Subtotal + Tax - Discount;
+            Subtotal = summary.Subtotal;
+            Tax = summary.Tax;
+            Discount = summary.Discount;
+            Total = summary.Total;
 
             // Notify property changed for all summary properties
             OnPropertyChanged(nameof(Subtotal));
@@ -233,6 +235,25 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             OnPropertyChanged(nameof(Discount));
             OnPropertyChanged(nameof(Total));
         }
+
+        private void UpdateAvailablePromotions()
+        {
+            AvailablePromotions.Clear();
+
+            var allPromotions = _dao.Promotions.GetAll(); // or whatever method you have
+            var orderedItemIds = OrderItems.Select(o => o.MenuItemID).ToHashSet();
+
+            var validPromotions = allPromotions
+                .Where(promo =>
+                    promo.StartDate <= DateTime.Now &&
+                    promo.EndDate >= DateTime.Now &&
+                    promo.ItemIDs.Any(id => orderedItemIds.Contains(id)))
+                .ToList();
+
+            foreach (var promo in validPromotions)
+                AvailablePromotions.Add(promo);
+        }
+
 
         private void GenerateOrderNumber()
         {

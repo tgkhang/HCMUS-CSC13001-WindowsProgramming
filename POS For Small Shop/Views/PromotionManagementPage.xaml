@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Page
     x:Class="POS_For_Small_Shop.Views.PromotionManagementPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:POS_For_Small_Shop.Views"
-    xmlns:models="using:POS_For_Small_Shop.Data.Models"
-    xmlns:form="using:POS_For_Small_Shop.Views.PromotionPopupForm"
     xmlns:converter="using:POS_For_Small_Shop.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:form="using:POS_For_Small_Shop.Views.PromotionPopupForm"
+    xmlns:local="using:POS_For_Small_Shop.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     SizeChanged="OnPageSizeChanged"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
 
     <Page.Resources>
@@ -21,7 +21,10 @@
         <converter:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
 
         <DataTemplate x:Key="PromotionItemTemplate" x:DataType="models:Promotion">
-            <Grid Padding="10" Background="{x:Bind Converter={StaticResource PromotionStatusConverter}, ConverterParameter=Stripe}">
+            <Grid
+                Padding="10"
+                PointerEntered="HoverBorder_PointerEntered"
+                PointerExited="HoverBorder_PointerExited">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="2*" />
@@ -126,88 +129,87 @@
             <!--  Search and Filters  -->
             <RowDefinition Height="*" />
             <!--  Table  -->
-            <RowDefinition Height="Auto" />
-            <!--  Pagination  -->
         </Grid.RowDefinitions>
 
-        <!--  Header with Breadcrumb  -->
-        <StackPanel
+        <!--  Header  -->
+        <Border
             Grid.Row="0"
-            Background="#003D57"
-            Orientation="Horizontal"
-            Spacing="5">
-            <TextBlock
-                FontSize="16"
-                Foreground="Gray"
-                Text="Home" />
-            <TextBlock
-                FontSize="16"
-                Foreground="Gray"
-                Text="&gt;" />
-            <TextBlock
-                FontSize="16"
-                FontWeight="Bold"
-                Text="Promotions" />
-        </StackPanel>
+            Margin="0,0,0,20"
+            Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+            <Grid Padding="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="1" Margin="0,10,0,10">
+                <!--  Return to Home Button  -->
+                <Button
+                    Grid.Column="0"
+                    Margin="0,0,20,0"
+                    Padding="8,4"
+                    Background="{ThemeResource SystemAccentColor}"
+                    Click="Back_To_HomePage"
+                    CornerRadius="4">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <FontIcon
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="16"
+                            Foreground="White"
+                            Glyph="" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            Text="Home" />
+                    </StackPanel>
+                </Button>
+
+                <!--  Title  -->
+                <TextBlock
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="24"
+                    FontWeight="SemiBold"
+                    Text="Promotion Management" />
+            </Grid>
+        </Border>
+
+        <!--  Search Input And Add A Promotion Button  -->
+        <Grid
+            Grid.Row="1"
+            Padding="0,0,0,20"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!--  Search and Filters Section  -->
-            <Grid Grid.Column="0" Margin="0,0,20,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <!--  Search Box  -->
+            <TextBox
+                x:Name="SearchBox"
+                Grid.Column="0"
+                Width="600"
+                Margin="0,0,8,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                PlaceholderText="Search promotions..."
+                Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBox
-                    Width="300"
-                    MinWidth="200"
-                    MaxWidth="400"
-                    Margin="0,0,0,10"
-                    HorizontalAlignment="Left"
-                    CornerRadius="6"
-                    PlaceholderText="Search by Promo Name" />
-
-                <Expander
-                    Grid.Row="1"
-                    HorizontalAlignment="Left"
-                    Header="Advanced Filters"
-                    IsExpanded="False">
-                    <StackPanel
-                        MinWidth="300"
-                        Margin="0,5,0,5"
-                        Orientation="Vertical">
-                        <ComboBox Margin="0,0,0,8" PlaceholderText="Select Discount Type">
-                            <ComboBoxItem Content="Percentage" />
-                            <ComboBoxItem Content="Fixed Amount" />
-                            <ComboBoxItem Content="Buy One Get One" />
-                        </ComboBox>
-                        <TextBox
-                            Margin="0,0,0,8"
-                            CornerRadius="6"
-                            PlaceholderText="Discount Value" />
-                    </StackPanel>
-                </Expander>
-            </Grid>
-
-            <!--  Button Section  -->
+            <!--  Add Promotion Button  -->
             <Button
+                x:Name="AddPromotionButton"
                 Grid.Column="1"
-                MinWidth="140"
-                Margin="10,0,0,0"
-                Padding="12,6"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Background="#007A99"
+                VerticalAlignment="Center"
+                Background="#003D57"
                 Click="AddPromotionButton_Click"
                 Content="Add Promotion"
-                CornerRadius="6"
                 Foreground="White" />
         </Grid>
+
 
 
         <!--  Styled ListView (Striped Table with Dark Blue Header)  -->
@@ -303,25 +305,6 @@
                 </ListView.ItemContainerStyle>
             </ListView>
         </Border>
-
-        <!--  Pagination  -->
-        <StackPanel
-            Grid.Row="3"
-            Margin="0,10,0,0"
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Spacing="10">
-            <Button
-                Padding="10,5"
-                Content="Previous"
-                CornerRadius="4" />
-            <TextBlock VerticalAlignment="Center" Text="Page 1 of 10" />
-            <Button
-                Padding="10,5"
-                Content="Next"
-                CornerRadius="4" />
-        </StackPanel>
-
 
         <Popup
             x:Name="addPromotionPopup"

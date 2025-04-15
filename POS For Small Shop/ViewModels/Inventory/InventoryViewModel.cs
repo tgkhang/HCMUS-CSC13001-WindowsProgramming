@@ -9,17 +9,21 @@ using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using PropertyChanged;
 
-namespace POS_For_Small_Shop.ViewModels
+namespace POS_For_Small_Shop.ViewModels.Inventory
 {
     [AddINotifyPropertyChangedInterface]
-    public class InventoryViewModel
+    public class InventoryViewModel : INotifyPropertyChanged
     {
         private IDao _dao;
         private string _searchText = "";
         public List<Ingredient> AllIngredients { get; private set; } = new List<Ingredient>();
 
+        public List<Category> AllCategories { get; private set; } = new List<Category>();
+
         public ObservableCollection<Ingredient> FilteredIngredients { get; private set; } = new ObservableCollection<Ingredient>();
+        
         public Ingredient CurrentIngredient { get; set; }
+        
         public bool IsEditMode { get; set; } = false;
 
         public string SearchText
@@ -28,7 +32,7 @@ namespace POS_For_Small_Shop.ViewModels
             set
             {
                 _searchText = value;
-                OnPropertyChanged(nameof(SearchText));
+                ApplyFilters();
             }
         }
         public InventoryViewModel()
@@ -46,13 +50,28 @@ namespace POS_For_Small_Shop.ViewModels
             try
             {
                 AllIngredients = _dao.Ingredients.GetAll();
+                AllCategories = _dao.Categories.GetAll();
                 ApplyFilters();
             }
             catch (NotImplementedException)
             {
                 AllIngredients = new List<Ingredient>();
+                AllCategories = new List<Category>();
                 ApplyFilters();
             }
+        }
+
+                // Get category name by ID helper method
+        public string GetCategoryNameById(int categoryId)
+        {
+            var category = AllCategories.FirstOrDefault(c => c.CategoryID == categoryId);
+            return category?.Name ?? "Unknown";
+        }
+
+        // Get category by ID helper method
+        public Category GetCategoryById(int categoryId)
+        {
+            return AllCategories.FirstOrDefault(c => c.CategoryID == categoryId);
         }
 
         public void ApplyFilters()
@@ -71,7 +90,6 @@ namespace POS_For_Small_Shop.ViewModels
                 FilteredIngredients.Add(item);
             }
 
-            OnPropertyChanged(nameof(FilteredIngredients));
         }
 
         public bool SaveIngredient()
@@ -81,6 +99,20 @@ namespace POS_For_Small_Shop.ViewModels
             if (IsEditMode)
             {
                 success = _dao.Ingredients.Update(CurrentIngredient.IngredientID, CurrentIngredient);
+                if (success)
+                {
+                    var existingIngredient = AllIngredients.FirstOrDefault(item => item.IngredientID == CurrentIngredient.IngredientID);
+                    if (existingIngredient != null)
+                    {
+                        existingIngredient.IngredientName = CurrentIngredient.IngredientName;
+                        existingIngredient.CategoryID = CurrentIngredient.CategoryID;
+                        existingIngredient.Stock = CurrentIngredient.Stock;
+                        existingIngredient.Unit = CurrentIngredient.Unit;
+                        existingIngredient.Supplier = CurrentIngredient.Supplier;
+                        existingIngredient.PurchasePrice = CurrentIngredient.PurchasePrice;
+                        existingIngredient.ExpiryDate = CurrentIngredient.ExpiryDate;
+                    }
+                }
             }
             else
             {
@@ -98,7 +130,7 @@ namespace POS_For_Small_Shop.ViewModels
 
         public bool DeleteIngredient(int ingredientId)
         {
-            bool success = _dao.MenuItems.Delete(ingredientId);
+            bool success = _dao.Ingredients.Delete(ingredientId);
 
             if (success)
             {
@@ -112,11 +144,11 @@ namespace POS_For_Small_Shop.ViewModels
             return success;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

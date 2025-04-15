@@ -16,6 +16,7 @@
         <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
         <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter"/>
         <converters:CurrencyFormatter x:Key="CurrencyFormatter"/>
+        <converters:CategoryIdToNameConverter x:Key="CategoryIdToNameConverter"/>
     </Page.Resources>
 
     <Grid Padding="20">
@@ -129,9 +130,17 @@
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Spacing="15">
-                        <TextBox x:Name="IngredientIDTextBox" Header="ID" PlaceholderText="Enter ingredient id"/>
                         <TextBox x:Name="IngredientNameTextBox" Header="Name" PlaceholderText="Enter ingredient name"/>
-                        <TextBox x:Name="CategoryIDTextBox" Header="Category" PlaceholderText="Enter category"/>
+                        <ComboBox x:Name="CategoryComboBox" 
+                          Header="Category" 
+                          PlaceholderText="Select a category"
+                          SelectionChanged="CategoryComboBox_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:Category">
+                                    <TextBlock Text="{x:Bind Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <TextBox x:Name="StockTextBox" Header="Stock" PlaceholderText="Enter stock quantity"/>
                         <TextBox x:Name="UnitTextBox" Header="Unit" PlaceholderText="Enter unit (e.g., kg, L, pcs)"/>
                         <TextBox x:Name="SupplierTextBox" Header="Supplier" PlaceholderText="Enter supplier name"/>

@@ -10,7 +10,7 @@ using POS_For_Small_Shop.Services;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.ViewModels;
-using POS_For_Small_Shop.ViewModels.MenuManagement;
+using POS_For_Small_Shop.ViewModels.Inventory;
 
 namespace POS_For_Small_Shop.Views.Inventory
 {
@@ -28,8 +28,6 @@ namespace POS_For_Small_Shop.Views.Inventory
         }
 
 
-
-
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
@@ -45,6 +43,23 @@ namespace POS_For_Small_Shop.Views.Inventory
             EmptyStateText.Visibility = ViewModel.FilteredIngredients.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
+        private void PopulateCategoryComboBox()
+        {
+            // Clear existing items
+            CategoryComboBox.Items.Clear();
+
+            // Add categories from the ViewModel
+            foreach (var category in ViewModel.AllCategories)
+            {
+                CategoryComboBox.Items.Add(category);
+            }
+        }
+
+        private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Handle selection change if necessary (not currently used)
+        }
+
         private void IngredientListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Handle selection change if necessary (not currently used)
@@ -58,14 +73,15 @@ namespace POS_For_Small_Shop.Views.Inventory
             IngredientDetailsPanel.Visibility = Visibility.Visible;
 
             // Clear form fields
-            IngredientIDTextBox.Text = string.Empty;
             IngredientNameTextBox.Text = string.Empty;
-            CategoryIDTextBox.Text = string.Empty;
             StockTextBox.Text = string.Empty;
             UnitTextBox.Text = string.Empty;
             SupplierTextBox.Text = string.Empty;
             PurchasePriceTextBox.Text = string.Empty;
-            ExpiryDatePicker.Date = DateTimeOffset.Now;
+            ExpiryDatePicker.Date = DateTime.Now;
+
+            PopulateCategoryComboBox();
+            CategoryComboBox.SelectedIndex = -1;
         }
 
         //private void ViewIngredientButton_Click(object sender, ItemClickEventArgs e)
@@ -84,16 +100,27 @@ namespace POS_For_Small_Shop.Views.Inventory
                 if (ingredients != null)
                 {
                     ViewModel.CurrentIngredient = ingredients;
-                    IngredientIDTextBox.Text = ingredients.IngredientID.ToString();
+
                     IngredientNameTextBox.Text = ingredients.IngredientName;
-                    CategoryIDTextBox.Text = ingredients.CategoryID.ToString();
                     StockTextBox.Text = ingredients.Stock.ToString();
                     UnitTextBox.Text = ingredients.Unit;
                     SupplierTextBox.Text = ingredients.Supplier;
                     PurchasePriceTextBox.Text = ingredients.PurchasePrice.ToString();
-                    ExpiryDatePicker.Date = ingredients.ExpiryDate ?? DateTimeOffset.Now;
+                    ExpiryDatePicker.Date = ingredients.ExpiryDate ?? DateTime.Now;
+
                     FormHeaderText.Text = "Edit Ingredient";
                     ViewModel.IsEditMode = true;
+
+                    PopulateCategoryComboBox();
+                    for (int i = 0; i < CategoryComboBox.Items.Count; i++)
+                    {
+                        if (CategoryComboBox.Items[i] is Category category &&
+                            category.CategoryID == ingredients.CategoryID)
+                        {
+                            CategoryComboBox.SelectedIndex = i;
+                            break;
+                        }
+                    }
                     IngredientDetailsPanel.Visibility = Visibility.Visible;
                 }
             }
@@ -113,14 +140,17 @@ namespace POS_For_Small_Shop.Views.Inventory
                 return;
             }
 
-            ViewModel.CurrentIngredient.IngredientID = int.Parse(IngredientIDTextBox.Text);
             ViewModel.CurrentIngredient.IngredientName = IngredientNameTextBox.Text;
             ViewModel.CurrentIngredient.Stock = int.Parse(StockTextBox.Text);
             ViewModel.CurrentIngredient.Unit = UnitTextBox.Text;
             ViewModel.CurrentIngredient.Supplier = SupplierTextBox.Text;
-            ViewModel.CurrentIngredient.CategoryID = int.Parse(CategoryIDTextBox.Text);
             ViewModel.CurrentIngredient.PurchasePrice = float.Parse(PurchasePriceTextBox.Text);
             ViewModel.CurrentIngredient.ExpiryDate = ExpiryDatePicker.Date.DateTime;
+
+            if (CategoryComboBox.SelectedItem is Category selectedCategory)
+            {
+                ViewModel.CurrentIngredient.CategoryID = selectedCategory.CategoryID;
+            }
 
             bool success = ViewModel.SaveIngredient();
 

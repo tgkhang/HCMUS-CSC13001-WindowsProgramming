@@ -11,7 +11,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.Data.Models;
-using POS_For_Small_Shop.ViewModels;
+using POS_For_Small_Shop.ViewModels.Inventory;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 

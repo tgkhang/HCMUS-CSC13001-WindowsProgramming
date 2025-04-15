@@ -50,9 +50,23 @@ namespace POS_For_Small_Shop.Views
 
             _dao = Service.GetKeyedSingleton<IDao>();
             _shiftService = Service.GetKeyedSingleton<IShiftService>();
+            // Subscribe to the ShiftUpdated event
+            _shiftService.ShiftUpdated += ShiftService_ShiftUpdated;
+
             InitializeShift();
         }
 
+        // Event handler for when the shift is updated
+        private void ShiftService_ShiftUpdated(object sender, EventArgs e)
+        {
+            UpdateShiftInfo();
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            // Unsubscribe from the event when navigating away to prevent memory leaks
+            _shiftService.ShiftUpdated -= ShiftService_ShiftUpdated;
+        }
         private void ShiftNavigation_Loaded(object sender, RoutedEventArgs e)
         {
             if (!_isInitialized)
@@ -83,7 +97,7 @@ namespace POS_For_Small_Shop.Views
                 {
                     ShiftID = 8386, // Mock ID - > auto real id
                     StartTime = DateTime.Now,
-                    EndTime= DateTime.Now,
+                    EndTime = DateTime.Now,
                     OpeningCash = 500000,  //input 
                     ClosingCash = 0,
                     TotalSales = 0,
@@ -105,14 +119,18 @@ namespace POS_For_Small_Shop.Views
 
         private void UpdateShiftInfo()
         {
-            Shift currentShift = _shiftService.CurrentShift; 
-            if (currentShift != null)
+            // We need to ensure this runs on the UI thread since it's updating UI elements
+            DispatcherQueue.TryEnqueue(() =>
             {
-                ShiftNumberText.Text = currentShift.ShiftID.ToString();
-                ShiftStartTimeText.Text = currentShift.StartTime.ToString("MMM d, h:mm tt");
-                ShiftTotalSalesText.Text = string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:#,##0} đ", currentShift.TotalSales);
-                ShiftOrderCountText.Text = currentShift.TotalOrders.ToString();
-            }
+                Shift currentShift = _shiftService.CurrentShift;
+                if (currentShift != null)
+                {
+                    ShiftNumberText.Text = currentShift.ShiftID.ToString();
+                    ShiftStartTimeText.Text = currentShift.StartTime.ToString("MMM d, h:mm tt");
+                    ShiftTotalSalesText.Text = string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:#,##0} đ", currentShift.TotalSales);
+                    ShiftOrderCountText.Text = currentShift.TotalOrders.ToString();
+                }
+            });
         }
 
         private void Navigation_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)

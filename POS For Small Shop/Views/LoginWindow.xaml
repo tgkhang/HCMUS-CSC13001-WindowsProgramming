@@ -7,41 +7,95 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Login">
+    Title="Coffee Shop POS - Login">
 
-    <StackPanel x:Name="container" Orientation="Vertical" Width="300"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center">
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="InputBoxStyle" TargetType="Control">
+                <Setter Property="Margin" Value="0,8,0,8" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+            </Style>
+        </Grid.Resources>
 
-        <TextBlock Text="Login" Style="{StaticResource TitleTextBlockStyle}"/>
-        <TextBox
-         Margin="0, 5, 0, 5"
-         Header="Username"
-         x:Name="usernameTextBox"
-         Text="{Binding Username, 
-         Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-     />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <PasswordBox
-         x:Name="passwordBox" Header="Password"
-         Margin="0, 5, 0, 5"
-         Password="{Binding Password, Mode=TwoWay}"
-         />
-
-        <CheckBox
-        Content="Remember me"
-        IsChecked="{Binding RememberMe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-        <StackPanel HorizontalAlignment="Center">
-            <Button
-             Style="{StaticResource AccentButtonStyle}"
-             Name="loginButton"
-             Content="Login"
-             Height="35"
-             Click="LoginButton_Click"
-             Margin="0, 5, 0, 5"
-             />
+        <!-- Top section with logo/image -->
+        <StackPanel Grid.Row="0" Margin="0,30,0,0">
+            <FontIcon 
+                Glyph="&#xE774;" 
+                FontSize="60" 
+                HorizontalAlignment="Center"
+                Foreground="{ThemeResource SystemAccentColor}"/>
+            <TextBlock 
+                Text="COFFEE SHOP POS" 
+                Style="{StaticResource TitleTextBlockStyle}" 
+                HorizontalAlignment="Center"
+                Margin="0,10,0,0"
+                FontWeight="SemiBold"/>
         </StackPanel>
-    </StackPanel>
 
+        <!-- Login form -->
+        <Border 
+            Grid.Row="1" 
+            Width="330"
+            Padding="24"
+            CornerRadius="8"
+            BorderThickness="1"
+            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Translation="0,0,32">
+
+            <StackPanel x:Name="container" Orientation="Vertical">
+                <TextBlock 
+                    Text="Sign In" 
+                    Style="{StaticResource SubtitleTextBlockStyle}" 
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,16"
+                    FontWeight="SemiBold"/>
+
+                <TextBox
+                    x:Name="usernameTextBox"
+                    Header="Username"
+                    PlaceholderText="Enter your username"
+                    Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource InputBoxStyle}"/>
+
+                <PasswordBox
+                    x:Name="passwordBox"
+                    Header="Password"
+                    PlaceholderText="Enter your password"
+                    Password="{Binding Password, Mode=TwoWay}"
+                    Style="{StaticResource InputBoxStyle}"/>
+
+                <CheckBox
+                    Content="Remember me"
+                    Margin="0,8,0,16"
+                    IsChecked="{Binding RememberMe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button
+                    x:Name="loginButton"
+                    Content="Sign In"
+                    Style="{StaticResource AccentButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Height="40"
+                    Click="LoginButton_Click"
+                    Margin="0,8,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Footer -->
+        <TextBlock 
+            Grid.Row="2" 
+            Text="© 2025 Coffee Shop POS System" 
+            Style="{StaticResource CaptionTextBlockStyle}" 
+            Opacity="0.6"
+            HorizontalAlignment="Center"
+            Margin="0,0,0,12"/>
+    </Grid>
 </Window>

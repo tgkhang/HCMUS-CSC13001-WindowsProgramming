@@ -117,6 +117,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                 bool success = _dao.Orders.Update(OrderNumber, order);
                 if (success)
                 {
+                    SaveOrderDetails();
                     // Create a transaction record
                     var transaction = new Transaction
                     {
@@ -172,6 +173,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                 bool success = _dao.Orders.Update(OrderNumber, order);
                 if (success)
                 {
+                    SaveOrderDetails();
                     var transaction = new Transaction
                     {
                         OrderID = order.OrderID,
@@ -209,6 +211,29 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             catch
             {
                 return null;
+            }
+        }
+        public bool SaveOrderDetails()
+        {
+            try
+            {
+                foreach (var item in OrderItems)
+                {
+                    var orderDetail = new OrderDetail
+                    {
+                        OrderID = OrderNumber,
+                        MenuItemID = item.MenuItemID,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.UnitPrice,
+                        Subtotal = item.Total
+                    };
+                    _dao.OrderDetails.Insert(orderDetail);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

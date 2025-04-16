@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using POS_For_Small_Shop.Data.Models;
+using POS_For_Small_Shop.Services.IRepository;
 using POS_For_Small_Shop.Services.Repository;
 
 namespace POS_For_Small_Shop.Services
@@ -15,7 +16,7 @@ namespace POS_For_Small_Shop.Services
         public IRepository<Shift> Shifts { get; set; } = new PostgresShiftRepository();
         public IRepository<Ingredient> Ingredients { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IOrderRepository<Order> Orders { get; set; } = new PostgresOrderRepository();
-        public IRepository<OrderDetail> OrderDetails { get; set; } = new PostgresOrderDetailRepository();
+        public IOrderDetailRepository<OrderDetail> OrderDetails { get; set; } = new PostgresOrderDetailRepository();
         public IRepository<Transaction> Transactions { get; set; } = new PostgresTransactionRepository();
         public IRepository<CashFlow> CashFlows { get; set; } = new PostgresCashFlowRepository();
         public IRepository<Notification> Notifications { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

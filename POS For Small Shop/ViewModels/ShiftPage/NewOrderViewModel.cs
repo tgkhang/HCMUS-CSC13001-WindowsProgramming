@@ -260,7 +260,6 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             // Generate a new order number based on current date/time
             //OrderNumber = DateTime.Now.ToString("yyMMddHHmm");
             //OnPropertyChanged(nameof(OrderNumber));
-
             Order currentOrder = new Order
             {
                 OrderID = 123,

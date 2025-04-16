@@ -15,6 +15,8 @@ using POS_For_Small_Shop.Services;
 using Windows.Foundation;
 using POS_For_Small_Shop.Views.ShiftPage;
 using Windows.Foundation.Collections;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -42,8 +44,11 @@ namespace POS_For_Small_Shop.Views
 
         private IDao _dao;
         private bool _isInitialized = false;
+        private float _openingCashAmount = 0;
+        private bool _isShiftInitialized = false;
 
         private IShiftService _shiftService;
+
         public OpenShiftPage()
         {
             this.InitializeComponent();
@@ -53,7 +58,22 @@ namespace POS_For_Small_Shop.Views
             // Subscribe to the ShiftUpdated event
             _shiftService.ShiftUpdated += ShiftService_ShiftUpdated;
 
-            InitializeShift();
+            // Show the opening cash dialog when the page is loaded
+            this.Loaded += OpenShiftPage_Loaded;
+        }
+
+        private async void OpenShiftPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            OpeningCashDialog.XamlRoot = this.XamlRoot;
+
+            // Show the dialog and handle the result
+            ContentDialogResult result = await OpeningCashDialog.ShowAsync();
+
+            // If the user cancels, navigate back to home page
+            if (result == ContentDialogResult.None)
+            {
+                Frame.Navigate(typeof(HomePage));
+            }
         }
 
         // Event handler for when the shift is updated
@@ -69,9 +89,9 @@ namespace POS_For_Small_Shop.Views
         }
         private void ShiftNavigation_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!_isInitialized)
+            if (!_isInitialized && _isShiftInitialized)
             {
-                // Set the default selected item and navigate to it
+                // Only set the default navigation after shift is initialized
                 if (ShiftNavigation.MenuItems.Count > 0)
                 {
                     // Find the first menu item with a tag
@@ -98,7 +118,7 @@ namespace POS_For_Small_Shop.Views
                     ShiftID = 8386, // Mock ID - > auto real id
                     StartTime = DateTime.Now,
                     EndTime = DateTime.Now,
-                    OpeningCash = 500000,  //input 
+                    OpeningCash = _openingCashAmount,
                     ClosingCash = 0,
                     TotalSales = 0,
                     TotalOrders = 0,
@@ -108,8 +128,22 @@ namespace POS_For_Small_Shop.Views
                 currentShift.ShiftID = _dao.Shifts.CreateGetId(currentShift);
 
                 _shiftService.SetCurrentShift(currentShift);
+                _isShiftInitialized = true;
 
                 UpdateShiftInfo();
+                if (ShiftNavigation.MenuItems.Count > 0 && !_isInitialized)
+                {
+                    var firstItem = ShiftNavigation.MenuItems
+                        .OfType<NavigationViewItem>()
+                        .FirstOrDefault(item => item.Tag != null);
+
+                    if (firstItem != null)
+                    {
+                        ShiftNavigation.SelectedItem = firstItem;
+                        NavigateToPage(firstItem.Tag.ToString());
+                    }
+                    _isInitialized = true;
+                }
             }
             catch (Exception ex)
             {
@@ -129,6 +163,7 @@ namespace POS_For_Small_Shop.Views
                     ShiftStartTimeText.Text = currentShift.StartTime.ToString("MMM d, h:mm tt");
                     ShiftTotalSalesText.Text = string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:#,##0} đ", currentShift.TotalSales);
                     ShiftOrderCountText.Text = currentShift.TotalOrders.ToString();
+                    OpeningCashText.Text = string.Format(new CultureInfo("vi-VN"), "{0:#,##0} đ", currentShift.OpeningCash);
                 }
             });
         }
@@ -241,6 +276,51 @@ namespace POS_For_Small_Shop.Views
                 ShowError($"Error printing report: {ex.Message}");
             }
         }
+        private void OpeningCashTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string input = OpeningCashTextBox.Text.Trim();
+
+            // Remove non-numeric characters
+            string numericOnly = Regex.Replace(input, "[^0-9]", "");
+
+            // Parse the numeric value
+            if (float.TryParse(numericOnly, out float amount))
+            {
+                _openingCashAmount = amount;
+
+                // Format and display the amount
+                FormattedCashTextBlock.Text = string.Format(new CultureInfo("vi-VN"), "{0:#,##0} đ", amount);
+
+                // Clear validation message
+                ValidationMessageTextBlock.Text = "";
+                ValidationMessageTextBlock.Visibility = Visibility.Collapsed;
+
+                // Enable the primary button
+                OpeningCashDialog.IsPrimaryButtonEnabled = true;
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    _openingCashAmount = 0;
+                    FormattedCashTextBlock.Text = "0 đ";
+                    ValidationMessageTextBlock.Visibility = Visibility.Collapsed;
+                    OpeningCashDialog.IsPrimaryButtonEnabled = true;
+                }
+                else
+                {
+                    // Show validation error
+                    ValidationMessageTextBlock.Text = "Please enter a valid number";
+                    ValidationMessageTextBlock.Visibility = Visibility.Visible;
+                    OpeningCashDialog.IsPrimaryButtonEnabled = false;
+                }
+            }
+        }
+
+        private void OpeningCashDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            InitializeShift();
+        }
 
         private async void ShowError(string message)
         {
@@ -252,7 +332,7 @@ namespace POS_For_Small_Shop.Views
                 XamlRoot = this.XamlRoot
             };
 
-            //await dialog.ShowAsync();
+            await dialog.ShowAsync();
         }
     }
 

@@ -65,11 +65,7 @@ namespace POS_For_Small_Shop.Views
         private async void OpenShiftPage_Loaded(object sender, RoutedEventArgs e)
         {
             OpeningCashDialog.XamlRoot = this.XamlRoot;
-
-            // Show the dialog and handle the result
             ContentDialogResult result = await OpeningCashDialog.ShowAsync();
-
-            // If the user cancels, navigate back to home page
             if (result == ContentDialogResult.None)
             {
                 Frame.Navigate(typeof(HomePage));

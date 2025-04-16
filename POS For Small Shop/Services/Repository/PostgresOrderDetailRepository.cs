@@ -4,12 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using POS_For_Small_Shop.Data.Models;
+using POS_For_Small_Shop.Services.IRepository;
 
 namespace POS_For_Small_Shop.Services.Repository
 {
-    public class PostgresOrderDetailRepository : BaseGraphQLRepository, IRepository<OrderDetail>
+    public class PostgresOrderDetailRepository : BaseGraphQLRepository, IOrderDetailRepository<OrderDetail>
     {
         public bool Delete(int id)
         {
@@ -168,5 +170,43 @@ namespace POS_For_Small_Shop.Services.Repository
         {
             throw new NotImplementedException();
         }
+        public Receipt getReceiptDetailByOrderId(int orderId)
+        {
+            return RunSync(() => GetOrderDetailByOrderIdAsync(orderId));
+        }
+        private async Task<Receipt> GetOrderDetailByOrderIdAsync(int orderId)
+        {
+            string query = @"
+                query MyQuery {
+                  allOrderDetails(condition: {orderId: " + orderId + @"}) {
+                    nodes {
+                      orderDetailId
+                      orderId
+                      menuItemId
+                      quantity
+                      unitPrice
+                      subtotal
+                      menuItemByMenuItemId {
+                        name
+                        sellingPrice
+                      }
+                    }
+                    totalCount
+                  }
+                }
+            ";
+
+            var result = await ExecuteGraphQLAsync(query);
+
+            if (result != null && result["data"] != null)
+            {
+                string jsonString = result.ToString();
+                return JsonConvert.DeserializeObject<Receipt>(jsonString);
+            }
+
+            return null;
+        }
+
+    
     }
 }

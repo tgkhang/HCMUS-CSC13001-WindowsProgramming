@@ -64,6 +64,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
                 Receipt receipt = _dao.OrderDetails.getReceiptDetailByOrderId(selectedOrder.OrderID);
                 ReceiptItemsPanel.Children.Clear();
                 if (receipt != null && selectedOrder.Status == "Canceled" && selectedOrder.Status != "Pending")
+
                 {
                     DisplayReceiptDetails(receipt);
                 }
@@ -72,6 +73,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
                     if (selectedOrder.Status == "Canceled")
                         FormHeaderText.Text += " - Canceled order is not saving!!";
                     else FormHeaderText.Text += " - This order is not complete";
+
                 }
             }
             else

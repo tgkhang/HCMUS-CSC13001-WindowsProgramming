@@ -144,7 +144,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
             ContentDialog confirmDialog = new ContentDialog
             {
                 Title = "Confirm Cash Payment",
-                Content = $"Confirm payment of {ViewModel.Total:C} by cash?",
+                Content = $"Confirm payment of {ViewModel.Total} by cash?",
                 PrimaryButtonText = "Confirm",
                 CloseButtonText = "Cancel",
                 DefaultButton = ContentDialogButton.Primary,

@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <UserControl
     x:Class="POS_For_Small_Shop.Views.PromotionPopupForm.ViewPromotionDetailsForm"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:POS_For_Small_Shop.Views.PromotionPopupForm"
-    xmlns:models="using:POS_For_Small_Shop.Data.Models"
     xmlns:converter="using:POS_For_Small_Shop.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:POS_For_Small_Shop.Views.PromotionPopupForm"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -17,32 +17,32 @@
     </UserControl.Resources>
 
     <ScrollViewer
-    HorizontalScrollBarVisibility="Disabled"
-    HorizontalScrollMode="Enabled"
-    VerticalScrollBarVisibility="Auto"
-    VerticalScrollMode="Disabled">
+        HorizontalScrollBarVisibility="Disabled"
+        HorizontalScrollMode="Enabled"
+        VerticalScrollBarVisibility="Auto"
+        VerticalScrollMode="Disabled">
         <StackPanel MaxWidth="800" Margin="20">
             <!--  Header  -->
             <Border
-            Margin="0,0,0,15"
-            Padding="15"
-            Background="#003D57"
-            CornerRadius="8">
+                Margin="0,0,0,15"
+                Padding="15"
+                Background="#003D57"
+                CornerRadius="8">
                 <TextBlock
-                HorizontalAlignment="Center"
-                FontSize="26"
-                FontWeight="SemiBold"
-                Foreground="White"
-                Text="Promotion Details" />
+                    HorizontalAlignment="Center"
+                    FontSize="26"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Text="Promotion Details" />
             </Border>
 
             <!--  Body  -->
             <Grid
-            Padding="20"
-            Background="White"
-            BorderBrush="#E0E0E0"
-            BorderThickness="1"
-            CornerRadius="8">
+                Padding="20"
+                Background="White"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                CornerRadius="8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" MinWidth="200" />
                     <ColumnDefinition Width="1*" MinWidth="200" />
@@ -58,168 +58,169 @@
 
                 <!--  Promotion Name  -->
                 <StackPanel
-                Grid.Row="0"
-                Grid.ColumnSpan="2"
-                Margin="0,0,0,15">
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,15">
                     <TextBlock
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    Foreground="#333333"
-                    Text="Promotion Name" />
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="#333333"
+                        Text="Promotion Name" />
                     <Border
-                    Margin="0,8,0,0"
-                    Padding="10"
-                    Background="#F9F9F9"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="1"
-                    CornerRadius="5">
+                        Margin="0,8,0,0"
+                        Padding="10"
+                        Background="#F9F9F9"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1"
+                        CornerRadius="5">
                         <TextBlock
-                        FontSize="14"
-                        Foreground="#666666"
-                        Text="{x:Bind ViewModel.SelectedPromotion.PromoName, Mode=OneWay}" />
+                            FontSize="14"
+                            Foreground="#666666"
+                            Text="{x:Bind ViewModel.SelectedPromotion.PromoName, Mode=OneWay}" />
                     </Border>
                 </StackPanel>
 
                 <!--  Discount Type & Value  -->
                 <StackPanel
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="0,0,10,15">
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,0,10,15">
                     <TextBlock
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    Foreground="#333333"
-                    Text="Discount Type" />
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="#333333"
+                        Text="Discount Type" />
                     <Border
-                    Margin="0,8,0,0"
-                    Padding="10"
-                    Background="#F9F9F9"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="1"
-                    CornerRadius="5">
+                        Margin="0,8,0,0"
+                        Padding="10"
+                        Background="#F9F9F9"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1"
+                        CornerRadius="5">
                         <TextBlock
-                        FontSize="14"
-                        Foreground="#666666"
-                        Text="{x:Bind ViewModel.SelectedPromotion.Details.DiscountType, Mode=OneWay}" />
+                            FontSize="14"
+                            Foreground="#666666"
+                            Text="{x:Bind ViewModel.SelectedPromotion.Details.DiscountType, Mode=OneWay}" />
                     </Border>
                 </StackPanel>
 
                 <StackPanel
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="10,0,0,15">
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="10,0,0,15">
                     <TextBlock
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    Foreground="#333333"
-                    Text="Discount Value" />
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="#333333"
+                        Text="Discount Value" />
                     <Border
-                    Margin="0,8,0,0"
-                    Padding="10"
-                    Background="#F9F9F9"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="1"
-                    CornerRadius="5">
+                        Margin="0,8,0,0"
+                        Padding="10"
+                        Background="#F9F9F9"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1"
+                        CornerRadius="5">
                         <TextBlock
-                        FontSize="14"
-                        Foreground="#666666"
-                        Text="{x:Bind ViewModel.SelectedPromotion.Details.DiscountValue, Mode=OneWay}" />
+                            FontSize="14"
+                            Foreground="#666666"
+                            Text="{x:Bind ViewModel.SelectedPromotion.Details.DiscountValue, Mode=OneWay}" />
                     </Border>
                 </StackPanel>
 
                 <!--  Start & End Date  -->
                 <StackPanel
-                Grid.Row="2"
-                Grid.Column="0"
-                Margin="0,0,10,15">
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="0,0,10,15">
                     <TextBlock
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    Foreground="#333333"
-                    Text="Start Date" />
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="#333333"
+                        Text="Start Date" />
                     <Border
-                    Margin="0,8,0,0"
-                    Padding="10"
-                    Background="#F9F9F9"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="1"
-                    CornerRadius="5">
+                        Margin="0,8,0,0"
+                        Padding="10"
+                        Background="#F9F9F9"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1"
+                        CornerRadius="5">
                         <TextBlock
-                        FontSize="14"
-                        Foreground="#666666"
-                        Text="{x:Bind ViewModel.SelectedPromotion.StartDate, Mode=OneWay}" />
+                            FontSize="14"
+                            Foreground="#666666"
+                            Text="{x:Bind ViewModel.SelectedPromotion.StartDate, Mode=OneWay}" />
                     </Border>
                 </StackPanel>
 
                 <StackPanel
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="10,0,0,15">
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="10,0,0,15">
                     <TextBlock
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    Foreground="#333333"
-                    Text="End Date" />
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="#333333"
+                        Text="End Date" />
                     <Border
-                    Margin="0,8,0,0"
-                    Padding="10"
-                    Background="#F9F9F9"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="1"
-                    CornerRadius="5">
+                        Margin="0,8,0,0"
+                        Padding="10"
+                        Background="#F9F9F9"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1"
+                        CornerRadius="5">
                         <TextBlock
-                        FontSize="14"
-                        Foreground="#666666"
-                        Text="{x:Bind ViewModel.SelectedPromotion.EndDate, Mode=OneWay}" />
+                            FontSize="14"
+                            Foreground="#666666"
+                            Text="{x:Bind ViewModel.SelectedPromotion.EndDate, Mode=OneWay}" />
                     </Border>
                 </StackPanel>
 
                 <!--  Promotional Items  -->
                 <StackPanel
-                Grid.Row="3"
-                Grid.ColumnSpan="2"
-                Margin="0,0,0,15">
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,15">
                     <TextBlock
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    Foreground="#333333"
-                    Text="Promotional Items" />
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="#333333"
+                        Text="Promotional Items" />
                     <Border
-                    Margin="0,8,0,0"
-                    Background="#F9F9F9"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="1"
-                    CornerRadius="5">
+                        Margin="0,8,0,0"
+                        Background="#F9F9F9"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1"
+                        CornerRadius="5">
                         <GridView
-                        MaxHeight="300"
-                        Padding="5"
-                        IsEnabled="False"
-                        ItemsSource="{x:Bind ViewModel.SelectedItems, Mode=OneWay}"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            Padding="5"
+                            HorizontalAlignment="Stretch"
+                            IsEnabled="False"
+                            IsHitTestVisible="False"
+                            ItemsSource="{x:Bind ViewModel.SelectedItems, Mode=OneWay}"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="models:MenuItem">
                                     <Border
-                                    Margin="5"
-                                    Padding="8"
-                                    Background="#FFFFFF"
-                                    BorderBrush="#E0E0E0"
-                                    BorderThickness="1"
-                                    CornerRadius="3">
+                                        Margin="5"
+                                        Padding="8"
+                                        Background="#FFFFFF"
+                                        BorderBrush="#E0E0E0"
+                                        BorderThickness="1"
+                                        CornerRadius="3">
                                         <StackPanel Orientation="Vertical">
                                             <Image
-                                            Width="100"
-                                            Height="100"
-                                            Source="{Binding ImagePath, Converter={StaticResource ImageFullPathConverter}}"
-                                            Stretch="Uniform" />
+                                                Width="100"
+                                                Height="100"
+                                                Source="{Binding ImagePath, Converter={StaticResource ImageFullPathConverter}}"
+                                                Stretch="Uniform" />
                                             <TextBlock
-                                            Margin="0,5,0,0"
-                                            Foreground="#333333"
-                                            Text="{x:Bind Name}"
-                                            TextAlignment="Center" />
+                                                Margin="0,5,0,0"
+                                                Foreground="#333333"
+                                                Text="{x:Bind Name}"
+                                                TextAlignment="Center" />
                                             <TextBlock
-                                            Foreground="#666666"
-                                            Text="{x:Bind SellingPrice, Converter={StaticResource CurrencyConverter}}"
-                                            TextAlignment="Center" />
+                                                Foreground="#666666"
+                                                Text="{x:Bind SellingPrice, Converter={StaticResource CurrencyConverter}}"
+                                                TextAlignment="Center" />
                                         </StackPanel>
                                     </Border>
                                 </DataTemplate>
@@ -230,43 +231,43 @@
 
                 <!--  Description  -->
                 <StackPanel
-                Grid.Row="4"
-                Grid.ColumnSpan="2"
-                Margin="0,0,0,15">
+                    Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,15">
                     <TextBlock
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    Foreground="#333333"
-                    Text="Description" />
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="#333333"
+                        Text="Description" />
                     <Border
-                    Margin="0,8,0,0"
-                    Padding="10"
-                    Background="#F9F9F9"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="1"
-                    CornerRadius="5">
+                        Margin="0,8,0,0"
+                        Padding="10"
+                        Background="#F9F9F9"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1"
+                        CornerRadius="5">
                         <TextBlock
-                        FontSize="14"
-                        Foreground="#666666"
-                        Text="{x:Bind ViewModel.SelectedPromotion.Details.Description, Mode=OneWay}"
-                        TextWrapping="Wrap" />
+                            FontSize="14"
+                            Foreground="#666666"
+                            Text="{x:Bind ViewModel.SelectedPromotion.Details.Description, Mode=OneWay}"
+                            TextWrapping="Wrap" />
                     </Border>
                 </StackPanel>
 
                 <!--  Close Button  -->
                 <StackPanel
-                Grid.Row="5"
-                Grid.ColumnSpan="2"
-                HorizontalAlignment="Right">
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right">
                     <Button
-                    x:Name="CloseButton"
-                    MinWidth="120"
-                    Padding="10,5"
-                    Background="#003D57"
-                    Click="CloseButton_Click"
-                    Content="Close"
-                    CornerRadius="5"
-                    Foreground="White" />
+                        x:Name="CloseButton"
+                        MinWidth="120"
+                        Padding="10,5"
+                        Background="#003D57"
+                        Click="CloseButton_Click"
+                        Content="Close"
+                        CornerRadius="5"
+                        Foreground="White" />
                 </StackPanel>
             </Grid>
         </StackPanel>

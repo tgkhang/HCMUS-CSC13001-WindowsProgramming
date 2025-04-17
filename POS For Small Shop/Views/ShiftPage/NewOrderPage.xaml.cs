@@ -38,6 +38,15 @@ namespace POS_For_Small_Shop.Views.ShiftPage
 
             // Load customers
             LoadCustomers();
+
+            // Setup ComboBox for discounts
+            DiscountComboBox.ItemsSource = ViewModel.AvailablePromotions;
+            DiscountComboBox.DisplayMemberPath = "PromoName";
+            DiscountComboBox.SelectionChanged += (s, e) =>
+            {
+                ViewModel.SetDiscount((Promotion)DiscountComboBox.SelectedItem);
+            };
+
             ViewModel.PaymentRequested += ViewModel_PaymentRequested;
         }
         private void ViewModel_PaymentRequested(object sender, NewOrderViewModel.PaymentType paymentType)
@@ -113,17 +122,17 @@ namespace POS_For_Small_Shop.Views.ShiftPage
             }
         }
 
-        private void DiscountComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (DiscountComboBox.SelectedItem is ComboBoxItem selectedItem &&
-                selectedItem.Tag is string discountStr)
-            {
-                if (float.TryParse(discountStr, out float discount))
-                {
-                    ViewModel.SetDiscountPercentage(discount);
-                }
-            }
-        }
+        //private void DiscountComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (DiscountComboBox.SelectedItem is ComboBoxItem selectedItem &&
+        //        selectedItem.Tag is string discountStr)
+        //    {
+        //        if (float.TryParse(discountStr, out float discount))
+        //        {
+        //            ViewModel.SetDiscount(null);
+        //        }
+        //    }
+        //}
 
         private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
         {

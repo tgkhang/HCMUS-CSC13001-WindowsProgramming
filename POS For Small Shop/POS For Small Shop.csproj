@@ -47,6 +47,7 @@
     <None Remove="Views\PromotionPopupForm\AddPromotionForm.xaml" />
     <None Remove="Views\PromotionPopupForm\UpdatePromotionForm.xaml" />
     <None Remove="Views\PromotionPopupForm\ViewPromotionDetailsForm.xaml" />
+    <None Remove="Views\Receipt.xaml" />
     <None Remove="Views\ShiftPage\CloseShiftPage.xaml" />
     <None Remove="Views\ShiftPage\NewOrderPage.xaml" />
     <None Remove="Views\ShiftPage\PaymentPage.xaml" />
@@ -91,6 +92,11 @@
 		<PrivateAssets>all</PrivateAssets>
 	</PackageReference>
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Receipt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ShiftPage\PaymentPage.xaml">
@@ -206,6 +212,9 @@
     <Page Update="Views\LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\ReceiptSubPages\" />
   </ItemGroup>
 
   <!--

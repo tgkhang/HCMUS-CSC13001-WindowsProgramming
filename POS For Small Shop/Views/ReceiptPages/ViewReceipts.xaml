@@ -104,16 +104,19 @@
                     AutomationProperties.Name="Filter Options"
                     Orientation="Horizontal">
                     <CalendarDatePicker
+                        x:Name="FilterStarDatePicker"
                         AutomationProperties.Name="From Date Calendar"
                         Header="From Date:"
                         PlaceholderText="Select start date"
                         Style="{StaticResource FilterControlStyle}" />
                     <CalendarDatePicker
+                        x:Name="FilterEndDatePicker"
                         AutomationProperties.Name="To Date Calendar"
                         Header="To Date:"
                         PlaceholderText="Select end date"
                         Style="{StaticResource FilterControlStyle}" />
                     <ComboBox
+                        x:Name="ShiftStatusComboBox"
                         AutomationProperties.Name="Shift Status Filter"
                         Header="Shift Status:"
                         Style="{StaticResource FilterControlStyle}">
@@ -122,6 +125,7 @@
                         <ComboBoxItem Content="Active" />
                     </ComboBox>
                     <ComboBox
+                        x:Name="OrderStatusComboBox"
                         AutomationProperties.Name="Order Status Filter"
                         Header="Order Status:"
                         Style="{StaticResource FilterControlStyle}">
@@ -134,11 +138,13 @@
                         Margin="0,0,10,0"
                         VerticalAlignment="Bottom"
                         AutomationProperties.Name="Apply Filters Button"
+                        Click="ApplyFilters_ButtonClick"
                         Content="Apply Filters"
                         Style="{StaticResource AccentButtonStyle}" />
                     <Button
                         VerticalAlignment="Bottom"
                         AutomationProperties.Name="Reset Filters Button"
+                        Click="ResetFilters_ButtonClick"
                         Content="Reset Filters"
                         Style="{StaticResource AccentButtonStyle}" />
                 </StackPanel>

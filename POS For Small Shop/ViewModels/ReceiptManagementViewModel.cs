@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using POS_For_Small_Shop.Services;
 using POS_For_Small_Shop.Data.Models;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace POS_For_Small_Shop.ViewModels
 {
@@ -37,18 +38,30 @@ namespace POS_For_Small_Shop.ViewModels
         public Customer? CustomerForSelectedOrder { get; set; } // Storage the customer of the selected order
         public ObservableCollection<OrderDetailWithMenuItem> OrderDetailsWithMenuItems { get; set; } // Storage the order detail with menu item of the selected order
 
+        public string OrderStatus { get; set; } = "all"; // Storage the order status of the selected order
 
         // Command
         public ICommand GetOrderByShiftIDCommand { get; set; } // Command to get the order by shift ID
         public ICommand GetOrderByOrderIDCommand { get; set; } // Command to get the order by order ID
+        public ICommand GetAllShiftsCommand { get; set; } // Command to get all shifts
 
         public ReceiptManagementViewModel()
         {
-            FilteredShifts = new ObservableCollection<Shift>(_dao.Shifts.GetAll());
+            GetAllShifts(); // Initialize the FilteredShifts with all shifts
 
             // Initialize the command
             GetOrderByShiftIDCommand = new RelayCommand<int>(GetOrderByShiftID);
             GetOrderByOrderIDCommand = new RelayCommand<int>(GetOrderByOrderID);
+            GetAllShiftsCommand = new RelayCommand(_ => GetAllShifts());
+
+        }
+
+        /// <summary>
+        /// Get all shifts and store them in FilteredShifts
+        /// </summary>
+        public void GetAllShifts()
+        {
+            FilteredShifts = new ObservableCollection<Shift>(_dao.Shifts.GetAll());
         }
 
         /// <summary>
@@ -58,6 +71,13 @@ namespace POS_For_Small_Shop.ViewModels
         public void GetOrderByShiftID(int shiftID)
         {
             OrdersForShift = new ObservableCollection<Order>(_dao.Orders.getOrdersByShiftID(shiftID));
+
+            // Filter the orders by status
+            //Debug.WriteLine($"OrderStatus: {OrderStatus}");
+            if (OrderStatus != "all")
+            {
+                OrdersForShift = new ObservableCollection<Order>(OrdersForShift.Where(order => order.Status.Equals(OrderStatus, StringComparison.OrdinalIgnoreCase)));
+            }
         }
 
         /// <summary>
@@ -119,7 +139,19 @@ namespace POS_For_Small_Shop.ViewModels
             }
         }
 
+        public void GetShiftsWithFilters(DateTime? startDate, DateTime? endDate, string? status)
+        {
+            startDate = startDate ?? DateTime.MinValue;
+            endDate = endDate ?? DateTime.MaxValue;
+            status = status ?? "";
 
+            FilteredShifts = new ObservableCollection<Shift>(
+                _dao.Shifts.GetAll()
+                .Where(shift => shift.StartTime >= startDate && shift.EndTime <= endDate)
+                .Where(shift => string.IsNullOrEmpty(status) || status.Equals("all", StringComparison.OrdinalIgnoreCase) || shift.Status.Equals(status, StringComparison.OrdinalIgnoreCase))
+            );
+
+        }
 
     }
 }

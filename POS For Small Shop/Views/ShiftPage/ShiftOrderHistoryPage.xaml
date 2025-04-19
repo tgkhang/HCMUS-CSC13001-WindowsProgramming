@@ -21,33 +21,33 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel Grid.Row="0" Margin="0,0,0,20">
             <TextBlock Text="Shift Orders" 
              Style="{StaticResource TitleTextBlockStyle}" 
              Margin="0,0,0,10"/>
-                        <AutoSuggestBox 
+            <AutoSuggestBox 
              x:Name="SearchBox" 
              PlaceholderText="Search orders..." 
              Width="400"
              HorizontalAlignment="Left"
              QueryIcon="Find"
              TextChanged="SearchBox_TextChanged"/>
-            
+
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="0,0,0,20">
             <!-- Categories -->
             <ScrollViewer Grid.Row="1" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" Margin="0,0,0,15">
                 <StackPanel Orientation="Horizontal" Spacing="10">
-                    <Button Content="All" Click="CategoryButton_Click" Tag="0" Style="{StaticResource AccentButtonStyle}"/>
+                    <Button Content="All" Click="CategoryButton_Click" Tag="0" />
                     <Button Content="Pending" Click="CategoryButton_Click" Tag="1" />
-                    <Button Content="Completed" Click="CategoryButton_Click" Tag="2"/>
+                    <Button Content="Completed" Click="CategoryButton_Click" Tag="2" Style="{StaticResource AccentButtonStyle}"/>
                     <Button Content="Canceled" Click="CategoryButton_Click" Tag="3"/>
 
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
-        
+
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -98,7 +98,7 @@
                             
                             
                             -->
-                           
+
                         </Grid>
                     </DataTemplate>
 
@@ -114,14 +114,15 @@
             </ListView>
             <!--Edit form-->
             <Grid 
-             x:Name="OrderDetailsPanel" 
-             Grid.Column="1" 
-             Width="350"
-             Padding="20"
-             BorderThickness="1"
-             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-             Visibility="Collapsed">
+                 x:Name="OrderDetailsPanel" 
+                 Grid.Column="1" 
+                 Width="350"
+                 Padding="20"
+                 BorderThickness="1"
+                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                 Visibility="Collapsed">
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -130,32 +131,23 @@
 
                 <!-- Form header -->
                 <TextBlock 
-                 Grid.Row="0" 
-                 x:Name="FormHeaderText" 
-                 Text="Order Details" 
-                 Style="{StaticResource SubtitleTextBlockStyle}" 
-                 Margin="0,0,0,20"/>
+                    Grid.Row="0" 
+                    x:Name="FormHeaderText" 
+                    Text="Order Details" 
+                    Style="{StaticResource SubtitleTextBlockStyle}" 
+                    Margin="0,0,0,20"/>
 
-                <!-- Form fields -->
-                <StackPanel Grid.Row="1" Spacing="15">
-                    <!--
-                 <TextBox x:Name="NameTextBox" Header="Name" PlaceholderText="Enter customer name"/>
-                 <TextBox x:Name="PhoneTextBox" Header="Phone" PlaceholderText="Enter phone number"/>
-                 <TextBox x:Name="EmailTextBox" Header="Email" PlaceholderText="Enter email address"/>
-                 <TextBox x:Name="AddressTextBox" Header="Address" PlaceholderText="Enter address" TextWrapping="Wrap" Height="80"/>
-                 <NumberBox x:Name="LoyaltyPointsBox" Header="Loyalty Points" Value="0" SpinButtonPlacementMode="Compact"/>
-                 -->
-
-                </StackPanel>
+                <!-- Form fields - replaced with receipt panel -->
+                <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto">
+                    <StackPanel x:Name="ReceiptItemsPanel" Spacing="5">
+                        <!-- Receipt items will be added here dynamically -->
+                    </StackPanel>
+                </ScrollViewer>
 
                 <!-- Form actions -->
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,20,0,0">
-                    <!--
-                 <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click"/>
-                 <Button x:Name="SaveButton" Content="Save" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
-                 
-                 -->
-
+                    <Button x:Name="PrintButton" Content="Print Receipt" Style="{StaticResource AccentButtonStyle}"/>
+                    <Button x:Name="CloseButton" Content="Close" Click="CloseButton_Click"/>
                 </StackPanel>
             </Grid>
 

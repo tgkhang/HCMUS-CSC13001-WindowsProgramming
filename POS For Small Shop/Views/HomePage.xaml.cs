@@ -66,6 +66,7 @@ namespace POS_For_Small_Shop.Views
         private void ReceiptButton_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to Receipt Management page
+            Frame.Navigate(typeof(ReceiptManagementPage));
         }
 
         private void SettingButton_Click(object sender, RoutedEventArgs e)

@@ -24,7 +24,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
 
         private IDao _dao;
         private IShiftService _shiftService;
-        private string _orderType = "All";
+        private string _orderType = "Completed";
         private string _searchText = "";
         private Shift _currentShift;
 

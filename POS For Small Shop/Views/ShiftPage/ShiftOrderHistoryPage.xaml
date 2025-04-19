@@ -39,9 +39,9 @@
             <!-- Categories -->
             <ScrollViewer Grid.Row="1" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" Margin="0,0,0,15">
                 <StackPanel Orientation="Horizontal" Spacing="10">
-                    <Button Content="All" Click="CategoryButton_Click" Tag="0" Style="{StaticResource AccentButtonStyle}"/>
+                    <Button Content="All" Click="CategoryButton_Click" Tag="0" />
                     <Button Content="Pending" Click="CategoryButton_Click" Tag="1" />
-                    <Button Content="Completed" Click="CategoryButton_Click" Tag="2"/>
+                    <Button Content="Completed" Click="CategoryButton_Click" Tag="2" Style="{StaticResource AccentButtonStyle}"/>
                     <Button Content="Canceled" Click="CategoryButton_Click" Tag="3"/>
 
                 </StackPanel>

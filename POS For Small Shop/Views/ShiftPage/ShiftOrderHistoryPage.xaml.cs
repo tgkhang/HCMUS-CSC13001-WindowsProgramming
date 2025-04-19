@@ -63,7 +63,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
                 FormHeaderText.Text = $"Order #{selectedOrder.OrderID} Details";
                 Receipt receipt = _dao.OrderDetails.getReceiptDetailByOrderId(selectedOrder.OrderID);
                 ReceiptItemsPanel.Children.Clear();
-                if (receipt != null && selectedOrder.Status == "Canceled" && selectedOrder.Status != "Pending")
+                if (receipt != null && selectedOrder.Status != "Canceled" && selectedOrder.Status != "Pending")
                 {
                     DisplayReceiptDetails(receipt);
                 }
@@ -140,7 +140,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
                 ReceiptItemsPanel.Children.Add(itemGrid);
             }
 
-         
+
 
             // Add totals
             float totalAmount = receipt.Data.AllOrderDetails.Nodes.Sum(item => item.Subtotal);
@@ -264,9 +264,9 @@ namespace POS_For_Small_Shop.Views.ShiftPage
 
         private void UpdateEmptyState()
         {
-           EmptyStateText.Visibility = (ViewModel.FilteredShiftOrders.Count == 0)
-                ? Visibility.Visible
-                : Visibility.Collapsed;
+            EmptyStateText.Visibility = (ViewModel.FilteredShiftOrders.Count == 0)
+                 ? Visibility.Visible
+                 : Visibility.Collapsed;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

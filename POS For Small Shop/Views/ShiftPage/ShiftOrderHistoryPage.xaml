@@ -21,19 +21,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel Grid.Row="0" Margin="0,0,0,20">
             <TextBlock Text="Shift Orders" 
              Style="{StaticResource TitleTextBlockStyle}" 
              Margin="0,0,0,10"/>
-                        <AutoSuggestBox 
+            <AutoSuggestBox 
              x:Name="SearchBox" 
              PlaceholderText="Search orders..." 
              Width="400"
              HorizontalAlignment="Left"
              QueryIcon="Find"
              TextChanged="SearchBox_TextChanged"/>
-            
+
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="0,0,0,20">
             <!-- Categories -->
@@ -47,7 +47,7 @@
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
-        
+
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -98,7 +98,7 @@
                             
                             
                             -->
-                           
+
                         </Grid>
                     </DataTemplate>
 

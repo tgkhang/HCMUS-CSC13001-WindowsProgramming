@@ -69,7 +69,7 @@ namespace POS_For_Small_Shop.Services.Repository
                     var shift = new Shift
                     {
                         ShiftID = node["shiftId"].Value<int>(),
-                        StartTime = DateTime.Parse(node["startTime"].Value<string>()),
+                        StartTime = node["startTime"].ToObject<DateTime>(),//DateTime.Parse(node["startTime"].Value<string>()),
                         OpeningCash = node["openingCash"].Value<float>(),
                         ClosingCash = node["closingCash"].Value<float>(),
                         TotalSales = node["totalSales"].Value<float>(),
@@ -80,7 +80,7 @@ namespace POS_For_Small_Shop.Services.Repository
                     // Handle nullable end time
                     if (node["endTime"] != null)
                     {
-                        shift.EndTime = DateTime.Parse(node["endTime"].Value<string>());
+                        shift.EndTime = node["startTime"].ToObject<DateTime>(); //DateTime.Parse(node["endTime"].Value<string>());
                     }
                     else
                     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using POS_For_Small_Shop.Data.Models;
+using POS_For_Small_Shop.Services.IRepository;
 
 namespace POS_For_Small_Shop.Services
 {
@@ -27,6 +28,8 @@ namespace POS_For_Small_Shop.Services
         public IRepository<Category> Categories { get; set; } = new MockCategoryRepository();
         public IRepository<Customer> Customers { get; set; } = new MockCustomerRepository();
         public IRepository<Order> Orders { get; set; } = new  MockOrderRepository();
+        IOrderRepository<Order> IDao.Orders { get => throw new NotImplementedException(); set => Orders = value; }
+        IOrderDetailRepository<OrderDetail> IDao.OrderDetails { get => throw new NotImplementedException(); set => OrderDetails = value; }
     }
 
     public class MockCategoryRepository : BaseMockRepository<Category>

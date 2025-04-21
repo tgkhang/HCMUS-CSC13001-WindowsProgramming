@@ -19,6 +19,13 @@
   <PublishReadyToRun>false</PublishReadyToRun>
   <PublishTrimmed>false</PublishTrimmed>
 	</PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Data\Models\NewFolder\**" />
+    <EmbeddedResource Remove="Data\Models\NewFolder\**" />
+    <None Remove="Data\Models\NewFolder\**" />
+    <Page Remove="Data\Models\NewFolder\**" />
+  </ItemGroup>
 	
 	
   <ItemGroup>
@@ -34,6 +41,9 @@
     <None Remove="Views\PromotionPopupForm\AddPromotionForm.xaml" />
     <None Remove="Views\PromotionPopupForm\UpdatePromotionForm.xaml" />
     <None Remove="Views\PromotionPopupForm\ViewPromotionDetailsForm.xaml" />
+    <None Remove="Views\ReceiptManagementPage.xaml" />
+    <None Remove="Views\ReceiptPages\ViewReceipts.xaml" />
+    <None Remove="Views\ReceiptPages\ViewSalesAnalysis.xaml" />
     <None Remove="Views\ShiftPage\CloseShiftPage.xaml" />
     <None Remove="Views\ShiftPage\NewOrderPage.xaml" />
     <None Remove="Views\ShiftPage\PaymentPage.xaml" />
@@ -70,13 +80,20 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.0-rc5.3" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250310001" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="PDFsharp" Version="6.1.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
 		<PrivateAssets>all</PrivateAssets>
 	</PackageReference>
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ReceiptPages\ViewSalesAnalysis.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ShiftPage\PaymentPage.xaml">
@@ -163,6 +180,16 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ReceiptPages\ViewReceipts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ReceiptManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
@@ -180,4 +207,7 @@
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
   </PropertyGroup>
+  <ItemGroup>
+    <PRIResource Remove="Data\Models\NewFolder\**" />
+  </ItemGroup>
 </Project>

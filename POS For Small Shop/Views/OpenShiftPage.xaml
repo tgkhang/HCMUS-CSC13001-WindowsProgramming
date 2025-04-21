@@ -27,6 +27,29 @@
     </Page.Resources>
 
     <Grid>
+        <!-- Opening Cash Input Dialog -->
+        <ContentDialog x:Name="OpeningCashDialog"
+                      Title="Enter Opening Cash"
+                      PrimaryButtonText="Start Shift"
+                      CloseButtonText="Cancel"
+                      DefaultButton="Primary"
+                      PrimaryButtonClick="OpeningCashDialog_PrimaryButtonClick">
+            <StackPanel Spacing="16">
+                <TextBlock Text="Please enter the opening cash amount:" TextWrapping="Wrap"/>
+                <TextBox x:Name="OpeningCashTextBox"
+                       PlaceholderText="Enter amount (đ)"
+                       InputScope="Number"
+                       TextChanged="OpeningCashTextBox_TextChanged"/>
+                <TextBlock x:Name="FormattedCashTextBlock"
+                         Text="0 đ"
+                         FontWeight="SemiBold"
+                         FontSize="18"/>
+                <TextBlock x:Name="ValidationMessageTextBlock"
+                         Foreground="Red"
+                         Visibility="Collapsed"
+                         TextWrapping="Wrap"/>
+            </StackPanel>
+        </ContentDialog>
 
         <NavigationView x:Name="ShiftNavigation"
                       AlwaysShowHeader="True"
@@ -60,6 +83,10 @@
                             <StackPanel>
                                 <TextBlock Text="Started" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.7" FontSize="14"/>
                                 <TextBlock x:Name="ShiftStartTimeText" Text="Today, 8:00 AM" Style="{StaticResource BodyTextBlockStyle}" FontSize="16"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Opening Cash" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.7" FontSize="14"/>
+                                <TextBlock x:Name="OpeningCashText" Text="0 đ" Style="{StaticResource BodyTextBlockStyle}" FontSize="16"/>
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock Text="Total Sales" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.7" FontSize="14"/>
@@ -163,8 +190,8 @@
                         </Grid>
                     </NavigationViewItem.Content>
                 </NavigationViewItem>
-                
-            <!-- 
+
+                <!-- 
 
                 <NavigationViewItem Tag="HomePage" Style="{StaticResource TouchFriendlyNavItemStyle}">
                     <NavigationViewItem.Content>

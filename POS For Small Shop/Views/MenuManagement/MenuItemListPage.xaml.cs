@@ -29,15 +29,16 @@ namespace POS_For_Small_Shop.Views.MenuManagement
     public sealed partial class MenuItemListPage : Page
     {
         public MenuItemListViewModel ViewModel { get; } = new MenuItemListViewModel();
-
+        private int _selectedCategoryId = 0;
         public MenuItemListPage()
         {
             this.InitializeComponent();
             this.DataContext = ViewModel;
 
-            // Initialize the ViewModel and connect the ListView
             ViewModel.Initialize();
-            ItemListView.ItemsSource = ViewModel.FilteredMenuItems;
+            MenuItemsGridView.ItemsSource = ViewModel.FilteredMenuItems;
+
+            UpdateEmptyState();
         }
 
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -47,6 +48,118 @@ namespace POS_For_Small_Shop.Views.MenuManagement
                 ViewModel.SearchText = sender.Text;
                 ViewModel.ApplyFilters();
                 UpdateEmptyState();
+            }
+        }
+        private void CategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string categoryIdStr)
+            {
+                // Parse the category ID from the button's tag
+                if (int.TryParse(categoryIdStr, out int categoryId))
+                {
+                    _selectedCategoryId = categoryId;
+                    ViewModel.SelectedCategoryFilter = categoryId;
+                    ViewModel.ApplyFilters();
+                    UpdateEmptyState();
+
+                    // Update button styles
+                    if (button.Parent is StackPanel categoryStackPanel)
+                    {
+                        // Update button styles
+                        foreach (var child in categoryStackPanel.Children)
+                        {
+                            if (child is Button categoryButton)
+                            {
+                                // Use direct style setting
+                                if (categoryButton == button)
+                                {
+                                    categoryButton.Style = Application.Current.Resources["AccentButtonStyle"] as Style;
+                                }
+                                else
+                                {
+                                    categoryButton.Style = null; // This will use the default style
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private void MenuItemsGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is MenuItem menuItem)
+            {
+                // Open the edit form for the clicked item
+                OpenEditForm(menuItem.MenuItemID);
+            }
+        }
+        private void OpenEditForm(int menuItemId)
+        {
+            MenuItem menuItem = ViewModel.AllMenuItems.FirstOrDefault(item => item.MenuItemID == menuItemId);
+            if (menuItem != null)
+            {
+                ViewModel.CurrentMenuItem = menuItem;
+                NameTextBox.Text = menuItem.Name;
+                PriceTextBox.Text = menuItem.SellingPrice.ToString();
+                ImagePathTextBox.Text = menuItem.ImagePath ?? "";
+                FormHeaderText.Text = "Edit Menu Item";
+                ViewModel.IsEditMode = true;
+
+                // Handle image preview
+                if (!string.IsNullOrEmpty(menuItem.ImagePath))
+                {
+                    try
+                    {
+                        // Try to create a BitmapImage from the path
+                        if (menuItem.ImagePath.StartsWith("ms-appdata:"))
+                        {
+                            PreviewImage.Source = new BitmapImage(new Uri(menuItem.ImagePath));
+                        }
+                        // Check if it's a local file path with MenuItemImages
+                        else if (menuItem.ImagePath.Contains("\\MenuItemImages\\"))
+                        {
+                            // Extract the filename from the path
+                            string fileName = Path.GetFileName(menuItem.ImagePath);
+                            string msAppDataPath = $"ms-appdata:///local/MenuItemImages/{fileName}";
+                            PreviewImage.Source = new BitmapImage(new Uri(msAppDataPath));
+                        }
+                        // Try as a direct URI
+                        else
+                        {
+                            PreviewImage.Source = new BitmapImage(new Uri(menuItem.ImagePath));
+                        }
+
+                        // Show the preview image
+                        PreviewImage.Visibility = Visibility.Visible;
+                    }
+                    catch (Exception ex)
+                    {
+                        // If there's an error loading the image, hide the preview
+                        Debug.WriteLine($"Error loading image preview: {ex.Message}");
+                        PreviewImage.Source = null;
+                        PreviewImage.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else
+                {
+                    // No image path, hide the preview
+                    PreviewImage.Source = null;
+                    PreviewImage.Visibility = Visibility.Collapsed;
+                }
+
+                PopulateCategoryComboBox();
+
+                for (int i = 0; i < CategoryComboBox.Items.Count; i++)
+                {
+                    if (CategoryComboBox.Items[i] is Category category &&
+                        category.CategoryID == menuItem.CategoryID)
+                    {
+                        CategoryComboBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+
+                ItemDetailsPanel.Visibility = Visibility.Visible;
             }
         }
 
@@ -66,6 +179,9 @@ namespace POS_For_Small_Shop.Views.MenuManagement
             NameTextBox.Text = string.Empty;
             PriceTextBox.Text = string.Empty;
             ImagePathTextBox.Text = string.Empty;
+            // Reset image preview
+            PreviewImage.Source = null;
+            PreviewImage.Visibility = Visibility.Collapsed;
 
             PopulateCategoryComboBox();
             CategoryComboBox.SelectedIndex = -1;
@@ -84,7 +200,52 @@ namespace POS_For_Small_Shop.Views.MenuManagement
                     ImagePathTextBox.Text = menuItem.ImagePath ?? "";
                     FormHeaderText.Text = "Edit Menu Item";
                     ViewModel.IsEditMode = true;
-                    
+
+                    // Handle image preview
+                    if (!string.IsNullOrEmpty(menuItem.ImagePath))
+                    {
+                        try
+                        {
+                            // Try to create a BitmapImage from the path
+                            BitmapImage bitmapImage = new BitmapImage();
+
+                            // Check if the path is already in ms-appdata format
+                            if (menuItem.ImagePath.StartsWith("ms-appdata:"))
+                            {
+                                PreviewImage.Source = new BitmapImage(new Uri(menuItem.ImagePath));
+                            }
+                            // Check if it's a local file path with MenuItemImages
+                            else if (menuItem.ImagePath.Contains("\\MenuItemImages\\"))
+                            {
+                                // Extract the filename from the path
+                                string fileName = System.IO.Path.GetFileName(menuItem.ImagePath);
+                                string msAppDataPath = $"ms-appdata:///local/MenuItemImages/{fileName}";
+                                PreviewImage.Source = new BitmapImage(new Uri(msAppDataPath));
+                            }
+                            // Try as a direct URI
+                            else
+                            {
+                                PreviewImage.Source = new BitmapImage(new Uri(menuItem.ImagePath));
+                            }
+
+                            // Show the preview image
+                            PreviewImage.Visibility = Visibility.Visible;
+                        }
+                        catch (Exception ex)
+                        {
+                            // If there's an error loading the image, hide the preview
+                            Debug.WriteLine($"Error loading image preview: {ex.Message}");
+                            PreviewImage.Source = null;
+                            PreviewImage.Visibility = Visibility.Collapsed;
+                        }
+                    }
+                    else
+                    {
+                        // No image path, hide the preview
+                        PreviewImage.Source = null;
+                        PreviewImage.Visibility = Visibility.Collapsed;
+                    }
+
 
                     PopulateCategoryComboBox();
 

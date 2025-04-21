@@ -7,7 +7,9 @@ using System.Linq;
 using System.Windows.Input;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
+using POS_For_Small_Shop.Services.Business;
 using PropertyChanged;
+using Windows.ApplicationModel.Payments;
 
 namespace POS_For_Small_Shop.ViewModels.ShiftPage
 {
@@ -36,6 +38,9 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         public float Tax { get; private set; }
         public float Discount { get; private set; }
         public float Total { get; private set; }
+        private OrderProcessor _orderProcessor = new OrderProcessor();
+        public ObservableCollection<Promotion> AvailablePromotions { get; private set; } = new();
+        public Promotion SelectedPromotion { get; private set; }
 
         public int OrderNumber
         {
@@ -96,6 +101,9 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
 
             // Apply initial filters
             ApplyFilters();
+
+            // Update available promotions
+            OrderItems.CollectionChanged += (_, __) => UpdateAvailablePromotions();
         }
 
         public void SetSearchText(string text)
@@ -110,9 +118,9 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             ApplyFilters();
         }
 
-        public void SetDiscountPercentage(float percentage)
+        public void SetDiscount(Promotion promotion)
         {
-            _discountPercentage = percentage;
+            SelectedPromotion = promotion;
             UpdateOrderSummary();
         }
 
@@ -214,17 +222,12 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
 
         private void UpdateOrderSummary()
         {
-            // Calculate subtotal
-            Subtotal = OrderItems.Sum(item => item.Total);
+            var summary = _orderProcessor.CalculateTotal(OrderItems.ToList(), SelectedPromotion);
 
-            // Calculate tax (8%)
-            Tax = Subtotal * 0.08f;
-
-            // Calculate discount
-            Discount = Subtotal * (_discountPercentage / 100f);
-
-            // Calculate total
-            Total = Subtotal + Tax - Discount;
+            Subtotal = summary.Subtotal;
+            Tax = summary.Tax;
+            Discount = summary.Discount;
+            Total = summary.Total;
 
             // Notify property changed for all summary properties
             OnPropertyChanged(nameof(Subtotal));
@@ -233,17 +236,35 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
             OnPropertyChanged(nameof(Total));
         }
 
+        private void UpdateAvailablePromotions()
+        {
+            AvailablePromotions.Clear();
+
+            var allPromotions = _dao.Promotions.GetAll(); // or whatever method you have
+            var orderedItemIds = OrderItems.Select(o => o.MenuItemID).ToHashSet();
+
+            var validPromotions = allPromotions
+                .Where(promo =>
+                    promo.StartDate <= DateTime.Now &&
+                    promo.EndDate >= DateTime.Now &&
+                    promo.ItemIDs.Any(id => orderedItemIds.Contains(id)))
+                .ToList();
+
+            foreach (var promo in validPromotions)
+                AvailablePromotions.Add(promo);
+        }
+
+
         private void GenerateOrderNumber()
         {
             // Generate a new order number based on current date/time
             //OrderNumber = DateTime.Now.ToString("yyMMddHHmm");
             //OnPropertyChanged(nameof(OrderNumber));
-
             Order currentOrder = new Order
             {
                 OrderID = 123,
                 CustomerID = 1,
-                ShiftID = 1,
+                ShiftID = _shiftService.CurrentShift.ShiftID,
                 TotalAmount = 0,
                 Discount = 0,
                 FinalAmount = 0,
@@ -251,7 +272,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                 Status = "Pending"
             };
             OrderNumber =_dao.Orders.CreateGetId(currentOrder);
-            OnPropertyChanged(nameof(OrderNumber));
+             OnPropertyChanged(nameof(OrderNumber));
         }
 
         private void CreateNewOrder()
@@ -277,21 +298,116 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
         {
             if (OrderItems.Count > 0)
             {
+                //try
+                //{
+                //    // Get the current active shift
+                //    Shift currentShift= _shiftService.CurrentShift;
+
+                //    // Create a new Order object
+                //    var order = new Order
+                //    {
+                //        OrderID= OrderNumber,
+                //        CustomerID = SelectedCustomer?.CustomerID,
+                //        ShiftID = currentShift.ShiftID,
+                //        TotalAmount = Subtotal,
+                //        Discount = Discount,
+                //        FinalAmount = Total,
+                //        PaymentMethod = "Cash",
+                //        Status = "Completed"
+                //    };
+
+                //    // Create order items
+                //    var orderItems = OrderItems.Select(item => new OrderDetail
+                //    {
+                //        MenuItemID = item.MenuItemID,
+                //        Quantity = item.Quantity,
+                //        UnitPrice = item.UnitPrice,
+                //        Subtotal = item.Total
+                //    }).ToList();
+
+                //    // Save order to database
+                //    bool success = _dao.Orders.Update(OrderNumber,order);
+                //    if (success)
+                //    {
+                //        //Save order details
+                //        foreach (var item in orderItems)
+                //        {
+                //            item.OrderID = OrderNumber;
+                //            _dao.OrderDetails.Insert(item);
+                //        }
+
+                //        // Update customer loyalty points if applicable
+                //        if (SelectedCustomer != null)
+                //        {
+                //            SelectedCustomer.LoyaltyPoints += (int)(Total / 10000); // 1 point per 10000 spent
+                //            _dao.Customers.Update(SelectedCustomer.CustomerID, SelectedCustomer);
+                //        }
+
+                //        // Create a transaction record
+                //        var transaction = new Transaction
+                //        {
+                //            OrderID = order.OrderID,
+                //            AmountPaid = Total,
+                //            PaymentMethod = order.PaymentMethod
+                //        };
+
+                //        _dao.Transactions.Insert(transaction);
+
+                //        // Link order to the shift
+                //        var shiftOrder = new ShiftOrder
+                //        {
+                //            ShiftID = currentShift.ShiftID,
+                //            OrderID = order.OrderID
+                //        };
+                //        _dao.ShiftOrders.Insert(shiftOrder);
+
+                //        // Update shift statistics
+                //        currentShift.TotalSales += Total;
+                //        currentShift.TotalOrders += 1;
+                //        _dao.Shifts.Update(currentShift.ShiftID, currentShift);
+
+                //        //UPDate previous frame screen
+                //        _shiftService.UpdateShift(currentShift);
+                //    }
+                //}
+                //catch (Exception)
+                //{
+                //    // Log error or handle exception
+                //    // In a real app, you might want to show an error message
+                //}
+
+                //// Create a new order
+                //CreateNewOrder();
+
+                PaymentRequested?.Invoke(this, PaymentType.Cash);
+            }
+        }
+        public event EventHandler<PaymentType> PaymentRequested;
+        public enum PaymentType
+        {
+            Cash,
+            Card,
+            QRCode
+        }
+        private void ProcessCardPayment()
+        {
+            if (OrderItems.Count > 0)
+            {
                 try
                 {
-                    // Get the current active shift
-                    Shift currentShift= _shiftService.CurrentShift;
+                    // Get the current active shift from the shift service
+                    Shift currentShift = _shiftService.CurrentShift;
 
                     // Create a new Order object
                     var order = new Order
                     {
-                        OrderID= OrderNumber,
+                        OrderID = OrderNumber,
                         CustomerID = SelectedCustomer?.CustomerID,
                         ShiftID = currentShift.ShiftID,
                         TotalAmount = Subtotal,
                         Discount = Discount,
                         FinalAmount = Total,
-                        PaymentMethod = "Cash",
+                        PaymentMethod = "Card",
                         Status = "Completed"
                     };
 
@@ -305,10 +421,10 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                     }).ToList();
 
                     // Save order to database
-                    bool success = _dao.Orders.Update(OrderNumber,order);
+                    bool success = _dao.Orders.Update(OrderNumber, order);
                     if (success)
                     {
-                        //Save order details
+                        // Save order details
                         foreach (var item in orderItems)
                         {
                             item.OrderID = OrderNumber;
@@ -329,7 +445,7 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                             AmountPaid = Total,
                             PaymentMethod = order.PaymentMethod
                         };
-                      
+
                         _dao.Transactions.Insert(transaction);
 
                         // Link order to the shift
@@ -345,7 +461,8 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                         currentShift.TotalOrders += 1;
                         _dao.Shifts.Update(currentShift.ShiftID, currentShift);
 
-                        //UPDate previous frame screen
+                        // Update previous frame screen
+                        _shiftService.UpdateShift(currentShift);
                     }
                 }
                 catch (Exception)
@@ -358,83 +475,23 @@ namespace POS_For_Small_Shop.ViewModels.ShiftPage
                 CreateNewOrder();
             }
         }
-
-        private void ProcessCardPayment()
-        {
-            if (OrderItems.Count > 0)
-            {
-                try
-                {
-                    // Get the current active shift
-                    var activeShift = _dao.Shifts.GetAll().FirstOrDefault(s => s.Status == "Open");
-                    if (activeShift == null)
-                    {
-                        // Create a new shift if no active shift exists
-                        activeShift = new Shift
-                        {
-                            StartTime = DateTime.Now,
-                            OpeningCash = 0,
-                            TotalSales = 0,
-                            TotalOrders = 0,
-                            Status = "Open"
-                        };
-                        _dao.Shifts.Insert(activeShift);
-                    }
-
-                    // Create a new Order object
-                    var order = new Order
-                    {
-                        CustomerID = SelectedCustomer?.CustomerID,
-                        ShiftID = activeShift.ShiftID,
-                        TotalAmount = Subtotal,
-                        Discount = Discount,
-                        FinalAmount = Total,
-                        PaymentMethod = "Card",
-                        Status = "Completed"
-                    };
-
-                    // Create order items
-                    var orderItems = OrderItems.Select(item => new OrderDetail
-                    {
-                        MenuItemID = item.MenuItemID,
-                        Quantity = item.Quantity,
-                        UnitPrice = item.UnitPrice,
-                        Subtotal = item.Total
-                    }).ToList();
-
-                    // Save order to database
-                    bool success = _dao.Orders.Insert(order);
-                    if (success)
-                    {
-                        // Save order details
-                        foreach (var item in orderItems)
-                        {
-                            item.OrderID = order.OrderID;
-                            _dao.OrderDetails.Insert(item);
-                        }
-
-                        // Update customer loyalty points if applicable
-                        if (SelectedCustomer != null)
-                        {
-                            SelectedCustomer.LoyaltyPoints += (int)(Total / 10); // 1 point per $10 spent
-                            _dao.Customers.Update(SelectedCustomer.CustomerID, SelectedCustomer);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    // Log error or handle exception
-                    // In a real app, you might want to show an error message
-                }
-
-                // Create a new order
-                CreateNewOrder();
-            }
-        }
-
         private void CancelOrder()
         {
             // Simply clear the current order
+            Shift currentShift = _shiftService.CurrentShift;
+            var order = new Order
+            {
+                OrderID = OrderNumber,
+                CustomerID = SelectedCustomer?.CustomerID,
+                ShiftID = currentShift.ShiftID,
+                TotalAmount = Subtotal,
+                Discount = Discount,
+                FinalAmount = Total,
+                PaymentMethod = "CASH",
+                Status = "Canceled"
+            };
+            bool success = _dao.Orders.Update(order.OrderID, order);
+
             CreateNewOrder();
         }
 

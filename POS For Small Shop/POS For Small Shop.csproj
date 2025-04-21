@@ -26,7 +26,6 @@
     <None Remove="Views\DashboardWindow.xaml" />
     <None Remove="Views\HelpPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
-    <None Remove="Views\Inventory\ReadIngredientPage.xaml" />
     <None Remove="Views\LoginWindow.xaml" />
     <None Remove="Views\MenuManagement\MenuItemListPage.xaml" />
     <None Remove="Views\MenuManagement\MenuManagementPage.xaml" />
@@ -81,11 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ShiftPage\PaymentPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Inventory\ReadIngredientPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

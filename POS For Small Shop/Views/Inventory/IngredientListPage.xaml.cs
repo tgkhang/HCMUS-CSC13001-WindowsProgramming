@@ -43,6 +43,7 @@ namespace POS_For_Small_Shop.Views.Inventory
             EmptyStateText.Visibility = ViewModel.FilteredIngredients.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
+
         private void PopulateCategoryComboBox()
         {
             // Clear existing items
@@ -56,6 +57,11 @@ namespace POS_For_Small_Shop.Views.Inventory
         }
 
         private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Handle selection change if necessary (not currently used)
+        }
+
+        private void UnitComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Handle selection change if necessary (not currently used)
         }
@@ -75,22 +81,15 @@ namespace POS_For_Small_Shop.Views.Inventory
             // Clear form fields
             IngredientNameTextBox.Text = string.Empty;
             StockTextBox.Text = string.Empty;
-            UnitTextBox.Text = string.Empty;
             SupplierTextBox.Text = string.Empty;
             PurchasePriceTextBox.Text = string.Empty;
             ExpiryDatePicker.Date = DateTime.Now;
 
             PopulateCategoryComboBox();
             CategoryComboBox.SelectedIndex = -1;
-        }
 
-        //private void ViewIngredientButton_Click(object sender, ItemClickEventArgs e)
-        //{
-        //    if (e.ClickedItem is Ingredient selectedIngredient)
-        //    {
-        //        this.Frame.Navigate(typeof(ReadIngredientPage), selectedIngredient);
-        //    }
-        //}
+            UnitComboBox.SelectedIndex = -1;
+        }
 
         private void EditIngredientButton_Click(object sender, RoutedEventArgs e)
         {
@@ -103,7 +102,6 @@ namespace POS_For_Small_Shop.Views.Inventory
 
                     IngredientNameTextBox.Text = ingredients.IngredientName;
                     StockTextBox.Text = ingredients.Stock.ToString();
-                    UnitTextBox.Text = ingredients.Unit;
                     SupplierTextBox.Text = ingredients.Supplier;
                     PurchasePriceTextBox.Text = ingredients.PurchasePrice.ToString();
                     ExpiryDatePicker.Date = ingredients.ExpiryDate ?? DateTime.Now;
@@ -121,6 +119,16 @@ namespace POS_For_Small_Shop.Views.Inventory
                             break;
                         }
                     }
+
+                    for (int i = 0; i < UnitComboBox.Items.Count; i++)
+                    {
+                        if (UnitComboBox.Items[i] is string unit &&
+                            unit == ingredients.Unit)
+                        {
+                            UnitComboBox.SelectedIndex = i;
+                            break;
+                        }
+                    }
                     IngredientDetailsPanel.Visibility = Visibility.Visible;
                 }
             }
@@ -130,7 +138,13 @@ namespace POS_For_Small_Shop.Views.Inventory
         {
             if (string.IsNullOrWhiteSpace(IngredientNameTextBox.Text))
             {
-                ShowError("Ingredient name is required.");
+                ShowError("Name is required.");
+                return;
+            }
+
+            if (!float.TryParse(StockTextBox.Text, out float stock))
+            {
+                ShowError("Please enter a valid stock.");
                 return;
             }
 
@@ -139,12 +153,23 @@ namespace POS_For_Small_Shop.Views.Inventory
                 ShowError("Please enter a valid price.");
                 return;
             }
+            if (CategoryComboBox.SelectedItem == null)
+            {
+                ShowError("Please select a category.");
+                return;
+            }
+
+            if (UnitComboBox.SelectedItem == null)
+            {
+                ShowError("Please select a unit.");
+                return;
+            }
 
             ViewModel.CurrentIngredient.IngredientName = IngredientNameTextBox.Text;
-            ViewModel.CurrentIngredient.Stock = int.Parse(StockTextBox.Text);
-            ViewModel.CurrentIngredient.Unit = UnitTextBox.Text;
+            ViewModel.CurrentIngredient.Stock = stock;
+            ViewModel.CurrentIngredient.Unit = UnitComboBox.SelectedItem.ToString();
             ViewModel.CurrentIngredient.Supplier = SupplierTextBox.Text;
-            ViewModel.CurrentIngredient.PurchasePrice = float.Parse(PurchasePriceTextBox.Text);
+            ViewModel.CurrentIngredient.PurchasePrice = price;
             ViewModel.CurrentIngredient.ExpiryDate = ExpiryDatePicker.Date.DateTime;
 
             if (CategoryComboBox.SelectedItem is Category selectedCategory)

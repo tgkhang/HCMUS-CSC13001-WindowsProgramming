@@ -83,19 +83,18 @@
 
                             <!-- Ingredient Info -->
                             <StackPanel Grid.Column="0" Spacing="4">
-                                <TextBlock Text="{x:Bind IngredientName}" FontWeight="SemiBold"/>
+                                <TextBlock Text="{Binding IngredientName}" FontWeight="SemiBold"/>
                                 <StackPanel Orientation="Horizontal" Spacing="8">
                                     <TextBlock Text="Stock units remaining:" FontSize="12"/>
-                                    <TextBlock Text="{x:Bind Stock, Mode=OneWay}" FontSize="12"/>
-                                    <TextBlock Text="{x:Bind Unit}" FontSize="12"/>
+                                    <TextBlock Text="{Binding Stock, Mode=OneWay}" FontSize="12"/>
+                                    <TextBlock Text="{Binding Unit}" FontSize="12"/>
                                 </StackPanel>
                             </StackPanel>
 
                             <!-- Actions -->
                             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
-                                <!--<Button Content="View" Click="ViewIngredientButton_Click" Tag="{x:Bind IngredientID}"/> -->
-                                <Button Content="Edit" Click="EditIngredientButton_Click" Tag="{x:Bind IngredientID}"/>
-                                <Button Content="Delete" Click="DeleteIngredientButton_Click" Tag="{x:Bind IngredientID}"/>
+                                <Button Content="Edit" Click="EditIngredientButton_Click" Tag="{Binding IngredientID}"/>
+                                <Button Content="Delete" Click="DeleteIngredientButton_Click" Tag="{Binding IngredientID}"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -137,12 +136,17 @@
                           SelectionChanged="CategoryComboBox_SelectionChanged">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="models:Category">
-                                    <TextBlock Text="{x:Bind Name}"/>
+                                    <TextBlock Text="{Binding Name}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <TextBox x:Name="StockTextBox" Header="Stock" PlaceholderText="Enter stock quantity"/>
-                        <TextBox x:Name="UnitTextBox" Header="Unit" PlaceholderText="Enter unit (e.g., kg, L, pcs)"/>
+                        <ComboBox x:Name="UnitComboBox"
+                          Header="Unit"
+                          ItemsSource="{Binding AllUnits}"
+                          SelectedItem="{Binding CurrentIngredient.Unit, Mode=TwoWay}"
+                          PlaceholderText="Select unit"
+                          SelectionChanged="UnitComboBox_SelectionChanged"/>
                         <TextBox x:Name="SupplierTextBox" Header="Supplier" PlaceholderText="Enter supplier name"/>
                         <TextBox x:Name="PurchasePriceTextBox" Header="Purchase Price" PlaceholderText="Enter purchase price"/>
                         <DatePicker x:Name="ExpiryDatePicker" Header="Expiry Date"/>    

@@ -18,10 +18,16 @@ namespace POS_For_Small_Shop.ViewModels.Inventory
         private string _searchText = "";
         public List<Ingredient> AllIngredients { get; private set; } = new List<Ingredient>();
 
+
         public List<Category> AllCategories { get; private set; } = new List<Category>();
 
         public ObservableCollection<Ingredient> FilteredIngredients { get; private set; } = new ObservableCollection<Ingredient>();
-        
+
+        public ObservableCollection<string> AllUnits { get; } = new ObservableCollection<string>
+        {
+            "kg", "g", "L", "ml", "pcs"
+        };
+
         public Ingredient CurrentIngredient { get; set; }
         
         public bool IsEditMode { get; set; } = false;

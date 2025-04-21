@@ -20,21 +20,22 @@ namespace POS_For_Small_Shop.Services.Repository
 
         private async Task<List<Ingredient>> GetAllAsync()
         {
-            string query = @"
-            {
-              allIngredients {
+            string query = @" 
+            query MyQuery {
+            allIngredients {
                 nodes {
+                  categoryId
+                  expiryDate
                   ingredientId
                   ingredientName
-                  categoryId
-                  stock
-                  unit
-                  supplier
                   purchasePrice
-                  expiryDate
-                }
-              }
-            }";
+                  stock
+                  supplier
+                  unit
+             }
+             }
+            }
+            ";
 
             var result = await ExecuteGraphQLAsync(query);
             var ingredients = new List<Ingredient>();
@@ -51,7 +52,7 @@ namespace POS_For_Small_Shop.Services.Repository
                         Stock = node["stock"].Value<int>(),
                         Unit = node["unit"].Value<string>(),
                         Supplier = node["supplier"].Value<string>(),
-                        PurchasePrice = node["purchasePrice"].Value<float>(),
+                        PurchasePrice = node["purchasePrice"]?.Value<float>() ?? 0.0f,
                         ExpiryDate = DateTime.Parse(node["expiryDate"].Value<string>())
                     };
                     ingredients.Add(ingredient);
@@ -63,19 +64,20 @@ namespace POS_For_Small_Shop.Services.Repository
 
         private async Task<Ingredient> GetByIdAsync(int id)
         {
-            string query = @"{
+            string query = @"
+            query MyQuery {
               ingredientByIngredientId(ingredientId: " + id + @") {
+                categoryId
+                expiryDate
                 ingredientId
                 ingredientName
-                categoryId
-                stock
-                unit
-                supplier
                 purchasePrice
-                expiryDate
+                stock
+                supplier
+                unit
               }
             }
-";
+            ";
 
             var result = await ExecuteGraphQLAsync(query);
             var ingredientData = result["data"]?["ingredientByIngredientId"];
@@ -90,7 +92,7 @@ namespace POS_For_Small_Shop.Services.Repository
                 Stock = ingredientData["stock"].Value<int>(),
                 Unit = ingredientData["unit"].Value<string>(),
                 Supplier = ingredientData["supplier"].Value<string>(),
-                PurchasePrice = ingredientData["purchasePrice"].Value<float>(),
+                PurchasePrice = ingredientData["purchasePrice"]?.Value<float>() ?? 0.0f,
                 ExpiryDate = DateTime.Parse(ingredientData["expiryDate"].Value<string>())
             };
         }

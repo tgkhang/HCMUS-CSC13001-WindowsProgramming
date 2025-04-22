@@ -149,6 +149,8 @@
                           SelectionChanged="UnitComboBox_SelectionChanged"/>
                         <TextBox x:Name="SupplierTextBox" Header="Supplier" PlaceholderText="Enter supplier name"/>
                         <TextBox x:Name="PurchasePriceTextBox" Header="Purchase Price" PlaceholderText="Enter purchase price"/>
+                        <!--<TextBox x:Name="PurchasePriceTextBox" Header="Purchase Price" PlaceholderText="Enter purchase price"
+                                 TextChanged="PurchasePriceTextBox_TextChanged"/> -->
                         <DatePicker x:Name="ExpiryDatePicker" Header="Expiry Date"/>    
                     </StackPanel>
                 </ScrollViewer>

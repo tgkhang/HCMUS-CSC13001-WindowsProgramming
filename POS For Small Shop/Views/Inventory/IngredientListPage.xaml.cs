@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using POS_For_Small_Shop.Data.Models;
+using System.Globalization;
 using POS_For_Small_Shop.Services;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml.Navigation;
@@ -37,6 +38,25 @@ namespace POS_For_Small_Shop.Views.Inventory
                 UpdateEmptyState();
             }
         }
+
+        //private void PurchasePriceTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    if (sender is TextBox textBox)
+        //    {
+        //        string text = textBox.Text.Replace(",", "."); // Replace comma with period
+        //                                                      // Allow only numbers, one decimal point, and optional minus sign
+        //        if (!System.Text.RegularExpressions.Regex.IsMatch(text, @"^-?\d*\.?\d*$"))
+        //        {
+        //            text = text.Substring(0, text.Length - 1); // Remove invalid character
+        //        }
+        //        if (text != textBox.Text)
+        //        {
+        //            int cursorPosition = textBox.SelectionStart;
+        //            textBox.Text = text;
+        //            textBox.SelectionStart = cursorPosition > text.Length ? text.Length : cursorPosition;
+        //        }
+        //    }
+        //}
 
         private void UpdateEmptyState()
         {
@@ -104,6 +124,7 @@ namespace POS_For_Small_Shop.Views.Inventory
                     StockTextBox.Text = ingredients.Stock.ToString();
                     SupplierTextBox.Text = ingredients.Supplier;
                     PurchasePriceTextBox.Text = ingredients.PurchasePrice.ToString();
+                    //PurchasePriceTextBox.Text = ingredients.PurchasePrice.ToString(CultureInfo.InvariantCulture);
                     ExpiryDatePicker.Date = ingredients.ExpiryDate ?? DateTime.Now;
 
                     FormHeaderText.Text = "Edit Ingredient";
@@ -142,17 +163,21 @@ namespace POS_For_Small_Shop.Views.Inventory
                 return;
             }
 
-            if (!float.TryParse(StockTextBox.Text, out float stock))
+            if (!int.TryParse(StockTextBox.Text, out int stock))
             {
                 ShowError("Please enter a valid stock.");
                 return;
             }
-
             if (!float.TryParse(PurchasePriceTextBox.Text, out float price))
             {
                 ShowError("Please enter a valid price.");
                 return;
             }
+            //if (!float.TryParse(PurchasePriceTextBox.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out float price))
+            //{
+            //    ShowError("Please enter a valid price.");
+            //    return;
+            //}
             if (CategoryComboBox.SelectedItem == null)
             {
                 ShowError("Please select a category.");
@@ -181,6 +206,7 @@ namespace POS_For_Small_Shop.Views.Inventory
 
             if (success)
             {
+                ViewModel.LoadIngredient();
                 ViewModel.ApplyFilters();
                 UpdateEmptyState();
                 IngredientDetailsPanel.Visibility = Visibility.Collapsed;

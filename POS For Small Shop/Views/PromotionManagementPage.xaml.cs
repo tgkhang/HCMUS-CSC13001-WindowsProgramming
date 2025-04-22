@@ -210,6 +210,14 @@ namespace POS_For_Small_Shop.Views
             }
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
+            if (e.Parameter is string itemName && !string.IsNullOrWhiteSpace(itemName))
+            {
+                ViewModel.SearchQuery = itemName;
+            }
+        }
     }
 }

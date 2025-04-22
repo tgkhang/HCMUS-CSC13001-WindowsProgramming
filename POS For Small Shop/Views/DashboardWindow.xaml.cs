@@ -29,13 +29,15 @@ namespace POS_For_Small_Shop.Views
     {
         public static DashboardWindow Instance { get; private set; }
         private string _username;
+        public Frame CurrentFrame { get; private set; }
         public DashboardWindow()
         {
             this.InitializeComponent();
             Instance = this;
             //_username = username;
             this.Activated += DashboardWindow_Activated;
-  //          App.MainWindow = this;
+            //          App.MainWindow = this;
+            CurrentFrame = this.MainFrame;
             MainFrame.Navigate(typeof(HomePage));
         }
 

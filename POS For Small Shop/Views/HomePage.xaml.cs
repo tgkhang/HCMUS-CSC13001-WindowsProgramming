@@ -14,6 +14,7 @@ using POS_For_Small_Shop.Views.CustomerManagement;
 using POS_For_Small_Shop.Views.MenuManagement;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using POS_For_Small_Shop.Services;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,6 +27,7 @@ namespace POS_For_Small_Shop.Views
     public sealed partial class HomePage : Page
     {
         private DispatcherTimer _timer;
+        public NotificationService NotificationService { get; set; }
 
         public HomePage()
         {
@@ -39,6 +41,8 @@ namespace POS_For_Small_Shop.Views
 
             // Update the date/time immediately
             UpdateDateTime();
+
+            NotificationService = new NotificationService(DashboardWindow.Instance.CurrentFrame);
         }
 
         private void Timer_Tick(object sender, object e)

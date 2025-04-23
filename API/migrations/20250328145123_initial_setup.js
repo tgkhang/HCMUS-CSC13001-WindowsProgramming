@@ -77,7 +77,7 @@ exports.up = async function(knex) {
       shift_id int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       start_time timestamp NOT NULL,
       end_time timestamp,
-      opening_cash float NOT NULL,
+      opening_cash float NOT NULL DEFAULT 0,  
       closing_cash float NOT NULL DEFAULT 0,
       total_sales float NOT NULL DEFAULT 0,
       total_orders int NOT NULL DEFAULT 0,

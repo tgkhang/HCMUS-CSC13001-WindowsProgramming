@@ -28,6 +28,7 @@ namespace POS_For_Small_Shop.Views
     {
         private DispatcherTimer _timer;
         public NotificationService NotificationService { get; set; }
+        private ContentDialog? _currentNotificationDialog;
 
         public HomePage()
         {
@@ -128,5 +129,41 @@ namespace POS_For_Small_Shop.Views
                 //Do nothing
             }
         }
+
+        private async void NotificationButton_Click(object sender, RoutedEventArgs e)
+        {
+            var listView = new ListView
+            {
+                ItemsSource = NotificationService.Notifications,
+                ItemTemplate = (DataTemplate)this.Resources["NotificationItemTemplate"],
+                IsItemClickEnabled = false
+            };
+
+            var dialog = new ContentDialog
+            {
+                Title = "Notifications",
+                XamlRoot = this.XamlRoot,
+                CloseButtonText = "Close",
+                DefaultButton = ContentDialogButton.Close,
+                Content = listView
+            };
+
+            _currentNotificationDialog = dialog;
+            await dialog.ShowAsync();
+        }
+
+        private void GoToNotification(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is Notification notification)
+            {
+                NotificationService.GoToTarget(notification);
+                if (_currentNotificationDialog != null)
+                {
+                    _currentNotificationDialog.Hide();
+                    _currentNotificationDialog = null;
+                }
+            }
+        }
+
     }
 }

@@ -12,6 +12,10 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.Views.CustomerManagement;
 using POS_For_Small_Shop.Views.MenuManagement;
+using POS_For_Small_Shop.Views.Inventory;
+using POS_For_Small_Shop.Views.ShiftPage;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using POS_For_Small_Shop.Services;
@@ -93,7 +97,7 @@ namespace POS_For_Small_Shop.Views
         private void InventoryButton_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to Inventory page
-            //Frame.Navigate(typeof(InventoryPage));
+            Frame.Navigate(typeof(InventoryPage));
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)

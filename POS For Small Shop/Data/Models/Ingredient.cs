@@ -23,7 +23,7 @@ namespace POS_For_Small_Shop.Data.Models
         public float Stock { get; set; }
 
         [JsonProperty("unit")]
-        public string Unit { get; set; } = "kg";
+        public string Unit { get; set; } = "";
 
         [JsonProperty("purchasePrice")]
         public float PurchasePrice { get; set; }

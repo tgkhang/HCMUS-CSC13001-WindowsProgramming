@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -14,6 +15,7 @@ using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -88,6 +90,7 @@ namespace POS_For_Small_Shop.Views
 
         public void CloseUpdateFormPopup()
         {
+            updatePromotionForm.ClearGridView();
             updatePromotionPopup.IsOpen = false;
         }
 
@@ -141,6 +144,7 @@ namespace POS_For_Small_Shop.Views
                 updatePromotionForm.DataContext = ViewModel;
 
                 updatePromotionPopup.IsOpen = true;
+
                 // Adjust position and show popup
                 AdjustPopupPosition(updatePromotionPopup, updatePromotionFormContainer);
 
@@ -169,6 +173,7 @@ namespace POS_For_Small_Shop.Views
         {
             ViewModel.SelectedItems = updatePromotionForm.TempSelectedItems;
             ViewModel.UpdateSelectedPromotion();
+            updatePromotionForm.ClearGridView();
             CloseUpdateFormPopup();
         }
 
@@ -181,6 +186,38 @@ namespace POS_For_Small_Shop.Views
         public void CancelDeletenButton_Click(object obj, RoutedEventArgs e)
         {
             CLoseDeleteFormPopup();
+        }
+
+        public void Back_To_HomePage(object sender, RoutedEventArgs e)
+        {
+            // Navigate back to the home page
+            DashboardWindow.Instance.NavigateToPage(typeof(HomePage));
+        }
+
+        public void HoverBorder_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (sender is Grid grid)
+            {
+                grid.Background = new SolidColorBrush(Colors.LightGray);
+            }
+        }
+
+        public void HoverBorder_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (sender is Grid grid)
+            {
+                grid.Background = new SolidColorBrush(Colors.White);
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is string itemName && !string.IsNullOrWhiteSpace(itemName))
+            {
+                ViewModel.SearchQuery = itemName;
+            }
         }
     }
 }

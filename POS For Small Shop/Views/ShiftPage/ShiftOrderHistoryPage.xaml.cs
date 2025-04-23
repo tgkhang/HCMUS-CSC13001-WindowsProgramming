@@ -72,6 +72,7 @@ namespace POS_For_Small_Shop.Views.ShiftPage
                     if (selectedOrder.Status == "Canceled")
                         FormHeaderText.Text += " - Canceled order is not saving!!";
                     else FormHeaderText.Text += " - This order is not complete";
+
                 }
             }
             else

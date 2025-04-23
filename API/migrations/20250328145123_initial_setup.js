@@ -151,24 +151,43 @@ exports.up = async function(knex) {
     COMMENT ON COLUMN transaction.payment_method IS 'Payment method (cash, credit_card)';
   `);
 
-  // promotion
-  await knex.raw(`
-    CREATE TABLE promotion(  
-      promo_id int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-      promo_name text NOT NULL,
-      discount_type text NOT NULL,
-      discount_value float NOT NULL,
-      start_date date NOT NULL,
-      end_date date NOT NULL
-    );
-    COMMENT ON TABLE promotion IS 'Marketing promotions';
-    COMMENT ON COLUMN promotion.promo_id IS 'Primary key for promotion';
-    COMMENT ON COLUMN promotion.promo_name IS 'Promotion name';
-    COMMENT ON COLUMN promotion.discount_type IS 'Discount type (percentage, fixed)';
-    COMMENT ON COLUMN promotion.discount_value IS 'Discount amount or percentage';
-    COMMENT ON COLUMN promotion.start_date IS 'Promotion start date';
-    COMMENT ON COLUMN promotion.end_date IS 'Promotion end date';
-  `);
+// promotion table
+await knex.raw(`
+  CREATE TABLE promotion(  
+    promo_id int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    promo_name text NOT NULL CHECK (length(promo_name) <= 100),
+    start_date date NOT NULL,
+    end_date date NOT NULL,
+    menu_item_ids int[] NOT NULL DEFAULT '{}'
+  );
+  COMMENT ON TABLE promotion IS 'Marketing promotions with associated menu items';
+  COMMENT ON COLUMN promotion.promo_id IS 'Primary key for promotion';
+  COMMENT ON COLUMN promotion.promo_name IS 'Promotion name (max 100 characters)';
+  COMMENT ON COLUMN promotion.start_date IS 'Promotion start date';
+  COMMENT ON COLUMN promotion.end_date IS 'Promotion end date';
+  COMMENT ON COLUMN promotion.menu_item_ids IS 'Array of menu item IDs associated with this promotion';
+`);
+
+// promotion_details table
+await knex.raw(`
+  CREATE TABLE promotion_details(
+    promo_details_id int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    promo_id int NOT NULL,
+    discount_type text NOT NULL CHECK (discount_type IN ('Percentage', 'FixedAmount')),
+    discount_value float NOT NULL,
+    description text,
+    CONSTRAINT fk_promo
+      FOREIGN KEY(promo_id) 
+      REFERENCES promotion(promo_id)
+      ON DELETE CASCADE
+  );
+  COMMENT ON TABLE promotion_details IS 'Details of marketing promotions';
+  COMMENT ON COLUMN promotion_details.promo_details_id IS 'Primary key for promotion details';
+  COMMENT ON COLUMN promotion_details.promo_id IS 'Foreign key referencing promotion';
+  COMMENT ON COLUMN promotion_details.discount_type IS 'Discount type (Percentage or FixedAmount)';
+  COMMENT ON COLUMN promotion_details.discount_value IS 'Discount amount or percentage';
+  COMMENT ON COLUMN promotion_details.description IS 'Optional description of the promotion details';
+`);
 
   // notification
   await knex.raw(`

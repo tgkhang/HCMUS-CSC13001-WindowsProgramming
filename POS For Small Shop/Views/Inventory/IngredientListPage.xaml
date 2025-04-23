@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.Inventory.IngredientListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views.Inventory"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:POS_For_Small_Shop.Converters"
+    xmlns:models="using:POS_For_Small_Shop.Data.Models"
+    xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
+        <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter"/>
+        <converters:CurrencyFormatter x:Key="CurrencyFormatter"/>
+        <converters:CategoryIdToNameConverter x:Key="CategoryIdToNameConverter"/>
+    </Page.Resources>
+
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with search and add button -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Ingredients List" 
+                           Style="{StaticResource TitleTextBlockStyle}" 
+                           Margin="0,0,0,10"/>
+                <AutoSuggestBox 
+                 x:Name="SearchBox" 
+                 PlaceholderText="Search Ingredients..." 
+                 Width="400"
+                 HorizontalAlignment="Left"
+                 QueryIcon="Find"
+                 TextChanged="SearchBox_TextChanged"/>
+            </StackPanel>
+
+            <Button 
+             Grid.Column="1" 
+             x:Name="AddIngredientButton" 
+             Content="Add Ingredient" 
+             Style="{StaticResource AccentButtonStyle}"
+             Click="AddIngredientButton_Click"
+             VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <!-- Ingredients list and details -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Items list -->
+            <ListView 
+             x:Name="IngredientListView"
+             Grid.Column="0"
+             SelectionMode="Single"
+             SelectionChanged="IngredientListView_SelectionChanged"
+             BorderThickness="1"
+             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+             Padding="0"
+             Margin="0,0,20,0">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Ingredient">
+                        <Grid Padding="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Ingredient Info -->
+                            <StackPanel Grid.Column="0" Spacing="4">
+                                <TextBlock Text="{Binding IngredientName}" FontWeight="SemiBold"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock Text="Stock units remaining:" FontSize="12"/>
+                                    <TextBlock Text="{Binding Stock, Mode=OneWay}" FontSize="12"/>
+                                    <TextBlock Text="{Binding Unit}" FontSize="12"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Actions -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                <Button Content="Edit" Click="EditIngredientButton_Click" Tag="{Binding IngredientID}"/>
+                                <Button Content="Delete" Click="DeleteIngredientButton_Click" Tag="{Binding IngredientID}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Ingredient details/edit form -->
+            <Grid 
+             x:Name="IngredientDetailsPanel" 
+             Grid.Column="1" 
+             Width="350"
+             Padding="20"
+             BorderThickness="1"
+             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+             Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Form header -->
+                <TextBlock 
+                 Grid.Row="0" 
+                 x:Name="FormHeaderText" 
+                 Text="Add Ingredient" 
+                 Style="{StaticResource SubtitleTextBlockStyle}" 
+                 Margin="0,0,0,20"/>
+
+                <!-- Form fields -->
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="15">
+                        <TextBox x:Name="IngredientNameTextBox" Header="Name" PlaceholderText="Enter ingredient name"/>
+                        <ComboBox x:Name="CategoryComboBox" 
+                          Header="Category" 
+                          PlaceholderText="Select a category"
+                          SelectionChanged="CategoryComboBox_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:Category">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBox x:Name="StockTextBox" Header="Stock" PlaceholderText="Enter stock quantity"/>
+                        <ComboBox x:Name="UnitComboBox"
+                          Header="Unit"
+                          ItemsSource="{Binding AllUnits}"
+                          SelectedItem="{Binding CurrentIngredient.Unit, Mode=TwoWay}"
+                          PlaceholderText="Select unit"
+                          SelectionChanged="UnitComboBox_SelectionChanged"/>
+                        <TextBox x:Name="SupplierTextBox" Header="Supplier" PlaceholderText="Enter supplier name"/>
+                        <TextBox x:Name="PurchasePriceTextBox" Header="Purchase Price" PlaceholderText="Enter purchase price"/>
+                        <!--<TextBox x:Name="PurchasePriceTextBox" Header="Purchase Price" PlaceholderText="Enter purchase price"
+                                 TextChanged="PurchasePriceTextBox_TextChanged"/> -->
+                        <DatePicker x:Name="ExpiryDatePicker" Header="Expiry Date"/>    
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Form actions -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,20,0,0">
+                    <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click"/>
+                    <Button x:Name="SaveButton" Content="Save" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!-- Empty state -->
+        <TextBlock 
+         x:Name="EmptyStateText" 
+         Grid.Row="1" 
+         Text="No ingredients found. Add a new ingredient to get started." 
+         HorizontalAlignment="Center" 
+         VerticalAlignment="Center" 
+         Opacity="0.7"
+         Visibility="Collapsed"/>
+    </Grid>
+</Page>

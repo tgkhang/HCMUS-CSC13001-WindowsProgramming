@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.ReceiptPages.ViewSalesAnalysis"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:POS_For_Small_Shop.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:POS_For_Small_Shop.Views.ReceiptPages"
+    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.WinUI"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:POS_For_Small_Shop.ViewModels"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <!--  Converter  -->
+            <converters:DateFormatter x:Name="DateFormatter" />
+            <converters:DateTimeToFormattedStringConverter x:Name="DateTimeToFormattedStringConverter" />
+            <converters:CurrencyFormatter x:Name="CurrencyFormatter" />
+            <converters:StatusIconConverter x:Name="StatusIconConverter" />
+            <converters:StatusColorConverter x:Name="StatusColorConverter" />
+            <converters:DateToFormattedStringConverter x:Name="DateToFormattedStringConverter" />
+            <converters:TimeToFormattedStringConverter x:Name="TimeToFormattedStringConverter" />
+            <converters:ValueToColorConverter x:Name="ValueToColorConverter" />
+            <converters:ValueToStringConverter x:Name="ValueToStringConverter" />
+
+        </ResourceDictionary>
+    </Page.Resources>
+
+
+    <ScrollViewer>
+        <StackPanel Padding="20" Spacing="20">
+
+            <!--  🔹 Top KPIs  -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--  Total Income Today  -->
+                <Border
+                    Grid.Column="0"
+                    Margin="0,0,10,0"
+                    Padding="16"
+                    Background="#FFCCE5FF"
+                    CornerRadius="12">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Text="💰 Total Income Today" />
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock
+                                FontSize="24"
+                                FontWeight="Bold"
+                                Text="{x:Bind ViewModel.IncomeToday, Converter={StaticResource CurrencyFormatter}}" />
+                            <Border
+                                Padding="5"
+                                Background="{x:Bind ViewModel.IncomeDifferencePercentTodayAndYesterday, Converter={StaticResource ValueToColorConverter}}"
+                                CornerRadius="5">
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="White">
+                                    <Run Text="{x:Bind ViewModel.IncomeDifferencePercentTodayAndYesterday, Converter={StaticResource ValueToStringConverter}}" />
+                                    <Run Text=" %" />
+                                </TextBlock>
+                            </Border>
+
+                            <Border
+                                Padding="5"
+                                Background="{x:Bind ViewModel.IncomeDifferenceValueTodayAndYesterday, Converter={StaticResource ValueToColorConverter}}"
+                                CornerRadius="5">
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="{x:Bind ViewModel.IncomeDifferenceValueTodayAndYesterday, Converter={StaticResource ValueToStringConverter}}" />
+                            </Border>
+
+                        </StackPanel>
+
+                        <TextBlock Foreground="Gray">
+                            <Run Text="vs prev. " />
+                            <Run Text="{x:Bind ViewModel.IncomeYesterday, Converter={StaticResource CurrencyFormatter}}" />
+                            <Run Text=" " />
+                            <Run Text="{x:Bind ViewModel.YesterDate, Converter={StaticResource DateToFormattedStringConverter}}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!--  Top-Selling Item Today  -->
+                <Border
+                    Grid.Column="1"
+                    Margin="0,0,10,0"
+                    Padding="16"
+                    Background="#FFCCE5FF"
+                    CornerRadius="12">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Text="🥇 Top-Selling Item" />
+                        <TextBlock
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Text="{x:Bind ViewModel.TopSellingItemToday.Name}" />
+                        <TextBlock Foreground="Gray">
+                            <Run Text="{x:Bind ViewModel.QuantityTopSellingItemToday}" />
+                            <Run Text=" items sold" />
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!--  Total Orders Today  -->
+                <Border
+                    Grid.Column="2"
+                    Padding="16"
+                    Background="#FFCCE5FF"
+                    CornerRadius="12">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Text="📦 Total Orders" />
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock
+                                FontSize="24"
+                                FontWeight="Bold"
+                                Text="{x:Bind ViewModel.TotalOrderToday}" />
+                            <Border
+                                Padding="5"
+                                Background="{x:Bind ViewModel.OrderDifferenceValueTodayAndYesterday, Converter={StaticResource ValueToColorConverter}}"
+                                CornerRadius="5">
+                                <TextBlock
+                                    FontSize="16"
+                                    Foreground="White"
+                                    Text="{x:Bind ViewModel.OrderDifferenceValueTodayAndYesterday, Converter={StaticResource ValueToStringConverter}}" />
+                            </Border>
+                        </StackPanel>
+
+                        <TextBlock Foreground="Gray">
+                            <Run Text="vs prev. " />
+                            <Run Text="{x:Bind ViewModel.TotalOrderYesterday, Converter={StaticResource ValueToStringConverter}}" />
+                            <Run Text=" items sold" />
+                            <Run Text="{x:Bind ViewModel.YesterDate, Converter={StaticResource DateToFormattedStringConverter}}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!--  🔹 Chart Area  -->
+
+            <!--  Sales Summary  -->
+            <Border
+                Margin="0,10,10,0"
+                Padding="20"
+                Background="White"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                CornerRadius="8">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock
+                        Margin="12,0,12,20"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Sales Summary" />
+                    <!--  Filter Button  -->
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            Width="100"
+                            Margin="5"
+                            Click="SalesFilterChart_ButtonClick"
+                            Content="Daily"
+                            Tag="daily" />
+                        <Button
+                            Width="100"
+                            Margin="5"
+                            Click="SalesFilterChart_ButtonClick"
+                            Content="Monthly"
+                            Tag="monthly" />
+                        <Button
+                            Width="100"
+                            Margin="5"
+                            Click="SalesFilterChart_ButtonClick"
+                            Content="Yearly"
+                            Tag="yearly" />
+                    </StackPanel>
+
+                    <!--  Chart  -->
+                    <lvc:CartesianChart
+                        Width="900"
+                        Height="400"
+                        Series="{x:Bind ViewModel.SalesSeries}"
+                        XAxes="{x:Bind ViewModel.SalesXAxes}"
+                        YAxes="{x:Bind ViewModel.SalesYAxes}" />
+
+                </StackPanel>
+            </Border>
+
+            <!--  Orders Summary  -->
+            <Border
+                Margin="0,10,10,0"
+                Padding="20"
+                Background="White"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                CornerRadius="8">
+                <StackPanel Orientation="Vertical">
+                    <!--  Orders Summary  -->
+                    <TextBlock
+                        Margin="12,0,12,20"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Orders Summary" />
+
+                    <!--  Filter Button  -->
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            Width="100"
+                            Margin="5"
+                            Click="OrdersFilterChart_ButtonClick"
+                            Content="Daily"
+                            Tag="daily" />
+                        <Button
+                            Width="100"
+                            Margin="5"
+                            Click="OrdersFilterChart_ButtonClick"
+                            Content="Monthly"
+                            Tag="monthly" />
+                        <Button
+                            Width="100"
+                            Margin="5"
+                            Click="OrdersFilterChart_ButtonClick"
+                            Content="Yearly"
+                            Tag="yearly" />
+                    </StackPanel>
+
+                    <!--  Chart  -->
+                    <lvc:CartesianChart
+                        Width="900"
+                        Height="400"
+                        Series="{x:Bind ViewModel.OrdersSeries}"
+                        XAxes="{x:Bind ViewModel.OrdersXAxes}"
+                        YAxes="{x:Bind ViewModel.OrdersYAxes}" />
+
+                </StackPanel>
+            </Border>
+
+
+            <!--  Top Five Selling Items and Payment Method  -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Border
+                    Grid.Column="0"
+                    Margin="0,10,10,0"
+                    Padding="20"
+                    Background="White"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <StackPanel>
+                        <!--  Title  -->
+                        <TextBlock
+                            Margin="12,0,12,20"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Text="Top 5 Selling Items" />
+
+                        <!--  ListView  -->
+                        <ListView
+                            Margin="0,0,0,12"
+                            BorderBrush="LightGray"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            ItemsSource="{x:Bind ViewModel.TopFiveSellingItems, Mode=OneWay}">
+                            <ListView.Header>
+                                <Grid Padding="12" Background="#F5F5F5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60" />
+                                        <!--  Rank  -->
+                                        <ColumnDefinition Width="100" />
+                                        <!--  Image  -->
+                                        <ColumnDefinition Width="*" />
+                                        <!--  Item Name  -->
+                                        <ColumnDefinition Width="100" />
+                                        <!--  Quantity  -->
+                                        <ColumnDefinition Width="200" />
+                                        <!--  Sales  -->
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Text="Rank"
+                                        TextAlignment="Center" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Text="Image"
+                                        TextAlignment="Center" />
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Text="Item" />
+                                    <TextBlock
+                                        Grid.Column="3"
+                                        VerticalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Text="Quantity"
+                                        TextAlignment="Left" />
+                                    <TextBlock
+                                        Grid.Column="4"
+                                        VerticalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Text="Sales"
+                                        TextAlignment="Left" />
+                                </Grid>
+                            </ListView.Header>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodels:TopSellingItem">
+                                    <Grid Padding="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60" />
+                                            <!--  Rank  -->
+                                            <ColumnDefinition Width="100" />
+                                            <!--  Image  -->
+                                            <ColumnDefinition Width="*" />
+                                            <!--  Item Name  -->
+                                            <ColumnDefinition Width="100" />
+                                            <!--  Quantity  -->
+                                            <ColumnDefinition Width="200" />
+                                            <!--  Sales  -->
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind Rank}"
+                                            TextAlignment="Center" />
+                                        <Image
+                                            Grid.Column="1"
+                                            Width="48"
+                                            Height="48"
+                                            VerticalAlignment="Center"
+                                            Source="{x:Bind ImagePath}"
+                                            Stretch="UniformToFill" />
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind Name}" />
+                                        <TextBlock
+                                            Grid.Column="3"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind Quantity}"
+                                            TextAlignment="Left" />
+                                        <TextBlock
+                                            Grid.Column="4"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind TotalSales, Converter={StaticResource CurrencyFormatter}}"
+                                            TextAlignment="Left" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+
+                    </StackPanel>
+                </Border>
+
+                <Border
+                    Grid.Column="1"
+                    Margin="0,10,0,0"
+                    Padding="20"
+                    Background="White"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock
+                            Margin="12,0,12,20"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Text="Payment Methods" />
+
+                        <lvc:PieChart
+                            Width="400"
+                            Height="300"
+                            Margin="0,12,0,0"
+                            LegendPosition="Bottom"
+                            Series="{x:Bind ViewModel.PaymentMethodChartSeries, Mode=OneWay}" />
+
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -47,6 +47,7 @@ namespace POS_For_Small_Shop
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+
             m_window = new LoginWindow();
             MainWindow = m_window;
             m_window.Activate();

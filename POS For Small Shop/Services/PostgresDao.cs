@@ -12,9 +12,11 @@ namespace POS_For_Small_Shop.Services
     public class PostgresDao : IDao
     {
         public IRepository<Category> Categories { get; set; } = new PostgresCategoryRepository();
-        public IRepository<Promotion> Promotions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRepository<Promotion> Promotions { get; set; } = new PostgresPromotionRepository();
         public IRepository<Shift> Shifts { get; set; } = new PostgresShiftRepository();
-        public IRepository<Ingredient> Ingredients { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRepository<Ingredient> Ingredients { get ; set ; } = new PostgresIngredientRepository();
+        //public IRepository<Order> Orders { get; set; } = new PostgresOrderRepository();
+        //public IRepository<OrderDetail> OrderDetails { get; set; } = new PostgresOrderDetailRepository();
         public IOrderRepository<Order> Orders { get; set; } = new PostgresOrderRepository();
         public IOrderDetailRepository<OrderDetail> OrderDetails { get; set; } = new PostgresOrderDetailRepository();
         public IRepository<Transaction> Transactions { get; set; } = new PostgresTransactionRepository();

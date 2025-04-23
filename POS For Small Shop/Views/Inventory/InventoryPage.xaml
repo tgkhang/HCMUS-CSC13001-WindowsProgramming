@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="POS_For_Small_Shop.Views.Inventory.InventoryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:POS_For_Small_Shop.Views.Inventory"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <Style x:Key="TouchFriendlyNavItemStyle" TargetType="NavigationViewItem">
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Padding" Value="12,8"/>
+        </Style>
+
+        <Style x:Key="TouchFriendlyButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="Padding" Value="16,12"/>
+            <Setter Property="MinHeight" Value="48"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <NavigationView x:Name="InventoryNavigation"
+                      AlwaysShowHeader="True"
+                      PaneDisplayMode="Left"
+                      IsBackButtonVisible="Collapsed"
+                      IsSettingsVisible="False"
+                      OpenPaneLength="280"  
+                      CompactModeThresholdWidth="100"
+                      ItemInvoked="Navigation_ItemInvoked"
+                      Loaded="InventoryNavigation_Loaded"
+                      MenuItemContainerStyle="{StaticResource TouchFriendlyNavItemStyle}">
+
+            <NavigationView.Header>
+                <Grid Margin="24,1" MaxWidth="1200" MaxHeight="120">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock x:Name="InventoryManagementTitle" 
+                                 Text="Inventory" 
+                                 Style="{StaticResource TitleTextBlockStyle}" 
+                                 FontSize="24"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Bottom">
+                        <Button x:Name="RefreshButton" 
+                              Click="RefreshButton_Click"
+                              Style="{StaticResource TouchFriendlyButtonStyle}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE72C;" FontSize="18"/>
+                                <TextBlock Text="Refresh" FontSize="14"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </NavigationView.Header>
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="IngredientListPage">
+                    <NavigationViewItem.Content>
+                        <Grid Height="48">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Grid.Column="0" Glyph="&#xE77B;" FontSize="24" Margin="0,0,16,0"/>
+                            <TextBlock Grid.Column="1" Text="Ingredients" VerticalAlignment="Center" FontSize="16"/>
+                        </Grid>
+                    </NavigationViewItem.Content>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Tag="HomePage" Style="{StaticResource TouchFriendlyNavItemStyle}">
+                    <NavigationViewItem.Content>
+                        <Grid Height="48">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Grid.Column="0" Glyph="&#xE72B;" FontSize="24" Margin="0,0,16,0"/>
+                            <TextBlock Grid.Column="1" Text="Return to Home" VerticalAlignment="Center" FontSize="16"/>
+                        </Grid>
+                    </NavigationViewItem.Content>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+
+            <Frame x:Name="Container" Margin="0"/>
+        </NavigationView>
+    </Grid>
+</Page>

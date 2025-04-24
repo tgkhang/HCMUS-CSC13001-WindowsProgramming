@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using PropertyChanged;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace POS_For_Small_Shop.ViewModels.Inventory
 {
@@ -41,6 +42,7 @@ namespace POS_For_Small_Shop.ViewModels.Inventory
                 ApplyFilters();
             }
         }
+
         public InventoryViewModel()
         {
             _dao = Service.GetKeyedSingleton<IDao>();

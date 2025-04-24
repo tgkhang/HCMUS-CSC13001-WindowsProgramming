@@ -6,11 +6,13 @@
     xmlns:local="using:POS_For_Small_Shop.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:POS_For_Small_Shop.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <!-- Move Resources to the top of the Page -->
     <Page.Resources>
+        <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter"/>
         <Style x:Key="CardButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
             <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
@@ -23,6 +25,19 @@
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
             <Setter Property="Height" Value="140"/>
         </Style>
+        <DataTemplate x:Key="NotificationItemTemplate">
+            <StackPanel Orientation="Horizontal" Margin="8" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Message}" Width="300" TextWrapping="Wrap"/>
+                <Button Margin="8,0,0,0"
+                        BorderThickness="0"
+                        Background="Transparent"
+                        ToolTipService.ToolTip="Navigate"
+                    Click="GoToNotification"
+                    Tag="{Binding}" >
+                    <FontIcon Glyph="&#xE72A;" />
+                </Button>
+            </StackPanel>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid>
@@ -50,17 +65,42 @@
                 <TextBlock x:Name="DateTimeText" Text="Monday, March 16, 2025 | 4:30 PM" 
                          VerticalAlignment="Center" 
                          Style="{StaticResource BodyTextBlockStyle}"/>
-                <Button x:Name="Ringer" 
-                      Background="Transparent" 
-                      BorderThickness="0"
-                      Padding="8">
-                    <FontIcon Glyph="&#xEA8F;" />
-                </Button>
+
                 <Button x:Name="UserProfileButton" 
                       Background="Transparent" 
                       BorderThickness="0"
                       Padding="8">
                     <FontIcon Glyph="&#xE77B;" FontSize="20"/>
+                </Button>
+
+                <!-- Notification Button-->
+                <Button
+                    x:Name="NotificationButton"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="NotificationButton_Click">
+                    <StackPanel>
+                        <FontIcon Glyph="&#xEA8F;" />
+                        <!--  Notification count badge  -->
+                        <Border
+                            Width="10"
+                            Height="10"
+                            Margin="-10,-10,0,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Red"
+                            CornerRadius="10"
+                            Visibility="{x:Bind NotificationService.Notifications.Count, Converter={StaticResource ZeroToVisibilityConverter}, Mode=OneWay}">
+                            <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="8"
+                            Foreground="White"
+                            Text="{x:Bind NotificationService.Notifications.Count}" />
+                        </Border>
+                    </StackPanel>
                 </Button>
             </StackPanel>
         </Grid>

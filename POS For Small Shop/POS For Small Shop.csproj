@@ -33,12 +33,6 @@
     <None Remove="Views\DashboardWindow.xaml" />
     <None Remove="Views\HelpPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
-    <None Remove="Views\InventoryPage.xaml" />
-    <None Remove="Views\Inventory\AddIngredientPage.xaml" />
-    <None Remove="Views\Inventory\AllIngredientPage.xaml" />
-    <None Remove="Views\Inventory\DeleteIngredientPage.xaml" />
-    <None Remove="Views\Inventory\EditIngredientPage.xaml" />
-    <None Remove="Views\Inventory\ReadIngredientPage.xaml" />
     <None Remove="Views\LoginWindow.xaml" />
     <None Remove="Views\MenuManagement\MenuItemListPage.xaml" />
     <None Remove="Views\MenuManagement\MenuManagementPage.xaml" />
@@ -103,36 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ShiftPage\PaymentPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Inventory\ReadIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Inventory\EditIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Inventory\DeleteIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Inventory\AllIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Inventory\AddIngredientPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\InventoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

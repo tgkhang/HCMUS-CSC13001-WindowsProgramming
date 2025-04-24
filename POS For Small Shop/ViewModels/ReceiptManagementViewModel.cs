@@ -74,7 +74,7 @@ namespace POS_For_Small_Shop.ViewModels
 
             // Filter the orders by status
             //Debug.WriteLine($"OrderStatus: {OrderStatus}");
-            if (OrderStatus != "all")
+            if (OrderStatus.ToLower() != "all")
             {
                 OrdersForShift = new ObservableCollection<Order>(OrdersForShift.Where(order => order.Status.Equals(OrderStatus, StringComparison.OrdinalIgnoreCase)));
             }

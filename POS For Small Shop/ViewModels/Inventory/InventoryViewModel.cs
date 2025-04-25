@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using PropertyChanged;
+using Windows.System;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace POS_For_Small_Shop.ViewModels.Inventory
@@ -93,6 +95,7 @@ namespace POS_For_Small_Shop.ViewModels.Inventory
             }
 
             FilteredIngredients.Clear();
+
             foreach (var item in filteredItems)
             {
                 FilteredIngredients.Add(item);

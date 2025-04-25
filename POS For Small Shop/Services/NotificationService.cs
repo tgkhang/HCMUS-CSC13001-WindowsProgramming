@@ -110,7 +110,7 @@ namespace POS_For_Small_Shop.Services
                 {
                     Notifications.Add(new Notification
                     {
-                        Message = $"\"{item.IngredientName}\" is running low. Check it out",
+                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
                         Target = "Inventory",
                         ItemName = item.IngredientName
                     });
@@ -120,7 +120,7 @@ namespace POS_For_Small_Shop.Services
                 {
                     Notifications.Add(new Notification
                     {
-                        Message = $"\"{item.IngredientName}\" is running low. Check it out",
+                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
                         Target = "Inventory",
                         ItemName = item.IngredientName
                     });
@@ -130,7 +130,7 @@ namespace POS_For_Small_Shop.Services
                 {
                     Notifications.Add(new Notification
                     {
-                        Message = $"\"{item.IngredientName}\" is running low. Check it out",
+                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
                         Target = "Inventory",
                         ItemName = item.IngredientName
                     });

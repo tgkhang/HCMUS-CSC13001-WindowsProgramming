@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using POS_For_Small_Shop.ViewModels.ShiftPage;
@@ -49,6 +50,23 @@ namespace POS_For_Small_Shop.Views.ShiftPage
 
             ViewModel.PaymentRequested += ViewModel_PaymentRequested;
         }
+
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter is string parameter)
+            {
+                // Use the parameter
+            }
+        }
+
         private void ViewModel_PaymentRequested(object sender, NewOrderViewModel.PaymentType paymentType)
         {
             Frame.Navigate(typeof(PaymentPage), ViewModel);

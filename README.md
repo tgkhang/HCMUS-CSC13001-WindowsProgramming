@@ -31,7 +31,7 @@ A Windows application designed for small coffee shops with single-staff operatio
    cd api
    ```
 
-2. Build and start the Docker containers, recommend using manually build description:
+2. Build and start the Docker containers, recommend using manually build description in /API/README.md:
    ```
    docker-compose up -d
    ```

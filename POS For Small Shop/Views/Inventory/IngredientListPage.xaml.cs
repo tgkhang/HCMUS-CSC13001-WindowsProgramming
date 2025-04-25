@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.ViewModels;
 using POS_For_Small_Shop.ViewModels.Inventory;
+using System.Diagnostics;
 
 namespace POS_For_Small_Shop.Views.Inventory
 {
@@ -259,6 +260,16 @@ namespace POS_For_Small_Shop.Views.Inventory
                         }
                     }
                 }
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is string itemName && !string.IsNullOrWhiteSpace(itemName))
+            {
+                ViewModel.SearchText = itemName;
             }
         }
     }

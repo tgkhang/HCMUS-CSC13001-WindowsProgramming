@@ -5,6 +5,10 @@
     },
     "POS For Small Shop (Unpackaged)": {
       "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
     }
   }
 }

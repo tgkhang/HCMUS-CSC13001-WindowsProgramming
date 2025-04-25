@@ -85,8 +85,71 @@ namespace POS_For_Small_Shop.Views.PromotionPopupForm
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!ValidatePromotionInput())
+                return;
             UpdateRequested?.Invoke();
         }
+
+        private bool ValidatePromotionInput()
+        {
+            string promoName = PromotionName.Text?.Trim();
+            string discountValueText = DiscountValue.Text?.Trim();
+            var selectedItems = UpdateItemGridView.SelectedItems;
+
+            if (string.IsNullOrWhiteSpace(promoName))
+            {
+                ShowError("Promotion name is required.");
+                return false;
+            }
+
+            if (DiscountType.SelectedItem == null)
+            {
+                ShowError("Please select a discount type.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(discountValueText) ||
+                !float.TryParse(discountValueText, out float discountValue) || discountValue <= 0)
+            {
+                ShowError("Enter a valid positive discount value.");
+                return false;
+            }
+
+            if (StartDate.Date == null || EndDate.Date == null)
+            {
+                ShowError("Start and end dates are required.");
+                return false;
+            }
+
+            if (StartDate.Date > EndDate.Date)
+            {
+                ShowError("Start date cannot be after end date.");
+                return false;
+            }
+
+            if (selectedItems == null || selectedItems.Count == 0)
+            {
+                ShowError("Please select at least one item.");
+                return false;
+            }
+
+            // All good
+            return true;
+        }
+
+        private void ShowError(string message)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "Validation Error",
+                Content = message,
+                CloseButtonText = "OK",
+                XamlRoot = this.XamlRoot // 
+            };
+
+            _ = dialog.ShowAsync(); // Fire-and-forget
+        }
+
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {

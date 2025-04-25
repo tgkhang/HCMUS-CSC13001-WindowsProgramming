@@ -111,7 +111,7 @@ namespace POS_For_Small_Shop.ViewModels
             OrderDifferenceValueTodayAndYesterday = TotalOrderToday - TotalOrderYesterday;
 
             // Get the top selling item today
-            var orders = _dao.Orders.GetAll().Where(o => o.Status == "Completed")
+            var orders = _dao.Orders.GetAll().Where(o => o.Status.ToLower() == "completed")
                 .Where(o => todayShifts.Select(s => s.ShiftID).Contains(o.ShiftID))
                 .ToList();
 
@@ -185,7 +185,7 @@ namespace POS_For_Small_Shop.ViewModels
         {
             PaymentMethodSeries.Clear();
 
-            var allOrders = _dao.Orders.GetAll().Where(o => o.Status == "Completed").ToList();
+            var allOrders = _dao.Orders.GetAll().Where(o => o.Status.ToLower() == "completed").ToList();
 
             var groups = allOrders
                 .GroupBy(o => o.PaymentMethod.ToLowerInvariant())
@@ -256,7 +256,7 @@ namespace POS_For_Small_Shop.ViewModels
                         .ToList();
 
                     var dailySalesDict = shifts
-                        .Where(s => s.StartTime >= startOfMonth && s.StartTime <= today)
+                        .Where(s => s.StartTime >= startOfMonth && s.StartTime < today.AddDays(1))
                         .GroupBy(s => s.StartTime.Date)
                         .ToDictionary(g => g.Key, g => g.Sum(s => s.TotalSales));
 
@@ -382,7 +382,7 @@ namespace POS_For_Small_Shop.ViewModels
                         .ToList();
 
                     var dailyOrdersDict = shifts
-                        .Where(s => s.StartTime >= startOfMonth && s.StartTime <= today)
+                        .Where(s => s.StartTime >= startOfMonth && s.StartTime < today.AddDays(1))
                         .GroupBy(s => s.StartTime.Date)
                         .ToDictionary(g => g.Key, g => g.Sum(s => s.TotalOrders));
 

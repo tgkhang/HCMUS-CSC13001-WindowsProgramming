@@ -65,6 +65,14 @@
                 <TextBlock x:Name="DateTimeText" Text="Monday, March 16, 2025 | 4:30 PM" 
                          VerticalAlignment="Center" 
                          Style="{StaticResource BodyTextBlockStyle}"/>
+                <!--
+
+                <Button x:Name="Ringer" 
+                      Background="Transparent" 
+                      BorderThickness="0"
+                      Padding="8">
+                    <FontIcon Glyph="&#xEA8F;" />
+                </Button>
 
                 <Button x:Name="UserProfileButton" 
                       Background="Transparent" 
@@ -72,7 +80,8 @@
                       Padding="8">
                     <FontIcon Glyph="&#xE77B;" FontSize="20"/>
                 </Button>
-
+                -->
+              
                 <!-- Notification Button-->
                 <Button
                     x:Name="NotificationButton"

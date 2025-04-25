@@ -37,22 +37,22 @@ namespace POS_For_Small_Shop.Views
 
 
             //DELETE IT
-            var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
-            var username = localStorage.Values["Username"] as string;
-            var encryptedInBase64 = localStorage.Values["Password"] as string;
-            var entropyInBase64 = localStorage.Values["Entropy"] as string;
+            //var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
+            //var username = localStorage.Values["Username"] as string;
+            //var encryptedInBase64 = localStorage.Values["Password"] as string;
+            //var entropyInBase64 = localStorage.Values["Entropy"] as string;
 
-            if (!string.IsNullOrEmpty(username))
-            {
-                var encryptedInBytes = Convert.FromBase64String(encryptedInBase64);
-                var entropyInBytes = Convert.FromBase64String(entropyInBase64);
-                var passwordInBytes = ProtectedData.Unprotect(encryptedInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
-                var password = Encoding.UTF8.GetString(passwordInBytes);
+            //if (!string.IsNullOrEmpty(username))
+            //{
+            //    //var encryptedInBytes = Convert.FromBase64String(encryptedInBase64);
+            //    //var entropyInBytes = Convert.FromBase64String(entropyInBase64);
+            //    //var passwordInBytes = ProtectedData.Unprotect(encryptedInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
+            //    //var password = Encoding.UTF8.GetString(passwordInBytes);
 
-                ViewModel.Username = username;
-                ViewModel.Password = password;
-                ViewModel.RememberMe = true;
-            }
+            //    ViewModel.Username = username;
+            //    ViewModel.Password = password;
+            //    ViewModel.RememberMe = true;
+            //}
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)
@@ -66,38 +66,38 @@ namespace POS_For_Small_Shop.Views
                 bool success = ViewModel.Login();
 
                 //DELETE IT
-                var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
+                //var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-                if (ViewModel.RememberMe == true)
-                {
-                    var passwordInBytes = Encoding.UTF8.GetBytes(ViewModel.Password);
-                    var entropyInBytes = new byte[20];
-                    using (var rng = RandomNumberGenerator.Create())
-                    {
-                        rng.GetBytes(entropyInBytes);
-                    }
-                    var encryptedInBytes = ProtectedData.Protect(passwordInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
-                    var encryptedInBase64 = Convert.ToBase64String(encryptedInBytes);
-                    var entropyInBase64 = Convert.ToBase64String(entropyInBytes);
+                //if (ViewModel.RememberMe == true)
+                //{
+                //    var passwordInBytes = Encoding.UTF8.GetBytes(ViewModel.Password);
+                //    var entropyInBytes = new byte[20];
+                //    using (var rng = RandomNumberGenerator.Create())
+                //    {
+                //        rng.GetBytes(entropyInBytes);
+                //    }
+                //    var encryptedInBytes = ProtectedData.Protect(passwordInBytes, entropyInBytes, DataProtectionScope.CurrentUser);
+                //    var encryptedInBase64 = Convert.ToBase64String(encryptedInBytes);
+                //    var entropyInBase64 = Convert.ToBase64String(entropyInBytes);
 
-                    localStorage.Values["Username"] = ViewModel.Username;
-                    localStorage.Values["Password"] = encryptedInBase64;
-                    localStorage.Values["Entropy"] = entropyInBase64;
+                //    localStorage.Values["Username"] = ViewModel.Username;
+                //    localStorage.Values["Password"] = encryptedInBase64;
+                //    localStorage.Values["Entropy"] = entropyInBase64;
 
-                    Debug.WriteLine($"Encrypted password in base 64 is: {encryptedInBase64}");
-                }
-                else
-                {
-                    //var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
-                    //localStorage.Values["Username"] = null;
-                    //localStorage.Values["Password"] = null;
-                    //localStorage.Values["Entropy"] = null;
+                //    Debug.WriteLine($"Encrypted password in base 64 is: {encryptedInBase64}");
+                //}
+                //else
+                //{
+                //    //var localStorage = Windows.Storage.ApplicationData.Current.LocalSettings;
+                //    //localStorage.Values["Username"] = null;
+                //    //localStorage.Values["Password"] = null;
+                //    //localStorage.Values["Entropy"] = null;
 
-                    localStorage.Values.Remove("Username");
-                    localStorage.Values.Remove("Password");
-                    localStorage.Values.Remove("Entropy");
-                    Debug.WriteLine("Login info cleared from local storage.");
-                }
+                //    localStorage.Values.Remove("Username");
+                //    localStorage.Values.Remove("Password");
+                //    localStorage.Values.Remove("Entropy");
+                //    Debug.WriteLine("Login info cleared from local storage.");
+                //}
 
                 if (success)
                 {

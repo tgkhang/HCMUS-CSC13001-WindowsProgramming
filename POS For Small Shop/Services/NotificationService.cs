@@ -86,7 +86,7 @@ namespace POS_For_Small_Shop.Services
             Type? targetPage = notification.Target switch
             {
                 "Promotion" => typeof(PromotionManagementPage),
-                "Inventory" => typeof(InventoryPage),
+                //"Inventory" => typeof(InventoryPage),
                 _ => null
             };
 

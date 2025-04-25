@@ -52,6 +52,7 @@
         </ContentDialog>
 
         <NavigationView x:Name="ShiftNavigation"
+                      IsPaneToggleButtonVisible="False"
                       AlwaysShowHeader="True"
                       PaneDisplayMode="Left"
                       IsBackButtonVisible="Collapsed"

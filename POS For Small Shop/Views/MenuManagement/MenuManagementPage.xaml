@@ -29,6 +29,7 @@
     <Grid>
 
         <NavigationView x:Name="MenuItemNavigation"
+                        IsPaneToggleButtonVisible="False"
                    AlwaysShowHeader="True"
                    PaneDisplayMode="Left"
                    IsBackButtonVisible="Collapsed"

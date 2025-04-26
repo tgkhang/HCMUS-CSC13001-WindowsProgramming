@@ -7,6 +7,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using POS_For_Small_Shop.Data.Models;
+using POS_For_Small_Shop.Services;
+using POS_For_Small_Shop.Views.Inventory;
 
 namespace POS_For_Small_Shop.Services
 {
@@ -78,7 +81,61 @@ namespace POS_For_Small_Shop.Services
         // Loadd the notification of inventory
         public void LoadInventoryNotification()
         {
+            var ingredients = _dao.Ingredients.GetAll();
+            var today = DateTime.Today;
 
+            foreach (var item in ingredients)
+            {
+                if (item.Unit == "kg" && item.Stock <= 2)
+                {
+                    Notifications.Add(new Notification
+                    {
+                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
+                        Target = "Inventory",
+                        ItemName = item.IngredientName
+                    });
+                }
+
+                if (item.Unit == "g" && item.Stock <= 300)
+                {
+                    Notifications.Add(new Notification
+                    {
+                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
+                        Target = "Inventory",
+                        ItemName = item.IngredientName
+                    });
+                }
+
+                if (item.Unit == "L" && item.Stock <= 2)
+                {
+                    Notifications.Add(new Notification
+                    {
+                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
+                        Target = "Inventory",
+                        ItemName = item.IngredientName
+                    });
+                }
+
+                if (item.Unit == "ml" && item.Stock <= 300)
+                {
+                    Notifications.Add(new Notification
+                    {
+                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
+                        Target = "Inventory",
+                        ItemName = item.IngredientName
+                    });
+                }
+
+                if (item.Unit == "pcs" && item.Stock <= 10)
+                {
+                    Notifications.Add(new Notification
+                    {
+                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
+                        Target = "Inventory",
+                        ItemName = item.IngredientName
+                    });
+                }
+            }
         }
 
         public void GoToTarget(Notification notification)

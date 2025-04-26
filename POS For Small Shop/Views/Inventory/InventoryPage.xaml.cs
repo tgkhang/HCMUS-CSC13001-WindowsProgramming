@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.UI.Xaml.Navigation;
 using POS_For_Small_Shop.ViewModels;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using System.Diagnostics;
 
 namespace POS_For_Small_Shop.Views.Inventory
 {
@@ -135,5 +136,20 @@ namespace POS_For_Small_Shop.Views.Inventory
         {
             // Refresh and update Inventory data.
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is string itemName && !string.IsNullOrWhiteSpace(itemName))
+            {
+                this.Container.Navigate(typeof(IngredientListPage), itemName);
+            }
+            else
+            {
+                this.Container.Navigate(typeof(IngredientListPage));
+            }
+        }
+
     }
 }

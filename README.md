@@ -28,13 +28,10 @@ A Windows application designed for small coffee shops with single-staff operatio
 ### API Setup (Docker)
 1. Navigate to the `api` directory:
    ```
-   cd api
+   cd API
    ```
 
-2. Build and start the Docker containers, recommend using manually build description in /API/README.md:
-   ```
-   docker-compose up -d
-   ```
+2. Using manually build description in /API/README.md to start api:
 
 3. The GraphQL API will be available at: http://localhost:5000/graphql
 
@@ -42,6 +39,11 @@ A Windows application designed for small coffee shops with single-staff operatio
 1. Open the solution in Visual Studio 2022
 2. Make sure you have the Windows App SDK installed
 3. Build and run the application
+
+### Run App
+- You can run the exe file in release folder. Or running app directly from visual studio. 
+- Please start docker and api before running app.
+- If the QR payment is not active you need to go to folder src/POS For Small Shop/Services/QRService.cs, and adding you api key from (vietQR).
 
 ## Development
 - The application follows MVVM architecture

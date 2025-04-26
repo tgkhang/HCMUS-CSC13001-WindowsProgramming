@@ -2,41 +2,6 @@
 
 This project provides a complete PostgreSQL database with tables, relationships, and sample data for a coffee shop management system.
 
-
-## Manual Setup
-
-If you prefer to set up the database manually:
-
-1. Start a PostgreSQL container:
-   ```
-   docker run -d --name coffee_shop_db -e POSTGRES_PASSWORD=1234 -p 5432:5432 postgres
-   ```
-
-2. Create the database:
-   ```
-   docker exec -it coffee_shop_db psql -U postgres -c "CREATE DATABASE database1;"
-   ```
-
-3. Install dependencies:
-   ```
-   npm install
-   ```
-
-4. Run migrations:
-   ```
-   npx knex migrate:latest
-   ```
-
-5. Run seeds:
-   ```
-   npx knex seed:run
-   ```
-
-6. Run API :
-   ```
-   postgraphile -c "postgres://postgres:1234@localhost:5432/database1" --enhance-graphiql --dynamic-json
-   ```
-
 ## Quick Start
 
 1. Make sure Docker and Docker Compose are installed on your system. If not:
@@ -45,21 +10,36 @@ If you prefer to set up the database manually:
 
 2. Clone or unzip this project into a directory
 
-3. Open a terminal in the project directory
-
-4. Run the following command:
+2. Start a PostgreSQL container:
    ```
-   docker-compose up
+   docker run -d --name coffee_shop_db -e POSTGRES_PASSWORD=1234 -p 5432:5432 postgres
    ```
 
-5. That's it! The database will be created automatically with all tables and sample data.
-
-6. RUN API
+3. Create the database:
    ```
-   wsl ./postgrest postgrest.conf
-
-   postgraphile -c 'postgres://postgres:1234@localhost:5432/postgres' --watch --enhance-graphiql --dynamic-json
+   docker exec -it coffee_shop_db psql -U postgres -c "CREATE DATABASE database1;"
    ```
+
+4. Install dependencies:
+   ```
+   npm install
+   ```
+
+5. Run migrations:
+   ```
+   npx knex migrate:latest
+   ```
+
+6. Run seeds:
+   ```
+   npx knex seed:run
+   ```
+
+7. Run API :
+   ```
+   postgraphile -c "postgres://postgres:1234@localhost:5432/database1" --enhance-graphiql --dynamic-json
+   ```
+
 ## Database Connection Details
 
 - **Host**: localhost

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using POS_For_Small_Shop.Data.Models;
 using POS_For_Small_Shop.Services;
 using POS_For_Small_Shop.Views.Inventory;
+using static SkiaSharp.HarfBuzz.SKShaper;
+using Windows.UI.Notifications;
 
 namespace POS_For_Small_Shop.Services
 {
@@ -33,9 +35,9 @@ namespace POS_For_Small_Shop.Services
         {
             _frame = frame;
 
-            // Load the notifications
             LoadPromotionNotification();
             LoadInventoryNotification();
+
         }
 
         // Load the notification of promotion
@@ -86,7 +88,11 @@ namespace POS_For_Small_Shop.Services
 
             foreach (var item in ingredients)
             {
-                if (item.Unit == "kg" && item.Stock <= 2)
+                if ((item.Unit == "kg" && item.Stock <= 2) ||
+                    (item.Unit == "g" && item.Stock <= 300) ||
+                    (item.Unit == "L" && item.Stock <= 2) ||
+                    (item.Unit == "ml" && item.Stock <= 300) ||
+                    (item.Unit == "pcs" && item.Stock <= 10))
                 {
                     Notifications.Add(new Notification
                     {
@@ -95,47 +101,25 @@ namespace POS_For_Small_Shop.Services
                         ItemName = item.IngredientName
                     });
                 }
-
-                if (item.Unit == "g" && item.Stock <= 300)
-                {
+                if(item.ExpiryDate <  DateTime.Today) {
                     Notifications.Add(new Notification
                     {
-                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
+                        Message = $"\"{item.IngredientName}\" is expired. Check it out.",
                         Target = "Inventory",
                         ItemName = item.IngredientName
                     });
                 }
-
-                if (item.Unit == "L" && item.Stock <= 2)
+                if (item.ExpiryDate == DateTime.Today)
                 {
                     Notifications.Add(new Notification
                     {
-                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
-                        Target = "Inventory",
-                        ItemName = item.IngredientName
-                    });
-                }
-
-                if (item.Unit == "ml" && item.Stock <= 300)
-                {
-                    Notifications.Add(new Notification
-                    {
-                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
-                        Target = "Inventory",
-                        ItemName = item.IngredientName
-                    });
-                }
-
-                if (item.Unit == "pcs" && item.Stock <= 10)
-                {
-                    Notifications.Add(new Notification
-                    {
-                        Message = $"\"{item.IngredientName}\" is running low. Check it out.",
+                        Message = $"\"{item.IngredientName}\" will be expired today. Check it out.",
                         Target = "Inventory",
                         ItemName = item.IngredientName
                     });
                 }
             }
+
         }
 
         public void GoToTarget(Notification notification)
@@ -143,7 +127,7 @@ namespace POS_For_Small_Shop.Services
             Type? targetPage = notification.Target switch
             {
                 "Promotion" => typeof(PromotionManagementPage),
-                //"Inventory" => typeof(InventoryPage),
+                "Inventory" => typeof(InventoryPage),
                 _ => null
             };
 
